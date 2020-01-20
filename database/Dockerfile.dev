@@ -1,0 +1,7 @@
+FROM postgres:latest
+
+ENV POSTGRES_USER syntropic
+ENV POSTGRES_PASSWORD routeP@ss
+ENV POSTGRES_DB syntropic_farming
+
+COPY init.sql /docker-entrypoint-initdb.d/
