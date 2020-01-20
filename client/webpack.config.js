@@ -31,7 +31,7 @@ const config = {
                 }
             },
             {
-                test: /\.scss$/,
+                test: /\.css$/,
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader
