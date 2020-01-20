@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    volumes:
+      - database/data:/var/lib/postgresql/data  
+  syntropic-app:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    ports:
+      - '3000:3000'
+    restart: on-failure
+    container_name: syntropic-client
+  syntropic-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3001:3001'
+    restart: on-failure
+    container_name: syntropic-api
+    volumes:
+      - /app/node_modules 
+      - ./backend:/app 
+    environment:
+      - PGUSER=syntropic
+      - PGHOST=postgres
+      - PGDATABASE=syntropic_farming
+      - PGPASSWORD=routeP@ss
+      - PGPORT=5432
