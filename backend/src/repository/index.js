@@ -1,5 +1,7 @@
 const { getAll, get } = require('./materialRepository');
 const { getAllSpecies, getSpeciesById } = require('./speciesRepository');
+const { getAllLocations } = require('./locationRepository');
+const { getAllProcesses } = require('./processRepository');
 
 const materialRepository = {
     getAll,
@@ -11,7 +13,17 @@ const speciesRepository = {
     getSpeciesById
 }
 
+const processRepository = {
+    getAllProcesses
+}
+
+const locationRepository = {
+    getAllLocations
+}
+
 module.exports = {
     materialRepository,
-    speciesRepository
+    speciesRepository,
+    processRepository,
+    locationRepository
 }
