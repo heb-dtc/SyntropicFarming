@@ -8,11 +8,11 @@ function Box(props) {
 
         useEffect(() => {
             const fetchItems = async () => {
-              const response = await axios(`${baseUrl}/${props.itemsEndpoint}`);
-              setItems(response.data);
+                const response = await axios(`${baseUrl}/${props.itemsEndpoint}`);
+                setItems(response.data);
             };
             fetchItems();
-          }, []);
+        }, []);
 
     return (
         <div>
@@ -23,11 +23,9 @@ function Box(props) {
             </div>
             { showItems &&
                 <div>
-                    {
-                        items.map(item => {
-                            return <div>{item.species}</div>
-                        })
-                    }
+                {
+                    items.map(item => {return <div>{item.species}</div>})
+                }
                 </div>
             }
         </div>
