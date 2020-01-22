@@ -3,13 +3,12 @@ import axios from 'axios';
 
 function Box(props) {
     const [showItems, setShowItems] = useState(false);
-    const [items, setItems] = useState([]);
     const baseUrl = 'http://localhost:3001/api';
 
         useEffect(() => {
             const fetchItems = async () => {
                 const response = await axios(`${baseUrl}/${props.itemsEndpoint}`);
-                setItems(response.data);
+                props.setItems(response.data);
             };
             fetchItems();
         }, []);
@@ -22,11 +21,7 @@ function Box(props) {
             }
             </div>
             { showItems &&
-                <div>
-                {
-                    items.map(item => {return <div>{item.species}</div>})
-                }
-                </div>
+                props.children
             }
         </div>
     );
