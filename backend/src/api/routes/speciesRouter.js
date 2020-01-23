@@ -1,6 +1,8 @@
 const router = require('express').Router();
-const { getSpecies } = require('../controllers/speciesController');
+const {getSpecies, getSpeciesSchema} = require('../controllers/speciesController');
 
-router.get('/', getSpecies);
+router
+    .get('/', getSpecies)
+    .get('/schema/:speciesId', getSpeciesSchema);
 
 module.exports = router;

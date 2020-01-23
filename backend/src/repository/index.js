@@ -1,7 +1,7 @@
-const { getAll, get } = require('./materialRepository');
-const { getAllSpecies, getSpeciesById } = require('./speciesRepository');
-const { getAllLocations } = require('./locationRepository');
-const { getAllProcesses } = require('./processRepository');
+const {getAll, get} = require('./materialRepository');
+const {getAllSpecies, getSpeciesById, getSpeciesSchema} = require('./speciesRepository');
+const {getAllLocations} = require('./locationRepository');
+const {getAllProcesses} = require('./processRepository');
 
 const materialRepository = {
     getAll,
@@ -10,7 +10,8 @@ const materialRepository = {
 
 const speciesRepository = {
     getAllSpecies,
-    getSpeciesById
+    getSpeciesById,
+    getSpeciesSchema
 }
 
 const processRepository = {

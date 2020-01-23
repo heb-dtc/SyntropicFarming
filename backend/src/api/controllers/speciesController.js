@@ -7,7 +7,15 @@ function getSpecies(req, res) {
         })
 }
 
+function getSpeciesSchema(req, res) {
+    speciesRepository.getSpeciesSchema(req.params.speciesId)
+        .then((rows) => {
+            res.send(rows);
+        })
+}
+
 module.exports = {
-    getSpecies
+    getSpecies,
+    getSpeciesSchema,
 }
 
