@@ -27,16 +27,16 @@ CREATE TABLE processes (
 );
 
 CREATE TABLE part_process (
+  uid SERIAL PRIMARY KEY,
   part_id INT REFERENCES parts(uid),
   process_id INT REFERENCES processes(uid),
-  material_id INT REFERENCES materials(uid),
-  CONSTRAINT part_process_pkey PRIMARY KEY (part_id, process_id)
+  material_id INT REFERENCES materials(uid)
 );
 
 CREATE TABLE material_process (
+  uid SERIAL PRIMARY KEY,
   input_material_id INT REFERENCES materials(uid),
   process_id INT REFERENCES processes(uid),
-  output_material_id INT REFERENCES materials(uid),
-  CONSTRAINT material_process_pkey PRIMARY KEY (input_material_id, process_id)
+  output_material_id INT REFERENCES materials(uid)
 );
 
