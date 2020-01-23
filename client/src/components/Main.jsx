@@ -3,10 +3,12 @@ import SpeciesBox from './SpeciesBox'
 import ProcessBox from './ProcessBox'
 import MaterialBox from './MaterialBox'
 import ClimateBox from './ClimateBox'
+import Schema from '@/components/Schema'
 
 export const SearchContext = React.createContext();
 const initialState = {
     item: null,
+    itemType: ''
 };
 
 const reducer = (state, action) => {
@@ -14,12 +16,14 @@ const reducer = (state, action) => {
         case "SEARCH_SPECIES":
             return {
                 ...state,
-                item: action.payload
+                item: action.payload,
+                itemType: action.type
             };
         case "CLEAR_SEARCH":
             return {
                 ...state,
-                item: null
+                item: null,
+                itemType: ''
             };
         default:
             return state;
@@ -46,7 +50,7 @@ function Main() {
                     </div>
 
                     <div className="fl w-60 pa2">
-                        <div className="outline bg-white pv4"></div>
+                        <Schema searchItem={state}/>
                     </div>
 
                     <div className="fl w-20 pa2">
