@@ -43,6 +43,7 @@ function Main() {
                 <div className="cf ph2-ns">
 
                     <div className="fl w-20 pa2 tc">
+                        <p>your search</p>
                         <SpeciesBox/>
                         <ProcessBox/>
                         <MaterialBox/>
@@ -50,11 +51,14 @@ function Main() {
                     </div>
 
                     <div className="fl w-60 pa2">
+                        <p className="tc" onClick={() => dispatch({
+                            type: "CLEAR_SEARCH"
+                        })}>clear search</p>
                         <Schema searchItem={state}/>
                     </div>
 
-                    <div className="fl w-20 pa2">
-                        <div className="outline bg-white pv4"></div>
+                    <div className="fl w-20 pa2 tc">
+                        <p>connections</p>
                     </div>
 
                 </div>
