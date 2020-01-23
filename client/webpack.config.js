@@ -7,9 +7,9 @@ const config = {
     entry: './src/main.js',
     devtool: 'inline-source-map',
     devServer: {
-       contentBase: path.join(__dirname, './'),
-       publicPath: '/',
-     },
+        contentBase: path.join(__dirname, './'),
+        publicPath: '/',
+    },
     output: {
         filename: 'js/[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
@@ -72,11 +72,11 @@ const config = {
             filename: './index.html',
             title: 'SyntropicFront'
         }),
-       new MiniCssExtractPlugin({
-         filename: "css/[name].css",
-         chunkFilename: "css/[id].css"
-       })
-     ]
+        new MiniCssExtractPlugin({
+            filename: "css/[name].css",
+            chunkFilename: "css/[id].css"
+        })
+    ]
 };
 
 module.exports = config

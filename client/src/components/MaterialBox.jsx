@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import React, {useState} from "react";
 import Box from './Box'
 
 const MaterialBox = () => {
@@ -8,9 +7,11 @@ const MaterialBox = () => {
     return (
         <Box title={'materials'} itemsEndpoint={'materials'} setItems={(items) => setItems(items)}>
             <div>
-            {
-                items.map(item => {return <div>{item.material}</div>})
-            }
+                {
+                    items.map(item => {
+                        return <div>{item.material}</div>
+                    })
+                }
             </div>
         </Box>
     );

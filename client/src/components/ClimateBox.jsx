@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import React, {useState} from "react";
 import Box from './Box'
 
 const ClimateBox = () => {
@@ -8,9 +7,11 @@ const ClimateBox = () => {
     return (
         <Box title={'locations'} itemsEndpoint={'locations'} setItems={(items) => setItems(items)}>
             <div>
-            {
-                items.map(item => {return <div>{item.climate}</div>})
-            }
+                {
+                    items.map(item => {
+                        return <div>{item.climate}</div>
+                    })
+                }
             </div>
         </Box>
     );
