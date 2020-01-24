@@ -1,9 +1,9 @@
 import React from "react";
-import SpeciesBox from './SpeciesBox'
-import ProcessBox from './ProcessBox'
-import MaterialBox from './MaterialBox'
-import ClimateBox from './ClimateBox'
-import Schema from '@/components/Schema'
+import SpeciesBox from '@/components/SpeciesBox'
+import ProcessBox from '@/components/ProcessBox'
+import MaterialBox from '@/components/MaterialBox'
+import ClimateBox from '@/components/ClimateBox'
+import Schema from '@/components/schema/Schema'
 
 export const SearchContext = React.createContext();
 const initialState = {
