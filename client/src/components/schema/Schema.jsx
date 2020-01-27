@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
+import SVG from 'react-inlinesvg';
 import axios from 'axios'
+import image from "@/images/plants.svg";
 
 const Schema = (props) => {
     const [data, setData] = useState(null);
@@ -19,7 +21,7 @@ const Schema = (props) => {
     return (
         <div className="outline bg-white pv4">
             {data &&
-            data.species
+                <SVG src={image} />
             }
         </div>
     );
