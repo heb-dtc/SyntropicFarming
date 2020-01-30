@@ -13,7 +13,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "pg": "^7.17.0",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "xml-writer": "^1.7.0"
   },
   "devDependencies": {
     "morgan": "^1.9.1",
