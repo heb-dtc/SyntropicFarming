@@ -21,7 +21,7 @@ const Schema = (props) => {
     return (
         <div className="outline bg-white pv4">
             {data &&
-                <SVG src={image} />
+                <SVG src={data} />
             }
         </div>
     );
