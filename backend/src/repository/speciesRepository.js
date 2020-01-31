@@ -38,7 +38,7 @@ const buildOperationsMaterialTree = async (operations) => {
             res = await buildMaterialTree(material);
             return {
                 data: process,
-                children: res,
+                children: Array.of(res)
             }
         }
     })
