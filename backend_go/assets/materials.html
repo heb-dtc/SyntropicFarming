@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>Syntropic Farming Admin Panel</title>
+</head>
+
+<body>
+  <h1>Materials</h1>
+
+  <form id="addMaterialsForm">
+    <input type="text" name="name" id="materialName" />
+    <input type="submit" value="add" />
+  </form>
+  <br/>
+
+  <table>
+    <tr>
+      <th>Existing Materials</th>
+    </tr>
+  </table>
+  <br/>
+
+  <script>
+    document.getElementById('addMaterialsForm').addEventListener('submit', addMaterial);
+
+    materialTable = document.querySelector("table")
+
+    //fetch material list on page load
+    getMaterialList()
+
+    function getMaterialList() {
+      fetch("/api/materials")
+        .then(response => response.json())
+        .then(materials => {
+          materials.forEach(material => {
+            row = document.createElement("tr")
+            materialEntry = document.createElement("td")
+            materialEntry.innerHTML = material.name
+            row.appendChild(materialEntry)
+            materialTable.appendChild(row)
+          });
+        })
+    }
+
+      function addMaterial(event) {
+        event.preventDefault();
+        let name = document.getElementById('materialName').value;
+
+        fetch("/api/materials/new", {
+          method: "POST",
+          mode: "cors",
+          cache: "no-cache", 
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          redirect: "follow",
+          referrer: "no-referrer",
+          body: JSON.stringify({name: name})
+        })
+        .then(response => location.reload());
+      }
+  </script>
+
+</body>
+</html>

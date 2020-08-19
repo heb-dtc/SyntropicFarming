@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>Syntropic Farming Admin Panel</title>
+</head>
+
+<body>
+  <h1>Species</h1>
+
+  <form id="addSpeciesForm">
+    <input type="text" name="name" id="speciesName" />
+    <input type="submit" value="add" />
+  </form>
+  <br/>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Existing Species</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <br/>
+
+  <script>
+    document.getElementById('addSpeciesForm').addEventListener('submit', addSpecies);
+
+    speciesTable = document.querySelector("table")
+
+    getSpecies()
+
+    function getSpecies() {
+      fetch("/api/species")
+        .then(response => response.json())
+        .then(speciesList => {
+          speciesList.forEach(species => {
+            row = document.createElement("tr")
+            speciesEntry = document.createElement("td")
+            speciesEntry.innerHTML = species.name
+            row.appendChild(speciesEntry)
+            speciesTable.appendChild(row)
+          });
+        })
+    }
+
+      function addSpecies(event) {
+        event.preventDefault();
+        let name = document.getElementById('speciesName').value;
+
+        fetch("/api/species/new", {
+          method: "POST",
+          mode: "cors",
+          cache: "no-cache", 
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          redirect: "follow",
+          referrer: "no-referrer",
+          body: JSON.stringify({name: name})
+        })
+        .then(response => location.reload());
+      }
+  </script>
+
+</body>
+</html>

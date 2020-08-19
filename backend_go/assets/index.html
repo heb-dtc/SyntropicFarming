@@ -8,34 +8,55 @@
 <body>
   <h1>Species and Material associations</h1>
 
+  <ul>
+    <a href="species.html">Species</a>
+    <a href="materials.html">Materials</a>
+    <a href="associations.html">Associations</a>
+  </ul>
+
+  <br/>
+  <h1>Existing Associations</h1>
   <table>
-    <tr>
-      <th>Species</th>
-    </tr>
+    <thead>
+      <tr>
+        <th colspan="1">ID</th>
+        <th colspan="1">species</th>
+        <th colspan="1">material</th>
+        <th colspan="1">image</th>
+        <th colspan="1">link</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
   </table>
   <br/>
 
-  <form
-    enctype="multipart/form-data"
-    action="/api/images/upload"
-    method="post"
-  >
-    <input type="file" name="image" />
-    <input type="submit" value="upload" />
-  </form>
-
   <script>
-    speciesTable = document.querySelector("table")
+    table = document.querySelector("table")
 
-    fetch("/api/species")
+    fetch("/api/associations")
       .then(response => response.json())
-      .then(speciesList => {
-        speciesList.forEach(species => {
+      .then(associations => {
+        associations.forEach(association => {
           row = document.createElement("tr")
-          speciesEntry = document.createElement("td")
-          speciesEntry.innerHTML = species.name
-          row.appendChild(speciesEntry)
-          speciesTable.appendChild(row)
+          id = document.createElement("th")
+          specieId = document.createElement("td")
+          materialId = document.createElement("td")
+          imageId = document.createElement("td")
+          link = document.createElement("td")
+
+          id.innerHTML = association.id
+          specieId.innerHTML = association.species_id
+          materialId.innerHTML = association.material_id
+          imageId.innerHTML = association.image_id
+          link.innerHTML = association.link
+          row.appendChild(id)
+          row.appendChild(specieId)
+          row.appendChild(materialId)
+          row.appendChild(imageId)
+          row.appendChild(link)
+          table.appendChild(row)
         });
       })
   </script>

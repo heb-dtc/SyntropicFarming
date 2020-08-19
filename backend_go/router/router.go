@@ -9,7 +9,8 @@ import (
 func Router() *mux.Router {
   router := mux.NewRouter()
 
-  router.HandleFunc("/api/images/upload", middleware.UploadImage).Methods("POST", "OPTIONS")
+  router.HandleFunc("/api/associations", middleware.GetAllAssociations).Methods("GET", "OPTIONS")
+  router.HandleFunc("/api/associations/create", middleware.UploadImage).Methods("POST", "OPTIONS")
   
   router.HandleFunc("/api/materials", middleware.GetAllMaterials).Methods("GET", "OPTIONS")
   router.HandleFunc("/api/materials/new", middleware.AddMaterial).Methods("POST", "OPTIONS")
