@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>Syntropic Farming Admin Panel</title>
+</head>
+
+<body>
+  <h1>Species and Material associations</h1>
+
+  <table>
+    <tr>
+      <th>Species</th>
+    </tr>
+  </table>
+  <br/>
+
+  <form
+    enctype="multipart/form-data"
+    action="/api/images/upload"
+    method="post"
+  >
+    <input type="file" name="image" />
+    <input type="submit" value="upload" />
+  </form>
+
+  <script>
+    speciesTable = document.querySelector("table")
+
+    fetch("/api/species")
+      .then(response => response.json())
+      .then(speciesList => {
+        speciesList.forEach(species => {
+          row = document.createElement("tr")
+          speciesEntry = document.createElement("td")
+          speciesEntry.innerHTML = species.name
+          row.appendChild(speciesEntry)
+          speciesTable.appendChild(row)
+        });
+      })
+  </script>
+
+</body>
+</html>

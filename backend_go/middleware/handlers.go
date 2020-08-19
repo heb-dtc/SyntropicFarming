@@ -9,6 +9,7 @@ import (
   "strconv"
   "net/http"
   "encoding/json"
+  "io/ioutil"
 	"github.com/joho/godotenv"
   "github.com/gorilla/mux"
   _ "github.com/lib/pq"
@@ -42,6 +43,44 @@ func createConnection() *sql.DB {
 
     fmt.Println("Successfully connected!")
     return db
+}
+
+func UploadImage(w http.ResponseWriter, r *http.Request) {
+    fmt.Println("Upload image")
+
+    // max 10MB images
+    r.ParseMultipartForm(10 << 20)
+
+    image, handler, err := r.FormFile("image")
+    if err != nil {
+        fmt.Println("Error Retrieving the File")
+        fmt.Println(err)
+        return
+    }
+    defer image.Close()
+
+    fmt.Printf("Uploaded File: %+v\n", handler.Filename)
+    fmt.Printf("File Size: %+v\n", handler.Size)
+    fmt.Printf("MIME Header: %+v\n", handler.Header)
+
+    imageBytes, err := ioutil.ReadAll(image)
+    if err != nil {
+        fmt.Println(err)
+    }
+
+    err = ioutil.WriteFile("./uploads/" + handler.Filename, imageBytes, 0666)
+    if err != nil {
+        fmt.Println(err)
+    }
+    fmt.Fprintf(w, "Successfully uploaded image\n")
+
+    insertID := insertImage(handler.Filename)
+    res := response{
+        ID:      insertID,
+        Message: "Image created successfully",
+    }
+
+    json.NewEncoder(w).Encode(res)
 }
 
 func AddSpecies(w http.ResponseWriter, r *http.Request) {
@@ -176,6 +215,23 @@ func delete(query string, id int64) int64 {
 
     fmt.Printf("Total rows/record affected %v", rowsAffected)
     return rowsAffected
+}
+
+func insertImage(imageName string) int64 {
+    db := createConnection()
+    defer db.Close()
+  
+    sqlStatement := `INSERT into images (name) VALUES ($1) RETURNING uid`
+  
+    var id int64
+    err := db.QueryRow(sqlStatement, imageName).Scan(&id)
+  
+    if err != nil {
+      log.Fatalf("Unable to execute the query, %v", err)
+    }
+  
+    fmt.Printf("Inserted image %v", id)
+    return id
 }
 
 func insertSpecies(species models.Species) int64 {
