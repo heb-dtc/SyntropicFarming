@@ -1,8 +1,27 @@
 const {pool} = require('./database');
 
-exports.getAllSpecies = async () => {
-    const res = await pool.query('SELECT * from species');
-    return res.rows;
+exports.getAllSpecies = () => {
+pool.connect((err, client, release) => {
+  if (err) {
+    return console.error('Error acquiring client', err.stack)
+  }
+  client.query('SELECT NOW()', (err, result) => {
+    release()
+    if (err) {
+      return console.error('Error executing query', err.stack)
+    }
+    console.log(result.rows)
+  })
+})
+    //const res = await pool.query('SELECT * from species');
+    //return res.rows;
+}
+
+async function testConnect() {
+    console.log('Before connect');
+    const client = await pool.connect();
+    console.log('Connected!');
+    client.release();
 }
 
 exports.getSpeciesById = async (id) => {
