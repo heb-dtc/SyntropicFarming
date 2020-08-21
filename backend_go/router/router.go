@@ -26,5 +26,9 @@ func Router() *mux.Router {
   staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
   router.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
 
+  imageFileDirectory := http.Dir("./uploads/")	
+  imageFileHandler := http.StripPrefix("/uploads/", http.FileServer(imageFileDirectory))
+  router.PathPrefix("/uploads/").Handler(imageFileHandler).Methods("GET")
+
   return router
 }
