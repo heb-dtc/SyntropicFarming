@@ -1,13 +1,13 @@
 package main
 
 import (
-  "log"
-  "net/http"
-  "backend/router"
+	"backend/router"
+	"log"
+	"net/http"
 )
 
 func main() {
-
-  router := router.Router()
-  log.Fatal(http.ListenAndServe(":3001", router))
+	router := router.Router()
+	log.Printf("Starting server @3001")
+	log.Fatal(http.ListenAndServe(":3001", router))
 }
