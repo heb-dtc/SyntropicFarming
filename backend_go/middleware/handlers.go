@@ -34,7 +34,7 @@ func createConnection() *sql.DB {
     }
 
     connectionString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",  host, os.Getenv("PGPORT"), os.Getenv("PGUSER"), os.Getenv("PGPASSWORD"), os.Getenv("PGDATABASE"))
-    fmt.Printf("Connecting to %s", connectionString)
+    fmt.Printf("Connecting to %s\n", connectionString)
     
     db, err := sql.Open("postgres", connectionString)
 
@@ -52,9 +52,7 @@ func createConnection() *sql.DB {
     return db
 }
 
-func UploadImage(w http.ResponseWriter, r *http.Request) {
-    fmt.Println("Upload image")
-
+func AddAssociation(w http.ResponseWriter, r *http.Request) {
     // max 10MB images
     r.ParseMultipartForm(10 << 20)
 
@@ -94,7 +92,6 @@ func UploadImage(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Successfully uploaded image\n")
 
     imageId := insertImage(handler.Filename)
-
     insertID := insertAssociation(int64(speciesId), int64(materialId), link, imageId)
 
     res := response{
@@ -332,13 +329,17 @@ func insertMaterial(material models.Material) int64 {
   return id
 }
 
-func getAllAssociations() ([]models.Association, error) {
+func getAllAssociations() ([]models.AssociationDetails, error) {
     db := createConnection()
     defer db.Close()
 
-    var associations []models.Association
+    var associations []models.AssociationDetails
 
-    sqlStatement := `SELECT * FROM species_materials`
+    sqlStatement := `select species_materials.uid, species."name", materials."name", images."name", link from species_materials 
+    inner join species on species_materials.species_id=species.uid
+    inner join materials on species_materials.material_id=materials.uid
+    inner join images on species_materials.image_id=images.uid;`
+
     rows, err := db.Query(sqlStatement)
 
     if err != nil {
@@ -348,8 +349,8 @@ func getAllAssociations() ([]models.Association, error) {
     defer rows.Close()
 
     for rows.Next() {
-        var association models.Association
-        err = rows.Scan(&association.ID, &association.SpeciesId, &association.MaterialId, &association.ImageId, &association.Link)
+        var association models.AssociationDetails
+        err = rows.Scan(&association.ID, &association.SpeciesName, &association.MaterialName, &association.ImageUrl, &association.Link)
 
         if err != nil {
             log.Fatalf("Unable to scan the row. %v", err)

@@ -24,3 +24,11 @@ type Association struct {
   ImageId int64 `json:"image_id"`
   Link string `json:"link"`
 }
+
+type AssociationDetails struct {
+  ID int64 `json:"id"`
+  SpeciesName string `json:"species_name"`
+  MaterialName string `json:"material_name"`
+  ImageUrl string `json:"image_url"`
+  Link string `json:"link"`
+}

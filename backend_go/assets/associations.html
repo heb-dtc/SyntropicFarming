@@ -9,10 +9,10 @@
   <h1>Species-Material Association</h1>
 
   <form id="createAssociationForm">
-    <select id="speciesSelect" name="material">
+    <select id="speciesSelect" name="species">
       <option>Choose a species</option>
     </select>
-    <select id="materialSelect" name="species">
+    <select id="materialSelect" name="material">
       <option>Choose a material</option>
     </select>
     <br/>
@@ -75,15 +75,7 @@
           referrer: "no-referrer",
           body: formData
         })
-        .then(response => console.log(response));
-    }
-
-    function bla(imageId) {
-      species = speciesSelect.value
-      material = materialSelect.value
-      link = document.getElementById("link").value
-
-      console.log(`${species} ${material} ${link} ${imageId}`)
+        .then(response => console.log("association created"));
     }
   </script>
 
