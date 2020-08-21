@@ -21,14 +21,21 @@ type response struct {
 }
 
 func createConnection() *sql.DB {
+    host := os.Getenv("PGHOST")
     err := godotenv.Load(".env")
+    
+    // PGHOST can be overriden, so if it wasnt supplied we use the one from .env file
+    if "" == host {
+        host = os.Getenv("PGHOST")
+    }
 
     if err != nil {
         log.Fatalf("Error loading .env file")
     }
 
-    connectionString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",  os.Getenv("PGHOST"), os.Getenv("PGPORT"), os.Getenv("PGUSER"), os.Getenv("PGPASSWORD"), os.Getenv("PGDATABASE"))
-
+    connectionString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",  host, os.Getenv("PGPORT"), os.Getenv("PGUSER"), os.Getenv("PGPASSWORD"), os.Getenv("PGDATABASE"))
+    fmt.Printf("Connecting to %s", connectionString)
+    
     db, err := sql.Open("postgres", connectionString)
 
     if err != nil {

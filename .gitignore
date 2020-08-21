@@ -6,3 +6,4 @@ node_modules/
 dist/
 
 backend_go/uploads
+database/data
