@@ -175,6 +175,19 @@ func GetAllMaterials(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(users)
 }
 
+func GetAllHardiness(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+
+    users, err := getAllHardiness()
+
+    if err != nil {
+        log.Fatalf("Unable to get all hardiness. %v", err)
+    }
+
+    json.NewEncoder(w).Encode(users)
+}
+
 func GetAllSpecies(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
     w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -289,10 +302,10 @@ func insertSpecies(species models.Species) int64 {
     db := createConnection()
     defer db.Close()
   
-    sqlStatement := `INSERT into species (species) VALUES ($1) RETURNING uid`
+    sqlStatement := `INSERT into species (name, min_hardiness, max_hardiness) VALUES ($1, $2, $3) RETURNING uid`
   
     var id int64
-    err := db.QueryRow(sqlStatement, species.Name).Scan(&id)
+    err := db.QueryRow(sqlStatement, species.Name, species.MinHardiness, species.MaxHardiness).Scan(&id)
   
     if err != nil {
       log.Fatalf("Unable to execute the query, %v", err)
@@ -306,7 +319,7 @@ func insertMaterial(material models.Material) int64 {
   db := createConnection()
   defer db.Close()
 
-  sqlStatement := `INSERT into materials (material) VALUES ($1) RETURNING uid`
+  sqlStatement := `INSERT into materials (name) VALUES ($1) RETURNING uid`
 
   var id int64
   err := db.QueryRow(sqlStatement, material.Name).Scan(&id)
@@ -377,6 +390,35 @@ func getAllMaterials() ([]models.Material, error) {
     return materials, err
 }
 
+func getAllHardiness() ([]models.Hardiness, error) {
+    db := createConnection()
+    defer db.Close()
+
+    var hardinessList []models.Hardiness
+
+    sqlStatement := `SELECT * FROM hardiness`
+    rows, err := db.Query(sqlStatement)
+
+    if err != nil {
+        log.Fatalf("Unable to execute the query. %v", err)
+    }
+
+    defer rows.Close()
+
+    for rows.Next() {
+        var hardiness models.Hardiness
+        err = rows.Scan(&hardiness.ID, &hardiness.Value)
+
+        if err != nil {
+            log.Fatalf("Unable to scan the row. %v", err)
+        }
+
+        hardinessList = append(hardinessList, hardiness)
+    }
+
+    return hardinessList, err
+}
+
 func getAllSpecies() ([]models.Species, error) {
     db := createConnection()
     defer db.Close()
@@ -394,7 +436,7 @@ func getAllSpecies() ([]models.Species, error) {
 
     for rows.Next() {
         var species models.Species
-        err = rows.Scan(&species.ID, &species.Name)
+        err = rows.Scan(&species.ID, &species.Name, &species.MinHardiness, &species.MaxHardiness)
 
         if err != nil {
             log.Fatalf("Unable to scan the row. %v", err)

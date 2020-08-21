@@ -10,14 +10,23 @@
 
   <form id="addSpeciesForm">
     <input type="text" name="name" id="speciesName" />
+    <select id="minHardinessSelect" name="minHardiness">
+      <option>Choose a min hardiness</option>
+    </select>
+    <select id="maxHardinessSelect" name="maxHardiness">
+      <option>Choose a max hardiness</option>
+    </select>
     <input type="submit" value="add" />
   </form>
   <br/>
 
+  <h1>Existing Species</h1>
   <table>
     <thead>
       <tr>
-        <th>Existing Species</th>
+        <th colspan="1">Name</th>
+        <th colspan="1">MinHardiness</th>
+        <th colspan="1">MaxHardiness</th>
       </tr>
     </thead>
     <tbody>
@@ -28,9 +37,12 @@
   <script>
     document.getElementById('addSpeciesForm').addEventListener('submit', addSpecies);
 
+    minHardinessSelect = document.getElementById("minHardinessSelect")
+    maxHardinessSelect = document.getElementById("maxHardinessSelect")
     speciesTable = document.querySelector("table")
 
     getSpecies()
+    getHardiness()
 
     function getSpecies() {
       fetch("/api/species")
@@ -38,32 +50,62 @@
         .then(speciesList => {
           speciesList.forEach(species => {
             row = document.createElement("tr")
-            speciesEntry = document.createElement("td")
-            speciesEntry.innerHTML = species.name
-            row.appendChild(speciesEntry)
+            nameEntry = document.createElement("td")
+            minHardinessEntry = document.createElement("td")
+            maxHardinessEntry = document.createElement("td")
+            
+            nameEntry.innerHTML = species.name
+            minHardinessEntry.innerHTML = species.min_hardiness
+            maxHardinessEntry.innerHTML = species.max_hardiness
+            
+            row.appendChild(nameEntry)
+            row.appendChild(minHardinessEntry)
+            row.appendChild(maxHardinessEntry)
+
             speciesTable.appendChild(row)
           });
         })
     }
 
-      function addSpecies(event) {
-        event.preventDefault();
-        let name = document.getElementById('speciesName').value;
+    function getHardiness() {
+      fetch("/api/hardiness")
+        .then(response => response.json())
+        .then(hardinessList => {
+          hardinessList.forEach(hardiness => {
+            var minEl = document.createElement("option");
+            var maxEl = document.createElement("option");
+            
+            minEl.textContent = hardiness.value;
+            minEl.value = hardiness.id;
+            maxEl.textContent = hardiness.value;
+            maxEl.value = hardiness.id;
 
-        fetch("/api/species/new", {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache", 
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          redirect: "follow",
-          referrer: "no-referrer",
-          body: JSON.stringify({name: name})
+            minHardinessSelect.appendChild(minEl);
+            maxHardinessSelect.appendChild(maxEl);
+          });
         })
-        .then(response => location.reload());
-      }
+    }
+
+    function addSpecies(event) {
+      event.preventDefault();
+      let name = document.getElementById('speciesName').value;
+      minHardiness = parseInt(minHardinessSelect.value)
+      maxHardiness = parseInt(maxHardinessSelect.value)
+
+      fetch("/api/species/new", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache", 
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        redirect: "follow",
+        referrer: "no-referrer",
+        body: JSON.stringify({name: name, min_hardiness: minHardiness, max_hardiness: maxHardiness})
+      })
+      .then(response => location.reload());
+    }
   </script>
 
 </body>
