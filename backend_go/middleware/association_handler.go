@@ -63,7 +63,7 @@ func AddAssociation(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllAssociations(w http.ResponseWriter, r *http.Request) {
-	log.Printf("GetAllAssociations")
+  log.Printf("GetAllAssociations")
 
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -133,6 +133,8 @@ func getAllAssociations() ([]models.AssociationDetails, error) {
 		var association models.AssociationDetails
 		err = rows.Scan(&association.ID, &association.SpeciesName, &association.MaterialName, &association.ImageUrl, &association.Link)
 
+    imageUrl := "/uploads/" + association.ImageUrl
+    association.ImageUrl = imageUrl
 		if err != nil {
 			log.Fatalf("Unable to scan the row. %v", err)
 		}
