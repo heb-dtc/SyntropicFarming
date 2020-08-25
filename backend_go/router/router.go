@@ -2,8 +2,8 @@ package router
 
 import (
 	"backend/middleware"
-	"github.com/gorilla/mux"
 	"net/http"
+	"github.com/gorilla/mux"
 )
 
 func Router() *mux.Router {
@@ -25,6 +25,12 @@ func Router() *mux.Router {
 	staticFileDirectory := http.Dir("./assets/")
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
 	router.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
+
+  router.HandleFunc("/gallery", middleware.RenderGallery).Methods("GET")
+  router.HandleFunc("/species", middleware.RenderAddSpecies).Methods("GET")
+  router.HandleFunc("/materials", middleware.RenderAddMaterial).Methods("GET")
+  router.HandleFunc("/associations", middleware.RenderAddAssociation).Methods("GET")
+  router.HandleFunc("/", middleware.RenderHome).Methods("GET")
 
 	imageFileDirectory := http.Dir("./uploads/")
 	imageFileHandler := http.StripPrefix("/uploads/", http.FileServer(imageFileDirectory))

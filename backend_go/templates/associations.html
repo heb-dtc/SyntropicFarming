@@ -1,0 +1,49 @@
+{{define "page"}}Association{{end}}
+{{define "title"}}Add Association{{end}}
+
+{{define "body"}}
+<form id="createAssociationForm">
+  <select id="speciesSelect" name="species">
+    <option>Choose a species</option>
+    {{range .Species}}
+    <option value={{.ID}}>{{.Name}}</option>
+    {{end}}
+  </select>
+  <select id="materialSelect" name="material">
+    <option>Choose a material</option>
+    {{range .Materials}}
+    <option value={{.ID}}>{{.Name}}</option>
+    {{end}}
+  </select>
+  <br/>
+  <br/>
+  image: <input type="file" name="image" />
+  <br/>
+  <br/>
+  link: <input type="text" name="link" id="link"/>
+  <br/>
+  <br/>
+  <input type="submit" value="create" />
+</form>
+
+<script>
+document.getElementById('createAssociationForm').addEventListener('submit', createAssociation)
+
+function createAssociation(event) {
+  event.preventDefault();
+  form = document.getElementById('createAssociationForm')
+  const formData = new FormData(form);
+
+  fetch("/api/associations/create", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: formData
+  })
+    .then(response => console.log("association created"));
+}
+</script>
+{{end}}

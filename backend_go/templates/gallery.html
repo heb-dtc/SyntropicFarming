@@ -1,0 +1,12 @@
+{{ define "page" }}Gallery{{end}}
+{{ define "title" }}Material Gallery{{end}}
+
+{{define "body"}}
+<div class="grid-container" id="image_grid">
+  {{range .}}
+  <div class="grid-item">
+    <img src="http://localhost:3001/uploads/{{.ImageUrl}}" />
+  </div>
+  {{end}}
+</div>
+{{end}}

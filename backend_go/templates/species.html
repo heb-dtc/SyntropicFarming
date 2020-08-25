@@ -1,0 +1,69 @@
+{{define "page"}}Species{{end}}
+{{define "title"}}Add Species{{end}}
+
+{{define "body"}}
+
+<form id="addSpeciesForm">
+  <input type="text" name="name" id="speciesName" />
+  <select id="minHardinessSelect" name="minHardiness">
+    <option>Choose a min hardiness</option>
+    {{range .HardinessList}}
+    <option value={{.ID}}>{{.Value}}</option>
+    {{end}}
+  </select>
+  <select id="maxHardinessSelect" name="maxHardiness">
+    <option>Choose a max hardiness</option>
+    {{range .HardinessList}}
+    <option value={{.ID}}>{{.Value}}</option>
+    {{end}}
+  </select>
+  <input type="submit" value="add" />
+</form>
+<br/>
+
+<h1>Existing Species</h1>
+<table>
+  <thead>
+    <tr>
+      <th colspan="1">Name</th>
+      <th colspan="1">MinHardiness</th>
+      <th colspan="1">MaxHardiness</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{range .Species}}
+    <tr>
+      <td>{{.Name}}</td>
+      <td>{{.MinHardiness}}</td>
+      <td>{{.MaxHardiness}}</td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+<br/>
+
+<script>
+document.getElementById('addSpeciesForm').addEventListener('submit', addSpecies);
+
+function addSpecies(event) {
+  event.preventDefault();
+  let name = document.getElementById('speciesName').value;
+  minHardiness = parseInt(minHardinessSelect.value)
+  maxHardiness = parseInt(maxHardinessSelect.value)
+
+  fetch("/api/species/new", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: JSON.stringify({name: name, min_hardiness: minHardiness, max_hardiness: maxHardiness})
+  })
+    .then(response => location.reload());
+}
+</script>
+{{end}}

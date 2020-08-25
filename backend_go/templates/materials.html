@@ -1,0 +1,45 @@
+{{define "page"}}Material{{end}}
+{{define "title"}}Add Material{{end}}
+
+{{define "body"}}
+<form id="addMaterialsForm">
+  <input type="text" name="name" id="materialName" />
+  <input type="submit" value="add" />
+</form>
+<br/>
+
+<table>
+  <tr>
+    <th>Existing Materials</th>
+  </tr>
+  {{range .}}
+  <tr>
+    <td>{{.Name}}</td>
+  </td>
+  {{end}}
+</table>
+<br/>
+
+<script>
+document.getElementById('addMaterialsForm').addEventListener('submit', addMaterial);
+
+function addMaterial(event) {
+  event.preventDefault();
+  let name = document.getElementById('materialName').value;
+
+  fetch("/api/materials/new", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: JSON.stringify({name: name})
+  })
+    .then(response => location.reload());
+}
+</script>
+{{end}}
