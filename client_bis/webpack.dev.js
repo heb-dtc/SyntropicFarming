@@ -1,5 +1,5 @@
-const webpack = require('webpack');
-const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   mode: 'development',
@@ -14,4 +14,4 @@ module.exports = {
     contentBase: './dist',
     hot: true,
   },
-};
+}

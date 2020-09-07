@@ -21,6 +21,7 @@ nav, ul {
   background-color: #65ED5A;
   padding: 30px 0px 30px 0px;
   list-style: none;
+  list-style-type: "/";
   border: 1px solid #707070;
 }
 

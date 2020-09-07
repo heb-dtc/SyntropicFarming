@@ -1,4 +1,4 @@
-const Dotenv = require('dotenv-webpack');
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   mode: 'production',
@@ -11,4 +11,4 @@ module.exports = {
   devServer: {
     contentBase: './dist',
   },
-};
+}
