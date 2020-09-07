@@ -4,8 +4,8 @@ import styles from './style.css'
 
 const NavigationBar = () => (
   <div className={styles.header}>
-    <ul>
-      <li>
+    <ul className={styles.navigationBar}>
+      <li className={styles.navigationBarTitle}>
         <NavLink activeClassName={styles.selectedNav} exact to="/">
           SYNTROPIC MATERIALS
         </NavLink>

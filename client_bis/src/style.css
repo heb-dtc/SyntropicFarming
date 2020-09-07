@@ -5,13 +5,23 @@ body, html {
 }
 
 .header {
-  font-size: 30px;
+  font-size: 16px;
   font-weight: bold;
   color: #FFFFFF;
 }
 
 .selectedNav {
   color: #761DF0;
+}
+
+.navigationBar {
+  background-color: #65ED5A;
+  padding: 30px 0px 30px 0px;
+  border: 1px solid #707070;
+}
+
+.navigationBarTitle {
+  list-style: none;
 }
 
 li > a {
@@ -21,13 +31,8 @@ li > a {
 
 nav, ul {
   display: flex;
-  flex: 3;
   margin: 0;
-  background-color: #65ED5A;
-  padding: 30px 0px 30px 0px;
-  list-style: none;
   list-style-type: "/";
-  border: 1px solid #707070;
 }
 
 nav, li {
@@ -41,10 +46,70 @@ nav, li {
   margin-top: 100px;
   margin-right: 100px;
   margin-left: 100px;
-  font-size: 25px;
+  font-size: 16px;
 }
 
 .column {
   margin-right: 16px;
   margin-left: 16px;
+}
+
+.explorerNavigationBar {
+  margin-top: 40px;
+  margin-left: 200px;
+}
+
+.explorerContainer {
+  display: flex;
+  flex-flow: row wrap;
+  height: 100%;
+  margin-top: 40px;
+  margin-right: 250px;
+  margin-left: 250px;
+  font-size: 25px;
+}
+
+.wrapper > * {
+  flex: 1 100%;
+}
+
+.explorerLeftMenu {
+  padding: 0px 30px;
+  order: 1;
+  #background-color: #65ED5A;
+}
+
+.explorerRightMenu {
+  padding: 0px 30px;
+  order: 3;
+  #background-color: #65ED5A;
+}
+
+main {
+  order: 2;
+  flex: 2;
+  #background-color: #29aD1A;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+.materialGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr ;
+  align-content: start;
+}
+
+.gridItem {
+  width: 250px;
+}
+
+img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.explorerMenuText {
+  text-align: center;
 }
