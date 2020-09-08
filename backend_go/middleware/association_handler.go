@@ -4,6 +4,7 @@ import (
 	"backend/models"
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"io/ioutil"
 	"log"
@@ -68,15 +69,72 @@ func GetAllAssociations(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	users, err := getAllAssociations()
+	associations, err := getAllAssociations()
 
 	if err != nil {
 		log.Fatalf("Unable to get all associations. %v", err)
 	}
 
-	json.NewEncoder(w).Encode(users)
+	json.NewEncoder(w).Encode(associations)
 }
 
+func FilterAssociations(w http.ResponseWriter, r *http.Request) {
+  log.Printf("GetAllAssociations")
+
+	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	params := mux.Vars(r)
+	hardiness, err := strconv.Atoi(params["hardiness"])
+	if err != nil {
+		log.Fatalf("Unable to convert the string into int.  %v", err)
+	}
+
+	associations, err := filterAssociations(int64(hardiness))
+
+	if err != nil {
+		log.Fatalf("Unable to get all associations. %v", err)
+	}
+
+	json.NewEncoder(w).Encode(associations)
+}
+
+func filterAssociations(hardiness int64) ([]models.AssociationDetails, error) {
+	db := createConnection()
+	defer db.Close()
+
+	var associations []models.AssociationDetails
+
+	sqlStatement := `select species_materials.uid, species."name", materials."name", images."name", link from species_materials 
+    inner join species on species_materials.species_id=species.uid
+    inner join materials on species_materials.material_id=materials.uid
+    inner join images on species_materials.image_id=images.uid
+    where species.min_hardiness = $1 or species.max_hardiness = $1
+    or species.min_hardiness < $1 and species.max_hardiness > $1`
+
+	rows, err := db.Query(sqlStatement, hardiness)
+
+	if err != nil {
+		log.Fatalf("Unable to execute the query. %v", err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var association models.AssociationDetails
+		err = rows.Scan(&association.ID, &association.SpeciesName, &association.MaterialName, &association.ImageUrl, &association.Link)
+
+    imageUrl := "/uploads/" + association.ImageUrl
+    association.ImageUrl = imageUrl
+		if err != nil {
+			log.Fatalf("Unable to scan the row. %v", err)
+		}
+
+		associations = append(associations, association)
+	}
+
+	return associations, err
+}
 func insertAssociation(speciesId int64, materialId int64, link string, imageId int64) int64 {
 	db := createConnection()
 	defer db.Close()
