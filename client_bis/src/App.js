@@ -2,13 +2,14 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import NavigationBar from '@/NavigationBar'
 import LandingPage from '@/LandingPage'
+import Library from '@/Library'
 
 const App = () => (
   <Router>
     <NavigationBar />
     <Switch>
       <Route path="/database">
-        <div>database</div>
+        <LandingPage />
       </Route>
       <Route path="/polycultures">
         <div>polyculture</div>
@@ -17,7 +18,7 @@ const App = () => (
         <div>program</div>
       </Route>
       <Route path="/">
-        <LandingPage />
+        <Library />
       </Route>
     </Switch>
   </Router>

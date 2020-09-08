@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './style.css'
 
-const DatabaseExplorer = () => (
+const DatabaseExplorer = ({hardiness}) => (
   <div>
     <ul className={styles.explorerNavigationBar}>
       <li className={styles.navigationBarTitle}>Hardiness zone</li>
-      <li>All</li>
+      <li>{hardiness}</li>
     </ul>
     <div className={styles.explorerContainer}>
       <aside className={styles.explorerLeftMenu}>

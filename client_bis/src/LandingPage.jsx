@@ -2,8 +2,8 @@ import React from 'react'
 import styles from './style.css'
 
 const LandingPage = () => (
-  <div className={styles.container}>
-    <div className={styles.column}>
+  <div className={styles.landingContainer}>
+    <div className={styles.landingColumn}>
       <p>Why?</p>
       <p>
         In response to looming “climate catastrophe”, designers have increasingly sought out sustainable alternatives to
