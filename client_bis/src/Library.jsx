@@ -4,9 +4,9 @@ import DatabaseExplorer from '@/DatabaseExplorer'
 import LibrarySlider from '@/LibrarySlider'
 
 const Library = (props) => {
-  const [introPlayed, setIntroPlayed] = useState(false)
+  const [introPlayed, setIntroPlayed] = useState(true)
   const [hardinessValues, setValues] = useState(null)
-  const [hardiness, setHardiness] = useState(-1)
+  const [hardiness, setHardiness] = useState(3)
 
   const baseUrl = 'https://syntropic-api.hebus.net/api'
 

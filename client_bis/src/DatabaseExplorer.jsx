@@ -22,6 +22,9 @@ const DatabaseExplorer = ({ hardiness }) => {
   const [associations, setAssociations] = useState({})
   const [materials, setMaterials] = useState([])
 
+  const [selectedSpecies, setSelectedSpecies] = useState([])
+  const [selectedMaterials, setSelectedMaterials] = useState([])
+
   useEffect(() => {
     const fetchValues = async () => {
       let url
@@ -30,14 +33,16 @@ const DatabaseExplorer = ({ hardiness }) => {
       } else {
         url = `${baseUrl}/associations`
       }
-      
+
       const response = await axios(url)
       const associations = response.data
 
       if (associations != null) {
-        //group associations by species
-        const groupedAssociations = groupBy(associations, 'species_name')
-        setAssociations(groupedAssociations)
+        // build an array of all species
+        const species = associations.reduce(
+          (unique, item) => (unique.includes(item.species_name) ? unique : [...unique, item.species_name]),
+          []
+        )
 
         // build an array of all materials
         const materials = associations.reduce(
@@ -45,6 +50,13 @@ const DatabaseExplorer = ({ hardiness }) => {
           []
         )
         setMaterials(materials)
+
+        //group associations by species
+        const groupedAssociations = groupBy(associations, 'species_name')
+        setAssociations(groupedAssociations)
+
+        setSelectedSpecies(species)
+        setSelectedMaterials(materials)
       }
     }
     fetchValues()
@@ -68,19 +80,25 @@ const DatabaseExplorer = ({ hardiness }) => {
 
         <main>
           {Object.entries(associations).map(([key, value]) => {
-            return (
-              <div>
-                <div className={styles.gridTitle}>{key}</div>
-                <div className={styles.materialGrid}>
-                  {value.map(item => (
-                    <div className={styles.gridItem}>
-                      <img src={item.imageUrl} />
-                      <div>{item.material}</div>
+            if (selectedSpecies.includes(key)) {
+              return (
+                <div>
+                  <div className={styles.gridTitle}>{key}</div>
+                  <div className={styles.materialGrid}>
+                    {value.map(item => {
+                      if (selectedMaterials.includes(item.material)) {
+                        return (
+                          <div className={styles.gridItem}>
+                            <img src={item.imageUrl} />
+                            <div>{item.material}</div>
+                          </div>
+                        )
+                      }
+                    })}
                   </div>
-                  ))}
                 </div>
-              </div>
-            )
+              )
+            }
           })}
         </main>
 
