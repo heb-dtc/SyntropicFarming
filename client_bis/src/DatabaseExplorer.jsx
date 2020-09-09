@@ -12,13 +12,54 @@ const filterSpecies = async hardiness => {
   return species
 }
 
+const groupBy = (array, property) => {
+  return array.reduce((accumulator, item) => {
+    let key = item[property]
+    if (!accumulator[key]) {
+      accumulator[key] = []
+    }
+    accumulator[key].push({
+      material: item.material_name,
+      image: item.image_url,
+    })
+    return accumulator
+  }, {})
+}
+
+const groupByMap = (array, property) => {
+  return array.reduce((accumulator, item) => {
+    let key = item[property]
+    if (!accumulator.has(key)) {
+      accumulator.set(key, [])
+    }
+    accumulator.get(key).push({
+      material: item.material_name,
+      image: item.image_url,
+    })
+    return accumulator
+  }, new Map())
+}
+
 const DatabaseExplorer = ({ hardiness }) => {
-  const [associations, setAssociations] = useState([])
+  const [associations, setAssociations] = useState({})
+  const [materials, setMaterials] = useState([])
 
   useEffect(() => {
     const fetchValues = async () => {
       const response = await axios(`${baseUrl}/associations/filter/${hardiness}`)
-      setAssociations(response.data)
+      const associations = response.data
+      if (associations != null) {
+        //group associations by species
+        const groupedAssociations = groupBy(associations, 'species_name')
+        setAssociations(groupedAssociations)
+
+        // build an array of all materials
+        const materials = associations.reduce(
+          (unique, item) => (unique.includes(item.material_name) ? unique : [...unique, item.material_name]),
+          []
+        )
+        setMaterials(materials)
+      }
     }
     fetchValues()
   }, [hardiness])
@@ -32,25 +73,32 @@ const DatabaseExplorer = ({ hardiness }) => {
       <div className={styles.explorerContainer}>
         <aside className={styles.explorerLeftMenu}>
           <div>SPECIES</div>
-          {associations.map(association => (
-            <div className={styles.explorerMenuText}>{association.species_name}</div>
+          {Object.keys(associations).map((item, i) => (
+            <div key={i} className={styles.explorerMenuText}>
+              {item}
+            </div>
           ))}
         </aside>
 
         <main>
-          <div> abaca </div>
-          <div className={styles.materialGrid}>
-            <img src="https://syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
-            <img src="https://Syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
-            <img src="https://syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
-            <img src="https://syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
-          </div>
+          {Object.entries(associations).map(([key, value]) => {
+            return (
+              <div>
+                <div>{key}</div>
+                <div className={styles.materialGrid}>
+                  {value.map(item => (
+                    <img src={`https://syntropic-api.hebus.net/${item.image}`} />
+                  ))}
+                </div>
+              </div>
+            )
+          })}
         </main>
 
         <aside className={styles.explorerRightMenu}>
           <div>MATERIALS</div>
-          {associations.map(association => (
-            <div className={styles.explorerMenuText}>{association.material_name}</div>
+          {materials.map(material => (
+            <div className={styles.explorerMenuText}>{material}</div>
           ))}
         </aside>
       </div>
