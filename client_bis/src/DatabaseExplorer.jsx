@@ -4,14 +4,6 @@ import styles from './style.css'
 
 const baseUrl = 'https://syntropic-api.hebus.net/api'
 
-const filterSpecies = async hardiness => {
-  const response = await axios(`${baseUrl}/species`)
-  const species = response.data.filter(
-    species => species.min_hardiness >= hardiness && species.max_hardiness <= hardiness
-  )
-  return species
-}
-
 const groupBy = (array, property) => {
   return array.reduce((accumulator, item) => {
     let key = item[property]
@@ -20,7 +12,7 @@ const groupBy = (array, property) => {
     }
     accumulator[key].push({
       material: item.material_name,
-      image: item.image_url,
+      imageUrl: `https://syntropic-api.hebus.net/${item.image_url}`,
     })
     return accumulator
   }, {})
@@ -32,8 +24,16 @@ const DatabaseExplorer = ({ hardiness }) => {
 
   useEffect(() => {
     const fetchValues = async () => {
-      const response = await axios(`${baseUrl}/associations/filter/${hardiness}`)
+      let url
+      if (hardiness !== -1) {
+        url = `${baseUrl}/associations/filter/${hardiness}`
+      } else {
+        url = `${baseUrl}/associations`
+      }
+      
+      const response = await axios(url)
       const associations = response.data
+
       if (associations != null) {
         //group associations by species
         const groupedAssociations = groupBy(associations, 'species_name')
@@ -74,7 +74,7 @@ const DatabaseExplorer = ({ hardiness }) => {
                 <div className={styles.materialGrid}>
                   {value.map(item => (
                     <div className={styles.gridItem}>
-                      <img src={`https://syntropic-api.hebus.net/${item.image}`} />
+                      <img src={item.imageUrl} />
                       <div>{item.material}</div>
                   </div>
                   ))}
