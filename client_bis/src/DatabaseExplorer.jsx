@@ -40,18 +40,10 @@ const DatabaseExplorer = ({ hardiness }) => {
         <main>
           <div> abaca </div>
           <div className={styles.materialGrid}>
-            <div className={styles.gridItem}>
-              <img src="https://syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
-            </div>
-            <div className={styles.gridItem}>
-              <img src="https://Syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
-            </div>
-            <div className={styles.gridItem}>
-              <img src="https://syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
-            </div>
-            <div className={styles.gridItem}>
-              <img src="https://syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
-            </div>
+            <img src="https://syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
+            <img src="https://Syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
+            <img src="https://syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
+            <img src="https://syntropic-api.hebus.net/uploads/Abaca-paper.jpg" />
           </div>
         </main>
 
