@@ -75,8 +75,8 @@ nav, li {
 
 .explorer {
   flex: 1;
-  margin-right: 250px;
-  margin-left: 250px;
+  margin-right: 50px;
+  margin-left: 50px;
 }
 
 .explorerContainer {
@@ -87,15 +87,13 @@ nav, li {
 }
 
 .explorerLeftMenu {
-  padding: 0px 30px;
+  padding: 0px 60px;
   order: 1;
-  #background-color: #65ED5A;
 }
 
 .explorerRightMenu {
-  padding: 0px 30px;
+  padding: 0px 60px;
   order: 3;
-  #background-color: #65ED5A;
 }
 
 main {
@@ -103,13 +101,25 @@ main {
   flex: 2;
   border-left: 1px solid;
   border-right: 1px solid;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+.gridTitle {
+  font-size: 30px;
+  text-transform: lowercase;
 }
 
 .materialGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 200px)) ;
+  grid-gap: 15px;
+  margin-bottom: 40px;
+}
+
+.gridItem {
+  font-size: 18px;
+  text-transform: lowercase;
 }
 
 img {
@@ -118,8 +128,17 @@ img {
   object-fit: cover;
 }
 
+.explorerMenuTitle {
+  text-align: center;
+  font-size: 30px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
 .explorerMenuText {
   text-align: center;
+  font-size: 30px;
+  text-transform: lowercase;
 }
 
 .introContainer {
