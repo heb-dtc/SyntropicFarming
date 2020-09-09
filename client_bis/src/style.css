@@ -1,7 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
 body, html {
-  height: 100%;
   padding: 0;
   margin: 0;
+  min-height: 100vh;
+}
+
+:global(#app) {
+  height: 100%;
+}
+
+.page {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
 }
 
 .header {
@@ -40,37 +54,36 @@ nav, li {
   margin-right: 30px;
 }
 
-.landingContainer {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  margin-top: 100px;
-  margin-right: 100px;
-  margin-left: 100px;
-  font-size: 16px;
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  margin-right: 250px;
+  margin-left: 250px;
+  flex: 1;
 }
 
-.landingColumn {
+.column {
   margin-right: 16px;
   margin-left: 16px;
 }
 
 .explorerNavigationBar {
   margin-top: 40px;
-  margin-left: 200px;
+}
+
+.explorer {
+  flex: 1;
+  margin-right: 250px;
+  margin-left: 250px;
 }
 
 .explorerContainer {
   display: flex;
-  flex-flow: row wrap;
-  height: 100%;
-  margin-top: 40px;
-  margin-right: 250px;
-  margin-left: 250px;
+  flex-flow: row;
   font-size: 25px;
-}
-
-.wrapper > * {
-  flex: 1 100%;
+  margin-top: 40px;
 }
 
 .explorerLeftMenu {
@@ -91,8 +104,8 @@ main {
   #background-color: #29aD1A;
   border-left: 1px solid;
   border-right: 1px solid;
-  padding-left: 80px;
-  padding-right: 80px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .materialGrid {
@@ -117,8 +130,7 @@ img {
 .introContainer {
   display: flex;
   flex-flow: row;
-  height: 100%;
-  margin: 200px;
+  flex: 1;
   font-size: 25px;
   justify-content: center;
   align-items: center;
