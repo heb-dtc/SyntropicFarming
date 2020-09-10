@@ -140,12 +140,11 @@ img {
   text-align: center;
   font-size: 30px;
   text-transform: lowercase;
-  background-color: #F8D7D7;
   padding: 0px 2px;
   margin: 4px 0px;
 }
 
-.explorerMenuText.selected {
+.selected {
   background-color: #F8D7D7;
 }
 
