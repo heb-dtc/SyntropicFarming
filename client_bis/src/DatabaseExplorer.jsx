@@ -26,7 +26,7 @@ const toggleSelected = (list, itemIndex) => {
   return newList
 }
 
-const DatabaseExplorer = ({ hardiness }) => {
+const DatabaseExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
   const [assoAndStatus, setAssoAndStatus] = useState({})
 
   const [materials, setMaterials] = useState([])
@@ -87,7 +87,16 @@ const DatabaseExplorer = ({ hardiness }) => {
     <div className={styles.explorer}>
       <ul className={styles.explorerNavigationBar}>
         <li className={styles.navigationBarTitle}>Hardiness zone</li>
-        <li>{hardiness === -1 ? 'All' : `${hardiness}`}</li>
+        <li>
+          <select className={styles.select} value={hardiness} onChange={e => onChangeHardiness(e.target.value)}>
+            <option value="-1" >All</option>
+            {hardinessValues.map(hardiness => (
+              <option key={hardiness.id} value={hardiness.value}>
+                {hardiness.value}
+              </option>
+            ))}
+          </select>
+        </li>
       </ul>
       <div className={styles.explorerContainer}>
         <aside className={styles.explorerLeftMenu}>

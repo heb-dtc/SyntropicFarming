@@ -19,7 +19,8 @@ const Library = (props) => {
   }, [props])
 
   if (introPlayed) {
-    return <DatabaseExplorer hardiness={hardiness} />
+    return <DatabaseExplorer hardinessValues={hardinessValues} hardiness={hardiness} onChangeHardiness={
+      (value) => setHardiness(value)}/>
   } else {
     return <LibrarySlider hardinessValues={hardinessValues} onComplete={(hardiness) => {
       setHardiness(hardiness)

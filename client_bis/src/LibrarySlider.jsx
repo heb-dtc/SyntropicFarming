@@ -36,7 +36,7 @@ const SlideFour = ({ hardinessValues, onChoose }) => (
     <p>select the hardiness zone of your interest and begin to explore the library</p>
     <p>
       Hardiness Zone /
-      <select onChange={e => onChoose(e.target.value)}>
+      <select className={styles.select} onChange={e => onChoose(e.target.value)}>
         <option value="-1">All</option>
         {hardinessValues.map(hardiness => (
           <option key={hardiness.id} value={hardiness.value}>

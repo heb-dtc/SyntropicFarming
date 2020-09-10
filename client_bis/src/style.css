@@ -178,3 +178,11 @@ img {
   text-transform: uppercase;
   padding: 90px;
 }
+
+.select {
+  appearance: none;
+  border: 0;
+  background: white;
+  font-size: 20px;
+  text-decoration-line: underline;
+}
