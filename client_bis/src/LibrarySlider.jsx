@@ -26,8 +26,7 @@ const SlideThree = () => (
   <div>
     <p>your exploration will begin by selecting a climatic zone of interest </p>
     <p>
-      every time you will want to restart your research just press CLEAR RESEARCH and you’ll come back to this dialogue
-      menu.
+      this database use the hardiness zone classification system. To know more about this classification and to find your hardiness number please visit <a href="https://www.plantmaps.com/index.php" target="_blank"> https://www.plantmaps.com</a>
     </p>
   </div>
 )

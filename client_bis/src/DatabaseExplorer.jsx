@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import {
   groupBySpecies,
@@ -10,20 +11,6 @@ import {
 import styles from './style.css'
 
 const baseUrl = 'https://syntropic-api.hebus.net/api'
-
-const groupBy = (array, property) => {
-  return array.reduce((accumulator, item) => {
-    let key = item[property]
-    if (!accumulator[key]) {
-      accumulator[key] = []
-    }
-    accumulator[key].push({
-      material: item.material_name,
-      imageUrl: `https://syntropic-api.hebus.net/${item.image_url}`,
-    })
-    return accumulator
-  }, {})
-}
 
 const toggleSelected = (list, itemIndex) => {
   const newList = list.map((item, index) => {
@@ -138,7 +125,9 @@ const DatabaseExplorer = ({ hardiness }) => {
                   {value.map((item, index) => {
                     return (
                       <div key={index} className={styles.gridItem}>
-                        <img src={item.imageUrl} />
+                        <a href={item.link} target="_blank">
+                          <img src={item.imageUrl} />
+                        </a>
                         <div>{item.material}</div>
                       </div>
                     )
