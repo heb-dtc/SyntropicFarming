@@ -17,6 +17,7 @@ export const groupBySpecies = array => {
       accumulator[key].push({
         material: association.material_name,
         imageUrl: `https://syntropic-api.hebus.net/${association.image_url}`,
+        link: association.link
       })
     }
     return accumulator

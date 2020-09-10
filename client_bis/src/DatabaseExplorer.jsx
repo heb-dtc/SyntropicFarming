@@ -87,7 +87,7 @@ const DatabaseExplorer = ({ hardiness }) => {
     <div className={styles.explorer}>
       <ul className={styles.explorerNavigationBar}>
         <li className={styles.navigationBarTitle}>Hardiness zone</li>
-        <li>{hardiness}</li>
+        <li>{hardiness === -1 ? 'All' : `${hardiness}`}</li>
       </ul>
       <div className={styles.explorerContainer}>
         <aside className={styles.explorerLeftMenu}>

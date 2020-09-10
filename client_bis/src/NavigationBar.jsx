@@ -10,7 +10,7 @@ const NavigationBar = () => (
           SYNTROPIC MATERIALS
         </NavLink>
       </li>
-      <li>
+      {/*<li>
         <NavLink activeClassName={styles.selectedNav} to="/database">
           DATABASE
         </NavLink>
@@ -25,6 +25,7 @@ const NavigationBar = () => (
           PROGRAM
         </NavLink>
       </li>
+      */}
     </ul>
   </div>
 )
