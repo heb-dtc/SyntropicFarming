@@ -7,7 +7,8 @@ body, html {
   font-size: 25px;
   padding: 0;
   margin: 0;
-  min-height: 100vh;
+  height: 100%;
+  overflow: hidden;
 }
 
 :global(#app) {
@@ -17,7 +18,7 @@ body, html {
 .page {
   display: flex;
   flex-flow: column;
-  min-height: 100vh;
+  height: 100%;
 }
 
 .header {
@@ -75,15 +76,20 @@ nav, li {
 }
 
 .explorer {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
   flex: 1;
-  margin-right: 50px;
-  margin-left: 50px;
+  overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .explorerContainer {
   display: flex;
+  height: 100%;
   flex-flow: row;
   font-size: 25px;
+  overflow: hidden;
 }
 
 .explorerLeftMenu {
@@ -91,6 +97,12 @@ nav, li {
   order: 1;
   display: flex;
   flex-flow: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.explorerLeftMenu::-webkit-scrollbar {
+  display: none;
 }
 
 .explorerRightMenu {
@@ -98,6 +110,12 @@ nav, li {
   order: 3;
   display: flex;
   flex-flow: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.exporerRightMenu::-webkit-scrollbar {
+  display: none;
 }
 
 main {
@@ -107,6 +125,12 @@ main {
   border-right: 1px solid;
   padding-left: 60px;
   padding-right: 60px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+main::-webkit-scrollbar {
+  display: none;
 }
 
 .gridTitle {
