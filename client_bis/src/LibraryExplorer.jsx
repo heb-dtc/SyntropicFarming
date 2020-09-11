@@ -66,6 +66,11 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
         // build array of associations to display
         const displayList = buildDisplayList(associationModels)
         updateAssociationDisplayList(displayList)
+      } else {
+        updateAssociationModels({})
+        updateSpeciesModels([])
+        updateMaterialModels([])
+        updateAssociationDisplayList({})
       }
     }
     fetchValues()
@@ -77,7 +82,7 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
         <li className={styles.navigationBarTitle}>Hardiness zone</li>
         <li>
           <select className={styles.select} value={hardiness} onChange={e => onChangeHardiness(e.target.value)}>
-            <option value="-1">All</option>
+            <option value={0}>All</option>
             {hardinessValues.map(hardiness => (
               <option key={hardiness.id} value={hardiness.value}>
                 {hardiness.value}

@@ -6,10 +6,10 @@ export const ALL_HARDINESS = -1
 
 const buildUrl = hardiness => {
   let url
-  if (hardiness === ALL_HARDINESS) {
-    url = `${API_URL}/associations`
-  } else {
+  if (hardiness != 0) {
     url = `${API_URL}/associations/filter/${hardiness}`
+  } else {
+    url = `${API_URL}/associations`
   }
   return url
 }

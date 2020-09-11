@@ -6,7 +6,7 @@ import LibrarySlider from '@/LibrarySlider'
 const Library = (props) => {
   const [introPlayed, setIntroPlayed] = useState(false)
   const [hardinessValues, setValues] = useState(null)
-  const [hardiness, setHardiness] = useState(-1)
+  const [hardiness, setHardiness] = useState(0)
 
   useEffect(() => {
     const fetchValues = async () => {

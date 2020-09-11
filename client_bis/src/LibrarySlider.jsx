@@ -37,7 +37,7 @@ const SlideFour = ({ hardinessValues, onChoose }) => (
     <p>
       Hardiness Zone /
       <select className={styles.select} onChange={e => onChoose(e.target.value)}>
-        <option value="-1">All</option>
+        <option value={0}>All</option>
         {hardinessValues.map(hardiness => (
           <option key={hardiness.id} value={hardiness.value}>
             {hardiness.value}
@@ -50,7 +50,7 @@ const SlideFour = ({ hardinessValues, onChoose }) => (
 
 const LibrarySlider = ({ hardinessValues, onComplete }) => {
   const [index, setIndex] = useState(0)
-  const [hardiness, chooseHardiness] = useState(-1)
+  const [hardiness, chooseHardiness] = useState(0)
 
   let slide
   switch (index) {
