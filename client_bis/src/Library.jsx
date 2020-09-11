@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {fetchHardinessValues} from '@/api'
-import DatabaseExplorer from '@/DatabaseExplorer'
+import LibraryExplorer from '@/LibraryExplorer'
 import LibrarySlider from '@/LibrarySlider'
 
 const Library = (props) => {
@@ -17,7 +17,7 @@ const Library = (props) => {
   }, [props])
 
   if (introPlayed) {
-    return <DatabaseExplorer hardinessValues={hardinessValues} hardiness={hardiness} onChangeHardiness={
+    return <LibraryExplorer hardinessValues={hardinessValues} hardiness={hardiness} onChangeHardiness={
       (value) => setHardiness(value)}/>
   } else {
     return <LibrarySlider hardinessValues={hardinessValues} onComplete={(hardiness) => {

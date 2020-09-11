@@ -1,6 +1,10 @@
 import { BASE_URL } from '@/api'
 
 // build the associations that can be displayed, grouped by species
+export const buildDisplayList = models => {
+  return groupBySelectedSpecies(models)
+}
+
 export const groupBySelectedSpecies = array => {
   return array.reduce((accumulator, item) => {
     const selected = item['selected']
@@ -15,34 +19,44 @@ export const groupBySelectedSpecies = array => {
       accumulator[key].push({
         material: association.material_name,
         imageUrl: `${BASE_URL}/${association.image_url}`,
-        link: association.link
+        link: association.link,
       })
     }
     return accumulator
   }, {})
 }
 
-export const toggleStatusForSpecies = (species, associations, selected) => {
-  return associations.map(item => {
-    if (item.association.species_name === species.name) {
+export const updateModelsWithItemStatus = (models, item, status) => {
+  return models.map(model => {
+    if (model.association.species_name === item.name || model.association.material_name === item.name) {
       return {
-        ...item,
-        selected: selected,
+        ...model,
+        selected: status,
       }
     }
-    return item
+    return model
   })
 }
 
-export const toggleStatusForMaterial = (material, associations, selected) => {
-  return associations.map(item => {
-    if (item.association.material_name === material.name) {
-      return {
-        ...item,
-        selected: selected,
-      }
+export const updateItemsStatusFromModels = (itemModels, associationModels) => {
+  return itemModels.map(item => {
+    let updatedItem = {
+      ...item,
+      selected: false,
     }
-    return item
+
+    associationModels.map(model => {
+      if (model.association.material_name === item.name || model.association.species_name === item.name) {
+        if (model.selected) {
+          updatedItem = {
+            ...item,
+            selected: true,
+          }
+          return
+        }
+      }
+    })
+    return updatedItem
   })
 }
 
@@ -52,7 +66,7 @@ export const updateMaterialsStatus = (materials, associations) => {
   return materials.map(material => {
     let updatedMaterial = {
       ...material,
-      selected: false
+      selected: false,
     }
     associations.map(item => {
       if (item.association.material_name === material.name) {
@@ -74,7 +88,7 @@ export const updateSpeciesStatus = (speciesList, associations) => {
   return speciesList.map(species => {
     let updatedSpecies = {
       ...species,
-      selected: false
+      selected: false,
     }
     associations.map(item => {
       if (item.association.species_name === species.name) {
@@ -87,19 +101,5 @@ export const updateSpeciesStatus = (speciesList, associations) => {
       }
     })
     return updatedSpecies
-  })
-}
-
-const hasSpecies = (associations, species) => {
-  return Object.entries(associations).some(([key, value]) => key === species.name)
-}
-
-export const updateSpeciesSelectedStatus = (speciesList, associations) => {
-  return speciesList.map(species => {
-    if (hasSpecies(associations, species)) {
-      return { ...species, selected: false }
-    } else {
-      return { ...species, selected: false }
-    }
   })
 }
