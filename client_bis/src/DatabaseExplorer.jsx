@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { ALL_HARDINESS, fetchAssociations } from '@/api'
 import {
   groupBySpecies,
   toggleStatusForSpecies,
   toggleStatusForMaterial,
   updateMaterialsStatus,
   updateSpeciesStatus,
-} from './explorer.js'
-import styles from './style.css'
-
-const baseUrl = 'https://syntropic-api.hebus.net/api'
+} from '@/explorer.js'
+import styles from '@/style.css'
 
 const toggleSelected = (list, itemIndex) => {
   const newList = list.map((item, index) => {
@@ -36,15 +34,7 @@ const DatabaseExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => 
 
   useEffect(() => {
     const fetchValues = async () => {
-      let url
-      if (hardiness !== -1) {
-        url = `${baseUrl}/associations/filter/${hardiness}`
-      } else {
-        url = `${baseUrl}/associations`
-      }
-
-      const response = await axios(url)
-      const associations = response.data
+      const associations = await fetchAssociations(hardiness)
 
       if (associations != null) {
         const assoAndStatus = associations.map(item => {
@@ -89,7 +79,7 @@ const DatabaseExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => 
         <li className={styles.navigationBarTitle}>Hardiness zone</li>
         <li>
           <select className={styles.select} value={hardiness} onChange={e => onChangeHardiness(e.target.value)}>
-            <option value="-1" >All</option>
+            <option value="-1">All</option>
             {hardinessValues.map(hardiness => (
               <option key={hardiness.id} value={hardiness.value}>
                 {hardiness.value}

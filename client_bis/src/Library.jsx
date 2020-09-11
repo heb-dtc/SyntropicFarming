@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import {fetchHardinessValues} from '@/api'
 import DatabaseExplorer from '@/DatabaseExplorer'
 import LibrarySlider from '@/LibrarySlider'
 
@@ -8,12 +8,10 @@ const Library = (props) => {
   const [hardinessValues, setValues] = useState(null)
   const [hardiness, setHardiness] = useState(-1)
 
-  const baseUrl = 'https://syntropic-api.hebus.net/api'
-
   useEffect(() => {
     const fetchValues = async () => {
-     const response = await axios(`${baseUrl}/hardiness`)
-     setValues(response.data)
+     const hardinessValues = await fetchHardinessValues()
+     setValues(hardinessValues)
     }
     fetchValues()
   }, [props])
