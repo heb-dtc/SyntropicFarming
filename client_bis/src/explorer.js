@@ -1,9 +1,7 @@
-const findSpecies = (associations, species) => {
-  const item = Object.entries(associations).find(([key, value]) => key.name === species.name)
-  return item.material
-}
+import { BASE_URL } from '@/api'
 
-export const groupBySpecies = array => {
+// build the associations that can be displayed, grouped by species
+export const groupBySelectedSpecies = array => {
   return array.reduce((accumulator, item) => {
     const selected = item['selected']
 
@@ -16,7 +14,7 @@ export const groupBySpecies = array => {
       }
       accumulator[key].push({
         material: association.material_name,
-        imageUrl: `https://syntropic-api.hebus.net/${association.image_url}`,
+        imageUrl: `${BASE_URL}/${association.image_url}`,
         link: association.link
       })
     }

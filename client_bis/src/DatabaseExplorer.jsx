@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ALL_HARDINESS, fetchAssociations } from '@/api'
 import {
-  groupBySpecies,
+  groupBySelectedSpecies,
   toggleStatusForSpecies,
   toggleStatusForMaterial,
   updateMaterialsStatus,
@@ -25,25 +25,27 @@ const toggleSelected = (list, itemIndex) => {
 }
 
 const DatabaseExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
-  const [assoAndStatus, setAssoAndStatus] = useState({})
-
+  const [associationModels, updateAssociationModels] = useState({})
   const [materials, setMaterials] = useState([])
   const [species, setSpecies] = useState([])
+  const [associationDisplayList, updateAssociationDisplayList] = useState([])
 
-  const [associationsToDisplay, setAssociationsToDisplay] = useState([])
+  const buildDisplayList = (associationModels) => {
+    return groupBySelectedSpecies(associationModels) 
+  }
 
   useEffect(() => {
     const fetchValues = async () => {
       const associations = await fetchAssociations(hardiness)
 
       if (associations != null) {
-        const assoAndStatus = associations.map(item => {
+        const associationModels = associations.map(item => {
           return {
             association: item,
             selected: true,
           }
         })
-        setAssoAndStatus(assoAndStatus)
+        updateAssociationModels(associationModels)
 
         // build an array of all species
         const species = associations.reduce(
@@ -66,8 +68,8 @@ const DatabaseExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => 
         setMaterials(materials)
 
         //group associations by species
-        const groupedAssociations = groupBySpecies(assoAndStatus)
-        setAssociationsToDisplay(groupedAssociations)
+        const displayList = buildDisplayList(associationModels)
+        updateAssociationDisplayList(displayList)
       }
     }
     fetchValues()
@@ -99,13 +101,16 @@ const DatabaseExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => 
                 onClick={() => {
                   //update species list with new selected status
                   setSpecies(toggleSelected(species, i))
+                  
                   //update associations list with selected status
-                  const updatedAssoStatus = toggleStatusForSpecies(item, assoAndStatus, !item.selected)
-                  setAssoAndStatus(updatedAssoStatus)
+                  const models = toggleStatusForSpecies(item, associationModels, !item.selected)
+                  updateAssociationModels(models)
+
                   //compute new association to display
-                  setAssociationsToDisplay(groupBySpecies(updatedAssoStatus))
+                  updateAssociationDisplayList(buildDisplayList(models))
+                  
                   //update material status
-                  const updatedMaterials = updateMaterialsStatus(materials, updatedAssoStatus)
+                  const updatedMaterials = updateMaterialsStatus(materials, models)
                   setMaterials(updatedMaterials)
                 }}
               >
@@ -116,7 +121,7 @@ const DatabaseExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => 
         </aside>
 
         <main>
-          {Object.entries(associationsToDisplay).map(([key, value], index) => {
+          {Object.entries(associationDisplayList).map(([key, value], index) => {
             return (
               <div key={index}>
                 <div className={styles.gridTitle}>{key}</div>
@@ -147,12 +152,12 @@ const DatabaseExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => 
                 //update material list with new selected status
                 setMaterials(toggleSelected(materials, index))
                 //update associations list with selected status
-                const updatedAssoStatus = toggleStatusForMaterial(item, assoAndStatus, !item.selected)
-                setAssoAndStatus(updatedAssoStatus)
+                const models = toggleStatusForMaterial(item, associationModels, !item.selected)
+                updateAssociationModels(models)
                 //compute new association to display
-                setAssociationsToDisplay(groupBySpecies(updatedAssoStatus))
+                updateAssociationDisplayList(buildDisplayList(models))
                 //update species status
-                const updatedSpecies = updateSpeciesStatus(species, updatedAssoStatus)
+                const updatedSpecies = updateSpeciesStatus(species, models)
                 setSpecies(updatedSpecies)
               }}
             >

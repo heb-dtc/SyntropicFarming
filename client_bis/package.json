@@ -8,7 +8,7 @@
     "build": "webpack --config ./webpack.config.js --env.env=prod",
     "lint": "eslint --ignore-path '.eslintignore' --ext .js,.jsx .",
     "lintfix": "eslint --fix --ignore-path '.eslintignore' --ext .js,.jsx .",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "jest --config ./jest.config.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
     "babel-loader": "^8.0.6",
+    "jest": "^26.4.2",
     "react-hot-loader": "^4.12.19",
     "url-loader": "^4.1.0",
     "webpack": "^4.42.0",
