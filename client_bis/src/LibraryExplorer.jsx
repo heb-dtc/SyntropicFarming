@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { ALL_HARDINESS, fetchAssociations, } from '@/api'
-import {
-  buildDisplayList,
- updateItemsStatusFromModels,  updateModelsWithItemStatus,
-  updateMaterialsStatus,
-  updateSpeciesStatus, 
-} from '@/explorer.js'
+import PropTypes from 'prop-types'
+import { fetchAssociations } from '@/api'
+import { buildDisplayList, updateItemsStatusFromModels, updateModelsWithItemStatus } from '@/explorer.js'
 import styles from '@/style.css'
 
 const toggleSelected = (list, itemIndex) => {
@@ -34,37 +29,37 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
       const associations = await fetchAssociations(hardiness)
 
       if (associations != null) {
-        // build array of all associations 
-        const associationModels = associations.map(item => {
+        // build array of all associations
+        const associationModelList = associations.map((item) => {
           return {
             association: item,
             selected: true,
           }
         })
-        updateAssociationModels(associationModels)
+        updateAssociationModels(associationModelList)
 
         // build an array of all species
-        const speciesModels = associations.reduce(
+        const speciesModelList = associations.reduce(
           (unique, item) =>
-            unique.some(species => species.name === item.species_name)
+            unique.some((species) => species.name === item.species_name)
               ? unique
               : [...unique, { name: item.species_name, selected: true }],
           []
         )
-        updateSpeciesModels(speciesModels)
+        updateSpeciesModels(speciesModelList)
 
         // build an array of all materials
-        const materialModels = associations.reduce(
+        const materialModelList = associations.reduce(
           (unique, item) =>
-            unique.some(material => material.name === item.material_name)
+            unique.some((material) => material.name === item.material_name)
               ? unique
               : [...unique, { name: item.material_name, selected: true }],
           []
         )
-        updateMaterialModels(materialModels)
+        updateMaterialModels(materialModelList)
 
         // build array of associations to display
-        const displayList = buildDisplayList(associationModels)
+        const displayList = buildDisplayList(associationModelList)
         updateAssociationDisplayList(displayList)
       } else {
         updateAssociationModels({})
@@ -81,11 +76,18 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
       <ul className={styles.explorerNavigationBar}>
         <li className={styles.navigationBarTitle}>Hardiness zone</li>
         <li>
-          <select className={styles.select} value={hardiness} onChange={e => onChangeHardiness(e.target.value)}>
+          <select
+            className={styles.select}
+            value={hardiness}
+            onChange={(e) => {
+              const value = parseInt(e.target.value, 10)
+              onChangeHardiness(value)
+            }}
+          >
             <option value={0}>All</option>
-            {hardinessValues.map(hardiness => (
-              <option key={hardiness.id} value={hardiness.value}>
-                {hardiness.value}
+            {hardinessValues.map((item) => (
+              <option key={item.id} value={item.value}>
+                {item.value}
               </option>
             ))}
           </select>
@@ -102,7 +104,7 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
                 onClick={() => {
                   // toggle species item status
                   updateSpeciesModels(toggleSelected(speciesModels, i))
-                  // update all association models matching species to new status  
+                  // update all association models matching species to new status
                   const models = updateModelsWithItemStatus(associationModels, item, !item.selected)
                   updateAssociationModels(models)
                   // check if any material item status should change and update if needed
@@ -124,11 +126,11 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
               <div key={index}>
                 <div className={styles.gridTitle}>{key}</div>
                 <div className={styles.materialGrid}>
-                  {value.map((item, index) => {
+                  {value.map((item, i) => {
                     return (
-                      <div key={index} className={styles.gridItem}>
-                        <a href={item.link} target="_blank">
-                          <img src={item.imageUrl} />
+                      <div key={i} className={styles.gridItem}>
+                        <a href={item.link} target="_blank" rel="noreferrer">
+                          <img src={item.imageUrl} alt={value} />
                         </a>
                         <div>{item.material}</div>
                       </div>
@@ -166,6 +168,12 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
       </div>
     </div>
   )
+}
+
+LibraryExplorer.propTypes = {
+  hardinessValues: PropTypes.arrayOf(PropTypes.number).isRequired,
+  hardiness: PropTypes.number.isRequired,
+  onChangeHardiness: PropTypes.func.isRequired,
 }
 
 export default LibraryExplorer

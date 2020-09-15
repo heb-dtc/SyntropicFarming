@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {fetchHardinessValues} from '@/api'
+import { fetchHardinessValues } from '@/api'
 import LibraryExplorer from '@/LibraryExplorer'
 import LibrarySlider from '@/LibrarySlider'
 
@@ -10,21 +10,30 @@ const Library = (props) => {
 
   useEffect(() => {
     const fetchValues = async () => {
-     const hardinessValues = await fetchHardinessValues()
-     setValues(hardinessValues)
+      const values = await fetchHardinessValues()
+      setValues(values)
     }
     fetchValues()
   }, [props])
 
   if (introPlayed) {
-    return <LibraryExplorer hardinessValues={hardinessValues} hardiness={hardiness} onChangeHardiness={
-      (value) => setHardiness(value)}/>
-  } else {
-    return <LibrarySlider hardinessValues={hardinessValues} onComplete={(hardiness) => {
-      setHardiness(hardiness)
-      setIntroPlayed(true)
-    }} />
+    return (
+      <LibraryExplorer
+        hardinessValues={hardinessValues}
+        hardiness={hardiness}
+        onChangeHardiness={(value) => setHardiness(value)}
+      />
+    )
   }
+  return (
+    <LibrarySlider
+      hardinessValues={hardinessValues}
+      onComplete={(selectedHardiness) => {
+        setHardiness(selectedHardiness)
+        setIntroPlayed(true)
+      }}
+    />
+  )
 }
 
 export default Library

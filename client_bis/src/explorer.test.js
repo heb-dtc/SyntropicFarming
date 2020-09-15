@@ -5,9 +5,9 @@ const createAssociationModel = (species, material, imageUrl, link, selected) => 
     species_name: species,
     material_name: material,
     image_url: imageUrl,
-    link: link,
+    link,
   },
-  selected: selected,
+  selected,
 })
 
 describe('Library explorer data tests', () => {
@@ -26,10 +26,10 @@ describe('Library explorer data tests', () => {
 
     const groupedAssociations = groupBySelectedSpecies(models)
 
-    expect(groupedAssociations['corn']).toHaveLength(4)
-    expect(groupedAssociations['abaca']).toHaveLength(2)
-    expect(groupedAssociations['banana']).toHaveLength(1)
-    expect(groupedAssociations['colzar']).toBeUndefined()
+    expect(groupedAssociations.corn).toHaveLength(4)
+    expect(groupedAssociations.abaca).toHaveLength(2)
+    expect(groupedAssociations.banana).toHaveLength(1)
+    expect(groupedAssociations.colzar).toBeUndefined()
   })
 
   it('material item status is set on all matching models', () => {

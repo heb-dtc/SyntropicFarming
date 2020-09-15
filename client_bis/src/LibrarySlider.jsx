@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import styles from '@/style.css'
 import ArrowNext from '../assets/next_arrow.svg'
 import ArrowPrevious from '../assets/prev_arrow.svg'
@@ -26,7 +27,11 @@ const SlideThree = () => (
   <div>
     <p>your exploration will begin by selecting a climatic zone of interest </p>
     <p>
-      this database use the hardiness zone classification system. To know more about this classification and to find your hardiness number please visit <a href="https://www.plantmaps.com/index.php" target="_blank"> https://www.plantmaps.com</a>
+      this database use the hardiness zone classification system. To know more about this classification and to find
+      your hardiness number please visit
+      <a href="https://www.plantmaps.com/index.php" target="_blank" rel="noreferrer">
+        https://www.plantmaps.com
+      </a>
     </p>
   </div>
 )
@@ -36,9 +41,9 @@ const SlideFour = ({ hardinessValues, onChoose }) => (
     <p>select the hardiness zone of your interest and begin to explore the library</p>
     <p>
       Hardiness Zone /
-      <select className={styles.select} onChange={e => onChoose(e.target.value)}>
+      <select className={styles.select} onChange={(e) => onChoose(e.target.value)}>
         <option value={0}>All</option>
-        {hardinessValues.map(hardiness => (
+        {hardinessValues.map((hardiness) => (
           <option key={hardiness.id} value={hardiness.value}>
             {hardiness.value}
           </option>
@@ -47,6 +52,11 @@ const SlideFour = ({ hardinessValues, onChoose }) => (
     </p>
   </div>
 )
+
+SlideFour.propTypes = {
+  hardinessValues: PropTypes.arrayOf(PropTypes.number).isRequired,
+  onChoose: PropTypes.func.isRequired,
+}
 
 const LibrarySlider = ({ hardinessValues, onComplete }) => {
   const [index, setIndex] = useState(0)
@@ -61,7 +71,7 @@ const LibrarySlider = ({ hardinessValues, onComplete }) => {
       slide = <SlideThree />
       break
     case 3:
-      slide = <SlideFour hardinessValues={hardinessValues} onChoose={value => chooseHardiness(value)} />
+      slide = <SlideFour hardinessValues={hardinessValues} onChoose={(value) => chooseHardiness(value)} />
       break
     case 0:
     default:
@@ -99,6 +109,11 @@ const LibrarySlider = ({ hardinessValues, onComplete }) => {
       </div>
     </div>
   )
+}
+
+LibrarySlider.propTypes = {
+  hardinessValues: PropTypes.arrayOf(PropTypes.number).isRequired,
+  onComplete: PropTypes.func.isRequired,
 }
 
 export default LibrarySlider
