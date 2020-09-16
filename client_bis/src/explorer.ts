@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/api'
+import { BASE_URL } from './api'
 
 export const groupBySelectedSpecies = (array) => {
   return array.reduce((accumulator, item) => {

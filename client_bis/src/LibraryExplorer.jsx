@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { fetchAssociations } from '@/api'
-import { buildDisplayList, updateItemsStatusFromModels, updateModelsWithItemStatus } from '@/explorer.js'
+import { buildDisplayList, updateItemsStatusFromModels, updateModelsWithItemStatus } from '@/explorer'
 import styles from '@/style.css'
 
 const toggleSelected = (list, itemIndex) => {
@@ -130,7 +130,7 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
                     return (
                       <div key={i} className={styles.gridItem}>
                         <a href={item.link} target="_blank" rel="noreferrer">
-                          <img src={item.imageUrl} alt={value} />
+                          <img class={styles.explorerImage} src={item.imageUrl} alt={value} />
                         </a>
                         <div>{item.material}</div>
                       </div>

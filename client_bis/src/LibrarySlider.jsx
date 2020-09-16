@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from '@/style.css'
-import ArrowNext from '../assets/next_arrow.svg'
-import ArrowPrevious from '../assets/prev_arrow.svg'
+import ArrowNext from '@/assets/next_arrow.svg'
+import ArrowPrevious from '@/assets/prev_arrow.svg'
 
 const SlideOne = () => (
   <div>
@@ -41,9 +41,9 @@ const SlideFour = ({ hardinessValues, onChoose }) => (
     <p>select the hardiness zone of your interest and begin to explore the library</p>
     <p>
       Hardiness Zone /
-      <select className={styles.select} onChange={(e) => onChoose(e.target.value)}>
+      <select className={styles.select} onChange={e => onChoose(e.target.value)}>
         <option value={0}>All</option>
-        {hardinessValues.map((hardiness) => (
+        {hardinessValues.map(hardiness => (
           <option key={hardiness.id} value={hardiness.value}>
             {hardiness.value}
           </option>
@@ -71,7 +71,7 @@ const LibrarySlider = ({ hardinessValues, onComplete }) => {
       slide = <SlideThree />
       break
     case 3:
-      slide = <SlideFour hardinessValues={hardinessValues} onChoose={(value) => chooseHardiness(value)} />
+      slide = <SlideFour hardinessValues={hardinessValues} onChoose={value => chooseHardiness(value)} />
       break
     case 0:
     default:
@@ -79,10 +79,11 @@ const LibrarySlider = ({ hardinessValues, onComplete }) => {
   }
 
   return (
-    <div className={styles.introContainer}>
-      <div className={styles.introAsideLeft}>
+    <div className={styles.sliderContainer}>
+      <div className={styles.sliderArrowContainer}>
         {index > 0 && (
           <img
+            class={styles.sliderArrow}
             src={ArrowPrevious}
             alt="previous"
             onClick={() => {
@@ -92,9 +93,10 @@ const LibrarySlider = ({ hardinessValues, onComplete }) => {
           />
         )}
       </div>
-      <div className={styles.introMain}>{slide}</div>
-      <div className={styles.introAsideRight}>
+      <div className={styles.sliderContent}>{slide}</div>
+      <div className={styles.sliderArrowContainer}>
         <img
+          class={styles.sliderArrow}
           src={ArrowNext}
           alt="next"
           onClick={() => {

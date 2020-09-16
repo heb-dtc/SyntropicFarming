@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { fetchHardinessValues } from '@/api'
 import LibraryExplorer from '@/LibraryExplorer'
 import LibrarySlider from '@/LibrarySlider'
+import { Hardiness } from '@/models'
 
 const Library = (props) => {
   const [introPlayed, setIntroPlayed] = useState(false)
@@ -10,7 +11,7 @@ const Library = (props) => {
 
   useEffect(() => {
     const fetchValues = async () => {
-      const values = await fetchHardinessValues()
+      const values: Array<Hardiness> = await fetchHardinessValues()
       setValues(values)
     }
     fetchValues()

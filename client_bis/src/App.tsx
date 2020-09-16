@@ -3,24 +3,26 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import NavigationBar from '@/NavigationBar'
 import LandingPage from '@/LandingPage'
 import Library from '@/Library'
-import styles from './style.css'
+import Polyculture from '@/Polyculture'
+import Program from '@/Program'
+import styles from '@/style.css'
 
 const App = () => (
   <Router>
-    <div className={styles.page}>
+    <div className={styles['page']}>
       <NavigationBar />
       <Switch>
         <Route path="/database">
-          <LandingPage />
+          <Library />
         </Route>
         <Route path="/polycultures">
-          <div>polyculture</div>
+          <Polyculture />
         </Route>
         <Route path="/program">
-          <div>program</div>
+          <Program />
         </Route>
         <Route path="/">
-          <Library />
+          <LandingPage />
         </Route>
       </Switch>
     </div>
