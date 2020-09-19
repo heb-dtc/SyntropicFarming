@@ -5,14 +5,14 @@ import styles from '@/style.css'
 const NavigationBar = () => (
   <div className={styles['pageHeader']}>
     <ul className={styles['navigationBar']}>
-      <li className={styles['navigationBarTitle']} >
+      <li className={styles['navigationBarTitle']}>
         <NavLink activeClassName={styles['selectedNav']} exact to="/">
           SYNTROPIC MATERIALS
         </NavLink>
       </li>
       <li>
-        <NavLink activeClassName={styles['selectedNav']} to="/database">
-          DATABASE
+        <NavLink activeClassName={styles['selectedNav']} to="/library">
+          LIBRARY
         </NavLink>
       </li>
       <li>
@@ -21,8 +21,8 @@ const NavigationBar = () => (
         </NavLink>
       </li>
       <li>
-        <NavLink activeClassName={styles['selectedNav']} to="/program">
-          PROGRAM
+        <NavLink activeClassName={styles['selectedNav']} to="/about">
+          ABOUT
         </NavLink>
       </li>
     </ul>

@@ -12,13 +12,13 @@ const App = () => (
     <div className={styles['page']}>
       <NavigationBar />
       <Switch>
-        <Route path="/database">
+        <Route path="/library">
           <Library />
         </Route>
         <Route path="/polycultures">
           <Polyculture />
         </Route>
-        <Route path="/program">
+        <Route path="/about">
           <Program />
         </Route>
         <Route path="/">

@@ -28,9 +28,15 @@ const SlideThree = () => (
     <p>your exploration will begin by selecting a climatic zone of interest </p>
     <p>
       this database use the hardiness zone classification system. To know more about this classification and to find
-      your hardiness number please visit
+      your hardiness number please visit&nbsp;
       <a href="https://www.plantmaps.com/index.php" target="_blank" rel="noreferrer">
         https://www.plantmaps.com
+      </a>
+    </p>
+    <p>
+      To learn more about the hardiness zones classification system go to &nbsp;
+      <a href="https://en.wikipedia.org/wiki/Hardiness_zone" target="_blank" rel="noreferrer">
+        https://en.wikipedia.org/wiki/Hardiness_zone
       </a>
     </p>
   </div>

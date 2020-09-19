@@ -1,5 +1,6 @@
 :root {
   --main-font-size: 25px;  
+  --text-font-size: 20px;  
 }
 
 * {
@@ -13,6 +14,15 @@ body, html {
   margin: 0;
   height: 100%;
   overflow: hidden;
+}
+
+img {
+  object-fit: cover;
+}
+
+h3 {
+  font-weight: normal;
+  text-transform: uppercase;
 }
 
 :global(#app) {
@@ -34,33 +44,50 @@ body, html {
   display: flex;
   flex-flow: column;
   height: 100%;
+  flex: 1;
+  overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .contentHeader {
-  display: flex;
-  flex-flow: row;
   padding-left: 30px;
   margin-right: 250px;
+  max-width: 450px;
 }
 
 .contentContainer {
   display: flex;
   justify-content: center;
-  margin: 0;
   margin-right: 250px;
   margin-left: 250px;
   flex: 1;
-  overflow-y: scroll;
-  scrollbar-width: none;
+  overflow-y: hidden;
+  height: 100%;
+  align-items: center;
+}
+
+.contentContainerCol {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin-right: 250px;
+  margin-left: 250px;
+  flex: 1;
+  overflow-y: hidden;
+  height: 100%;
 }
 
 .navigationBar {
   background-color: #65ED5A;
-  padding: 30px 0px 30px 0px;
+  padding: 18px 0px;
 }
 
 .navigationBarTitle {
   list-style: none;
+}
+
+a {
+  color: black;
 }
 
 li > a {
@@ -83,11 +110,13 @@ nav, li {
   color: #761DF0;
 }
 
-.landingColumn {
-  margin-right: 16px;
-  margin-left: 16px;
-  flex-basis: 0;
-  flex-grow: 1;
+.landingContent {
+  overflow-y: scroll;
+  height: 100%;
+  scrollbar-width: none;
+  font-size: var(--text-font-size);
+  margin-right: 80px;
+  margin-left: 80px;
 }
 
 .explorerNavigationBar {
@@ -176,7 +205,6 @@ main::-webkit-scrollbar {
   text-transform: lowercase;
 }
 
-
 .explorerMenuTitle {
   text-align: center;
   text-transform: uppercase;
@@ -186,7 +214,7 @@ main::-webkit-scrollbar {
 .explorerMenuText {
   text-align: center;
   text-transform: lowercase;
-  padding: 0px 2px;
+  padding: 0px 4px;
   margin: 4px 0px;
   display: table;
   align-self: center;
@@ -231,7 +259,53 @@ main::-webkit-scrollbar {
   appearance: none;
   border: 0;
   background: white;
-  font-size: 20px;
+  font-size: var(--text-font-size);
   text-decoration-line: underline;
+  cursor: pointer;
+}
+
+.polyculturePageContainer {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  flex: 1;
+  overflow: scroll;
+  margin-bottom: 20px;
+  scrollbar-width: none;
+}
+
+.polycultureContentContainerCol {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin-right: 250px;
+  margin-left: 250px;
+  flex: 1;
+  height: 100%;
+}
+
+.polycultureImgContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 250px;
+  margin-left: 250px;
+}
+
+.polycultureTextContent {
+  margin-right: 80px;
+  margin-left: 80px;
+  font-size: var(--text-font-size);
+}
+
+.polycultureMenu {
+  flex-basis: 0;
+  font-size: 18px;
+  margin-left: 10px;
+  text-align: center;
+}
+
+.polycultureMenuItem {
+  text-decoration: underline;
   cursor: pointer;
 }
