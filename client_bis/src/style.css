@@ -81,6 +81,7 @@ h3 {
 .navigationBar {
   background-color: #65ed5a;
   padding: 18px 0px;
+  color: #761df0;
 }
 
 .navigationBarTitle {
@@ -92,7 +93,7 @@ a {
 }
 
 li > a {
-  color: #ffffff;
+  color: #761df0;
   text-decoration: none;
 }
 
@@ -110,7 +111,7 @@ li {
 }
 
 .selectedNav {
-  color: #761df0;
+  color: #FFFFFF;
 }
 
 .landingContent {
@@ -289,6 +290,7 @@ main::-webkit-scrollbar {
 
 .polycultureImg {
   width: 100%;
+  max-width: 900px;
   margin: 0px 150px;
   padding: 0px 80px;
 }
