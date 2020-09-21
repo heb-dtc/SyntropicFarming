@@ -8,6 +8,7 @@
     "build": "webpack --config ./webpack.config.js --env.env=prod",
     "lint": "eslint --ignore-path '.eslintignore' --ext .js,.jsx .",
     "lintfix": "eslint --fix --ignore-path '.eslintignore' --ext .js,.jsx .",
+    "analyze": "source-map-explorer 'dist/*.js'",
     "test": "jest --config ./jest.config.js"
   },
   "keywords": [],
