@@ -1,17 +1,10 @@
 import React, { useState } from 'react'
 import styles from '@/style.css'
-import Milpa from '@/assets/01.png'
-import Materials from '@/assets/02.png'
-import Color from '@/assets/03.png'
-import Paper from '@/assets/04.png'
-import ParticleBoard from '@/assets/05.png'
-import Plastic from '@/assets/06.png'
-import Textile from '@/assets/07.png'
-import Timber from '@/assets/08.png'
-import Veneer from '@/assets/09.png'
+import { getImageUrl } from '@/api'
 
 const Polyculture = () => {
-  const [image, setImage] = useState(Milpa)
+  const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', '08.png', '09.png']
+  const [imageUrl, setImageUrl] = useState(getImageUrl(IMAGES[0]))
 
   return (
     <div className={styles['polyculturePageContainer']}>
@@ -23,35 +16,35 @@ const Polyculture = () => {
       </div>
       <div className={styles['polycultureContentContainerCol']}>
         <div className={styles['polycultureMenu']}>
-          <div className={styles['polycultureMenuItem']} onClick={() => setImage(Milpa)}>
+          <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[0]))}>
             MayaForestGarden
           </div>
-          <div className={styles['polycultureMenuItem']} onClick={() => setImage(Materials)}>
+          <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[1]))}>
             Materials
           </div>
-          <div className={styles['polycultureMenuItem']} onClick={() => setImage(Color)}>
+          <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[2]))}>
             Color
           </div>
-          <div className={styles['polycultureMenuItem']} onClick={() => setImage(Paper)}>
+          <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[3]))}>
             Paper
           </div>
-          <div className={styles['polycultureMenuItem']} onClick={() => setImage(ParticleBoard)}>
+          <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[4]))}>
             ParticleBoard
           </div>
-          <div className={styles['polycultureMenuItem']} onClick={() => setImage(Plastic)}>
+          <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[5]))}>
             Plastic
           </div>
-          <div className={styles['polycultureMenuItem']} onClick={() => setImage(Textile)}>
+          <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[6]))}>
             Textile
           </div>
-          <div className={styles['polycultureMenuItem']} onClick={() => setImage(Timber)}>
+          <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[7]))}>
             Timber
           </div>
-          <div className={styles['polycultureMenuItem']} onClick={() => setImage(Veneer)}>
+          <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[8]))}>
             Veneer
           </div>
         </div>
-        <img className={styles['polycultureImg']} src={image} />
+        <img className={styles['polycultureImg']} src={imageUrl} />
         <div className={styles['polycultureTextContent']}>
           <h3>Maya Forest Garden - The Milpa cycle</h3>
           <p>

@@ -1,6 +1,11 @@
 import axios from 'axios'
 import { Hardiness } from '@/models'
 
+
+export const getImageUrl = (imageName: string) => {
+  return `${BASE_URL}/uploads/${imageName}`
+}
+
 export const BASE_URL = 'https://syntropic-api.hebus.net'
 const API_URL = `${BASE_URL}/api`
 
