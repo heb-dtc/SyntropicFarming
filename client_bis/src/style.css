@@ -74,14 +74,12 @@ h3 {
   margin-right: 250px;
   margin-left: 250px;
   flex: 1;
-  overflow-y: hidden;
   height: 100%;
 }
 
 .navigationBar {
   background-color: #65ed5a;
   padding: 18px 0px;
-  color: #761df0;
 }
 
 .navigationBarTitle {
@@ -93,7 +91,7 @@ a {
 }
 
 li > a {
-  color: #761df0;
+  color: white;
   text-decoration: none;
 }
 
@@ -111,16 +109,24 @@ li {
 }
 
 .selectedNav {
-  color: #FFFFFF;
+  color: #761df0;
 }
 
 .landingContent {
-  overflow-y: scroll;
   height: 100%;
-  scrollbar-width: none;
   font-size: var(--text-font-size);
   margin-right: 80px;
   margin-left: 80px;
+}
+
+.landingPageContainer {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  flex: 1;
+  overflow: scroll;
+  margin-bottom: 20px;
+  scrollbar-width: none;
 }
 
 .explorerNavigationBar {

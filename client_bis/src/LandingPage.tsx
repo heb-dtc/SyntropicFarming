@@ -2,7 +2,7 @@ import React from 'react'
 import styles from '@/style.css'
 
 const LandingPage = () => (
-  <div className={styles['pageContainer']}>
+  <div className={styles['landingPageContainer']}>
     <div className={styles['contentHeader']}>
       <p>
         In this section you can find a description of the project, description which will change with the development of
