@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from '@/style.css'
 import { getImageUrl } from '@/api'
 
-const Polyculture = () => {
+const PolyculturePage = () => {
   const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', '08.png', '09.png']
   const [imageUrl, setImageUrl] = useState(getImageUrl(IMAGES[0]))
 
@@ -88,6 +88,12 @@ const Polyculture = () => {
             universe…[it] forms the core institution of Indian society in Mesoamerica and its religious and social
             importance often appear to exceed its nutritional and economic importance”
           </p>
+          <p>
+            Milpa moves beyond the economism and instrumentalization of nature and human relationships that
+            characterizes neoliberal and late capitalism. For this reason, I am influenced by this holistic ontology
+            without claiming it as my own, nor reifying it as a piecemeal pedagogic influence to mitigate the disasters
+            of capitalism.
+          </p>
           <h3>References</h3>
           <p>
             <a href="https://mayaforestgardeners.org/">https://mayaforestgardeners.org/</a>
@@ -103,4 +109,4 @@ const Polyculture = () => {
   )
 }
 
-export default Polyculture
+export default PolyculturePage

@@ -2,9 +2,9 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import NavigationBar from '@/NavigationBar'
 import LandingPage from '@/LandingPage'
-import Library from '@/Library'
-import Polyculture from '@/Polyculture'
-import Program from '@/Program'
+import LibraryPage from '@/LibraryPage'
+import PolyculturePage from '@/PolyculturePage'
+import AboutPage from '@/AboutPage'
 import styles from '@/style.css'
 
 const App = () => (
@@ -13,13 +13,13 @@ const App = () => (
       <NavigationBar />
       <Switch>
         <Route path="/library">
-          <Library />
+          <LibraryPage />
         </Route>
         <Route path="/polycultures">
-          <Polyculture />
+          <PolyculturePage />
         </Route>
         <Route path="/about">
-          <Program />
+          <AboutPage />
         </Route>
         <Route path="/">
           <LandingPage />

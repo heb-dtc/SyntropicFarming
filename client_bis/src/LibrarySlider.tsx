@@ -47,7 +47,7 @@ const SlideFour = ({ hardinessValues, onChoose }) => (
     <p>select the hardiness zone of your interest and begin to explore the library</p>
     <p>
       Hardiness Zone /
-      <select className={styles.select} onChange={e => onChoose(e.target.value)}>
+      <select className={styles['select']} onChange={e => onChoose(e.target.value)}>
         <option value={0}>All</option>
         {hardinessValues.map(hardiness => (
           <option key={hardiness.id} value={hardiness.value}>
@@ -85,11 +85,11 @@ const LibrarySlider = ({ hardinessValues, onComplete }) => {
   }
 
   return (
-    <div className={styles.sliderContainer}>
-      <div className={styles.sliderArrowContainer}>
+    <div className={styles['sliderContainer']}>
+      <div className={styles['sliderArrowContainer']}>
         {index > 0 && (
           <img
-            class={styles.sliderArrow}
+            className={styles['sliderArrow']}
             src={ArrowPrevious}
             alt="previous"
             onClick={() => {
@@ -99,10 +99,10 @@ const LibrarySlider = ({ hardinessValues, onComplete }) => {
           />
         )}
       </div>
-      <div className={styles.sliderContent}>{slide}</div>
-      <div className={styles.sliderArrowContainer}>
+      <div className={styles['sliderContent']}>{slide}</div>
+      <div className={styles['sliderArrowContainer']}>
         <img
-          class={styles.sliderArrow}
+          className={styles['sliderArrow']}
           src={ArrowNext}
           alt="next"
           onClick={() => {

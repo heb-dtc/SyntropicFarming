@@ -9,7 +9,7 @@ const LandingPage = () => (
         the research.
       </p>
     </div>
-    <div className={styles['contentContainerCol']}>
+    <div className={styles['contentContainer']}>
       <div className={styles['landingContent']}>
         <p>
           The current environmental crisis has proven to be a total one, affecting biodiversity, soil, water and air. As
@@ -61,6 +61,25 @@ const LandingPage = () => (
           objective is to centralise this information allowing us to create novel and meaningful connections. What is
           presented now is the first iteration of the library. With the development of the research, further information
           and filtering tools are planned to be added.
+        </p>
+        <h3>ACKNOWLEDGMENT</h3>
+        <p>
+          I am an Italian designer, educated in hegemonic European schools of Art and Design. That being said, I am
+          sensitive to the responsibilities and forms of power tied to my positionality as a White European designer
+          with significant institutional support. The ideas herein are polyphonic, reflecting the sustained reading and
+          conversations I have had with post-colonial and indigenous scholars, activists, thinkers and writers. They are
+          not the exclusive preserve of my own authoritative voice but the outcome of heterogeneous influences.
+        </p>
+        <p>
+          In privileging indigenous knowledge, I situate indigeneity not as radical alterity but as a form of world
+          building at odds with our contemporary extractivist moment, in which ecological crisis can only be confronted
+          through pluralistic, open and dynamic traditions.
+        </p>
+        <p>
+          This openness and the presumed parity between different ontological and epistemological systems is what allows
+          me to experiment with the promises (and failures) of Western science and indigenous relationships to land and
+          environment. This is part of an effort to think ourselves out of the quagmire that environmental crisis
+          portends.
         </p>
       </div>
     </div>

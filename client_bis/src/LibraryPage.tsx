@@ -4,7 +4,7 @@ import LibraryExplorer from '@/LibraryExplorer'
 import LibrarySlider from '@/LibrarySlider'
 import { Hardiness } from '@/models'
 
-const Library = (props) => {
+const LibraryPage = (props) => {
   const [introPlayed, setIntroPlayed] = useState(false)
   const [hardinessValues, setValues] = useState(null)
   const [hardiness, setHardiness] = useState(0)
@@ -37,4 +37,4 @@ const Library = (props) => {
   )
 }
 
-export default Library
+export default LibraryPage
