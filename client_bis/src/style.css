@@ -1,6 +1,22 @@
 :root {
-  --main-font-size: 25px;
-  --text-font-size: 20px;
+  --main-font-size: 20px;
+  --text-font-size: 15px;
+  --page-side-margin: 50px;
+  --header-max-width: 450px;
+}
+
+@media screen and (min-width: 768px) {
+  :root {
+    --page-side-margin: 150px;
+    --main-font-size: 25px;
+    --text-font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  :root {
+    --page-side-margin: 250px;
+  }
 }
 
 * {
@@ -38,7 +54,8 @@ h3 {
 
 .pageHeader {
   font-weight: bold;
-  color: #ffffff;
+  color: white;
+  display: flex;
 }
 
 .pageContainer {
@@ -52,32 +69,21 @@ h3 {
 
 .contentHeader {
   padding-left: 30px;
-  margin-right: 250px;
-  max-width: 450px;
+  margin-right: var(--page-side-margin);
+  max-width: var(--header-max-width);
 }
 
 .contentContainer {
   display: flex;
-  justify-content: center;
-  margin-right: 250px;
-  margin-left: 250px;
-  flex: 1;
-  overflow-y: hidden;
-  height: 100%;
-  align-items: center;
-}
-
-.contentContainerCol {
-  display: flex;
   flex-flow: column;
   justify-content: center;
-  margin-right: 250px;
-  margin-left: 250px;
+  margin: 0px var(--page-side-margin);
   flex: 1;
   height: 100%;
 }
 
 .navigationBar {
+  flex: 1;
   background-color: #65ed5a;
   padding: 18px 0px;
 }
@@ -98,8 +104,17 @@ li > a {
 nav,
 ul {
   display: flex;
+  flex-flow: column;
   margin: 0;
   list-style-type: '/';
+}
+
+@media screen and (min-width: 768px) {
+  nav,
+  ul {
+    flex-flow: row;
+    flex-wrap: wrap;
+  }
 }
 
 nav,
@@ -115,8 +130,13 @@ li {
 .landingContent {
   height: 100%;
   font-size: var(--text-font-size);
-  margin-right: 80px;
-  margin-left: 80px;
+  margin: 0px 0px;
+}
+
+@media screen and (min-width: 1200x) {
+  .landingContent {
+    margin: 0px 80px;
+  }
 }
 
 .landingPageContainer {
@@ -238,11 +258,18 @@ main::-webkit-scrollbar {
 .sliderContainer {
   display: flex;
   flex-flow: row;
+  flex-wrap: wrap;
   flex: 1;
   justify-content: center;
   align-items: center;
-  margin-right: 150px;
-  margin-left: 150px;
+  margin: 0px 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .sliderContainer {
+    margin: 0px 150px;
+    flex-wrap: nowrap;
+  }
 }
 
 .sliderArrowContainer {
@@ -257,7 +284,7 @@ main::-webkit-scrollbar {
 }
 
 .sliderContent {
-  text-size: 15px;
+  font-size: var(--text-font-size);
   text-align: center;
   text-transform: uppercase;
   padding: 50px;
@@ -289,8 +316,7 @@ main::-webkit-scrollbar {
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  margin-right: 250px;
-  margin-left: 250px;
+  margin: 0px var(--page-side-margin);
   flex: 1;
 }
 
@@ -298,7 +324,13 @@ main::-webkit-scrollbar {
   width: 100%;
   max-width: 900px;
   margin: 0px 150px;
-  padding: 0px 80px;
+  padding: 0px 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .polycultureImg {
+    padding: 0px 80px;
+  }
 }
 
 .polycultureTextContent {
@@ -308,10 +340,16 @@ main::-webkit-scrollbar {
 }
 
 .polycultureMenu {
-  display: inline-flex;
+  display: flex;
   flex-basis: 0;
   font-size: 18px;
   text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .polycultureMenu {
+    flex-flow: column;
+  }
 }
 
 .polycultureMenuItem {
