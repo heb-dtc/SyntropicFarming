@@ -7,14 +7,14 @@ const PolyculturePage = () => {
   const [imageUrl, setImageUrl] = useState(getImageUrl(IMAGES[0]))
 
   return (
-    <div className={styles['polyculturePageContainer']}>
+    <div className={`${styles['pageContainer']} ${styles['scrollContainer']}`}>
       <div className={styles['contentHeader']}>
         <p>
           In this section you can find a selection of analysis of polycultural agroecosystems and the materials they
           potentially can produce.
         </p>
       </div>
-      <div className={styles['polycultureContentContainerCol']}>
+      <div className={styles['contentContainer']}>
         <div className={styles['polycultureMenu']}>
           <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[0]))}>
             MayaForestGarden
@@ -45,7 +45,7 @@ const PolyculturePage = () => {
           </div>
         </div>
         <img className={styles['polycultureImg']} src={imageUrl} />
-        <div className={styles['polycultureTextContent']}>
+        <div className={styles['content']}>
           <h3>Maya Forest Garden - The Milpa cycle</h3>
           <p>
             “Domesticated crops and useful weedy herbs are cultivated annually over approximately four years, while

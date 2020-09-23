@@ -5,6 +5,10 @@
   --header-max-width: 450px;
 }
 
+:global(#app) {
+  height: 100%;
+}
+
 @media screen and (min-width: 768px) {
   :root {
     --page-side-margin: 150px;
@@ -42,56 +46,6 @@ h3 {
   text-transform: uppercase;
 }
 
-:global(#app) {
-  height: 100%;
-}
-
-.page {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-}
-
-.pageHeader {
-  font-weight: bold;
-  color: white;
-  display: flex;
-}
-
-.pageContainer {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-  flex: 1;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.contentHeader {
-  padding-left: 30px;
-  margin-right: var(--page-side-margin);
-  max-width: var(--header-max-width);
-}
-
-.contentContainer {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  margin: 0px var(--page-side-margin);
-  flex: 1;
-  height: 100%;
-}
-
-.navigationBar {
-  flex: 1;
-  background-color: #65ed5a;
-  padding: 18px 0px;
-}
-
-.navigationBarTitle {
-  list-style: none;
-}
-
 a {
   color: black;
 }
@@ -123,30 +77,72 @@ li {
   margin-right: 30px;
 }
 
-.selectedNav {
-  color: #761df0;
+.page {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
 
-.landingContent {
+.pageHeader {
+  font-weight: bold;
+  color: white;
+  display: flex;
+}
+
+.pageContainer {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.scrollContainer {
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+.contentHeader {
+  padding-left: 30px;
+  margin-right: var(--page-side-margin);
+  max-width: var(--header-max-width);
+}
+
+.contentContainer {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px var(--page-side-margin);
+  flex: 1;
+  height: 100%;
+}
+
+@media screen and (min-width: 1200x) {
+  .content {
+    margin: 0px 80px;
+  }
+}
+
+.content {
   height: 100%;
   font-size: var(--text-font-size);
   margin: 0px 0px;
 }
 
-@media screen and (min-width: 1200x) {
-  .landingContent {
-    margin: 0px 80px;
-  }
+.navigationBar {
+  flex: 1;
+  background-color: #65ed5a;
+  padding: 18px 0px;
 }
 
-.landingPageContainer {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-  flex: 1;
-  overflow: scroll;
-  margin-bottom: 20px;
-  scrollbar-width: none;
+.navigationBarTitle {
+  list-style: none;
+}
+
+.selectedNav {
+  color: #761df0;
 }
 
 .explorerNavigationBar {
@@ -301,25 +297,6 @@ main::-webkit-scrollbar {
   cursor: pointer;
 }
 
-.polyculturePageContainer {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-  flex: 1;
-  overflow: scroll;
-  margin-bottom: 20px;
-  scrollbar-width: none;
-}
-
-.polycultureContentContainerCol {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0px var(--page-side-margin);
-  flex: 1;
-}
-
 .polycultureImg {
   width: 100%;
   max-width: 900px;
@@ -331,12 +308,6 @@ main::-webkit-scrollbar {
   .polycultureImg {
     padding: 0px 80px;
   }
-}
-
-.polycultureTextContent {
-  margin-right: 80px;
-  margin-left: 80px;
-  font-size: var(--text-font-size);
 }
 
 .polycultureMenu {

@@ -2,7 +2,7 @@ import React from 'react'
 import styles from '@/style.css'
 
 const LandingPage = () => (
-  <div className={styles['landingPageContainer']}>
+  <div className={`${styles['pageContainer']} ${styles['scrollContainer']}`}>
     <div className={styles['contentHeader']}>
       <p>
         In this section you can find a description of the project, description which will change with the development of
@@ -10,7 +10,7 @@ const LandingPage = () => (
       </p>
     </div>
     <div className={styles['contentContainer']}>
-      <div className={styles['landingContent']}>
+      <div className={styles['content']}>
         <p>
           The current environmental crisis has proven to be a total one, affecting biodiversity, soil, water and air. As
           a reaction to it, an ever-growing quest for sustainable alternatives to oil-based materials has emerged. In
