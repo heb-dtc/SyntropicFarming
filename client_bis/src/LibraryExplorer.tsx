@@ -65,19 +65,19 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
         updateAssociationModels({})
         updateSpeciesModels([])
         updateMaterialModels([])
-        updateAssociationDisplayList({})
+        updateAssociationDisplayList([])
       }
     }
     fetchValues()
   }, [hardiness])
 
   return (
-    <div className={styles.explorer}>
-      <ul className={styles.explorerNavigationBar}>
-        <li className={styles.navigationBarTitle}>Hardiness zone</li>
+    <div className={styles['explorer']}>
+      <ul className={styles['explorerNavigationBar']}>
+        <li className={styles['navigationBarTitle']}>Hardiness zone</li>
         <li>
           <select
-            className={styles.select}
+            className={styles['select']}
             value={hardiness}
             onChange={(e) => {
               const value = parseInt(e.target.value, 10)
@@ -93,14 +93,14 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
           </select>
         </li>
       </ul>
-      <div className={styles.explorerContainer}>
-        <aside className={styles.explorerLeftMenu}>
-          <div className={styles.explorerMenuTitle}>species</div>
+      <div className={styles['explorerContainer']}>
+        <aside className={styles['explorerLeftMenu']}>
+          <div className={styles['explorerMenuTitle']}>species</div>
           {speciesModels.map((item, i) => {
             return (
               <div
                 key={i}
-                className={item.selected ? `${styles.explorerMenuText} ${styles.selected}` : styles.explorerMenuText}
+                className={item.selected ? `${styles['explorerMenuText']} ${styles['selected']}` : styles['explorerMenuText']}
                 onClick={() => {
                   // toggle species item status
                   updateSpeciesModels(toggleSelected(speciesModels, i))
@@ -124,13 +124,13 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
           {Object.entries(associationDisplayList).map(([key, value], index) => {
             return (
               <div key={index}>
-                <div className={styles.gridTitle}>{key}</div>
-                <div className={styles.materialGrid}>
+                <div className={styles['gridTitle']}>{key}</div>
+                <div className={styles['materialGrid']}>
                   {value.map((item, i) => {
                     return (
-                      <div key={i} className={styles.gridItem}>
+                      <div key={i} className={styles['gridItem']}>
                         <a href={item.link} target="_blank" rel="noreferrer">
-                          <img class={styles.explorerImage} src={item.imageUrl} alt={value} />
+                          <img className={styles['explorerImage']} src={item.imageUrl} alt={value} />
                         </a>
                         <div>{item.material}</div>
                       </div>
@@ -142,12 +142,12 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
           })}
         </main>
 
-        <aside className={styles.explorerRightMenu}>
-          <div className={styles.explorerMenuTitle}>materials</div>
+        <aside className={styles['explorerRightMenu']}>
+          <div className={styles['explorerMenuTitle']}>materials</div>
           {materialModels.map((item, index) => (
             <div
               key={index}
-              className={item.selected ? `${styles.explorerMenuText} ${styles.selected}` : styles.explorerMenuText}
+              className={item.selected ? `${styles['explorerMenuText']} ${styles['selected']}` : styles['explorerMenuText']}
               onClick={() => {
                 // toggle material item status
                 updateMaterialModels(toggleSelected(materialModels, index))
