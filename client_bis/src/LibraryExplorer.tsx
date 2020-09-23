@@ -72,8 +72,8 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
   }, [hardiness])
 
   return (
-    <div className={styles['explorer']}>
-      <ul className={styles['explorerNavigationBar']}>
+    <div className={styles['pageContainer']}>
+      <ul className={styles['explorerNavBar']}>
         <li className={styles['navigationBarTitle']}>Hardiness zone</li>
         <li>
           <select
@@ -94,7 +94,7 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
         </li>
       </ul>
       <div className={styles['explorerContainer']}>
-        <aside className={styles['explorerLeftMenu']}>
+        <aside className={`${styles['explorerMenu']} ${styles['leftMenu']} ${styles['scrollContainer']}`}>
           <div className={styles['explorerMenuTitle']}>species</div>
           {speciesModels.map((item, i) => {
             return (
@@ -120,12 +120,12 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
           })}
         </aside>
 
-        <main>
+        <main className={styles['scrollContainer']}>
           {Object.entries(associationDisplayList).map(([key, value], index) => {
             return (
               <div key={index}>
                 <div className={styles['gridTitle']}>{key}</div>
-                <div className={styles['materialGrid']}>
+                <div className={styles['grid']}>
                   {value.map((item, i) => {
                     return (
                       <div key={i} className={styles['gridItem']}>
@@ -142,7 +142,7 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
           })}
         </main>
 
-        <aside className={styles['explorerRightMenu']}>
+        <aside className={`${styles['explorerMenu']} ${styles['rightMenu']} ${styles['scrollContainer']}`}>
           <div className={styles['explorerMenuTitle']}>materials</div>
           {materialModels.map((item, index) => (
             <div
