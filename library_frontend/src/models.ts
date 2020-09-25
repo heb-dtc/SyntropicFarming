@@ -1,4 +1,32 @@
 export interface Hardiness {
-  id: number,
+  id: number
   value: number
+}
+
+export interface Association {
+  id: number
+  species_name: string
+  material_name: string
+  image_url: string
+  link: string
+}
+
+export interface AssociationModel {
+  association: Association
+  selected: boolean
+}
+
+export interface MenuItemModel {
+  name: string
+  selected: boolean
+}
+
+export interface GridItemModel {
+  material: string
+  imageUrl: string
+  link: string
+}
+
+export interface DisplayRow {
+  [speciesName: string]: GridItemModel
 }
