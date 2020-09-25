@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '@/style.css'
 
-const AboutPage = () => (
+const AboutPage: React.FC = () => (
   <div className={styles['pageContainer']}>
     <div className={styles['contentHeader']}>
       <p>

@@ -1,9 +1,9 @@
-declare module "*.png" {
-  const content: string 
+declare module '*.png' {
+  const content: string
   export default content
 }
 
-declare module "*.svg" {
-  const content: string 
+declare module '*.svg' {
+  const content: string
   export default content
 }

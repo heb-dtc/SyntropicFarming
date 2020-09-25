@@ -7,7 +7,7 @@ import PolyculturePage from '@/PolyculturePage'
 import AboutPage from '@/AboutPage'
 import styles from '@/style.css'
 
-const App = () => (
+const App: React.FC = () => (
   <Router>
     <div className={styles['page']}>
       <NavigationBar />

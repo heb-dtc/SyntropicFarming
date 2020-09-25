@@ -8,7 +8,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/, loader: 'ts-loader'
+        test: /\.(ts|tsx)$/,
+        loader: 'ts-loader',
       },
       {
         test: /\.(js|jsx)$/,

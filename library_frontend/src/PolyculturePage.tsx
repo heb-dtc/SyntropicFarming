@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from '@/style.css'
 import { getImageUrl } from '@/api'
 
-const PolyculturePage = () => {
+const PolyculturePage: React.FC = () => {
   const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', '08.png', '09.png']
   const [imageUrl, setImageUrl] = useState(getImageUrl(IMAGES[0]))
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import styles from '@/style.css'
 
-const NavigationBar = () => (
+const NavigationBar: React.FC = () => (
   <div className={styles['pageHeader']}>
     <ul className={styles['navigationBar']}>
       <li className={styles['navigationBarTitle']}>

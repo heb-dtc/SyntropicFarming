@@ -4,7 +4,7 @@ import LibraryExplorer from '@/LibraryExplorer'
 import LibrarySlider from '@/LibrarySlider'
 import { Hardiness } from '@/models'
 
-const LibraryPage = (props) => {
+const LibraryPage: React.FC = () => {
   const [introPlayed, setIntroPlayed] = useState(false)
   const [hardinessValues, setValues] = useState(null)
   const [hardiness, setHardiness] = useState(0)
@@ -15,7 +15,7 @@ const LibraryPage = (props) => {
       setValues(values)
     }
     fetchValues()
-  }, [props])
+  }, [])
 
   if (introPlayed) {
     return (

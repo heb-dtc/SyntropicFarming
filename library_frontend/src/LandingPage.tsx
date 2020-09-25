@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '@/style.css'
 
-const LandingPage = () => (
+const LandingPage: React.FC = () => (
   <div className={`${styles['pageContainer']} ${styles['scrollContainer']}`}>
     <div className={styles['contentHeader']}>
       <p>

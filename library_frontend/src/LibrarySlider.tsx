@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import { Hardiness } from '@/models'
 import styles from '@/style.css'
 import ArrowNext from '@/assets/next_arrow.svg'
 import ArrowPrevious from '@/assets/prev_arrow.svg'
@@ -42,14 +42,14 @@ const SlideThree = () => (
   </div>
 )
 
-const SlideFour = ({ hardinessValues, onChoose }) => (
+const SlideFour: React.FC<SlideFourProps> = ({ hardinessValues, onChoose }) => (
   <div>
     <p>select the hardiness zone of your interest and begin to explore the library</p>
     <p>
       Hardiness Zone /
-      <select className={styles['select']} onChange={e => onChoose(e.target.value)}>
+      <select className={styles['select']} onChange={(e) => onChoose(parseInt(e.target.value, 10))}>
         <option value={0}>All</option>
-        {hardinessValues.map(hardiness => (
+        {hardinessValues.map((hardiness) => (
           <option key={hardiness.id} value={hardiness.value}>
             {hardiness.value}
           </option>
@@ -59,12 +59,12 @@ const SlideFour = ({ hardinessValues, onChoose }) => (
   </div>
 )
 
-SlideFour.propTypes = {
-  hardinessValues: PropTypes.arrayOf(PropTypes.number).isRequired,
-  onChoose: PropTypes.func.isRequired,
+interface SlideFourProps {
+  hardinessValues: Array<Hardiness>
+  onChoose: (hardiness: number) => void
 }
 
-const LibrarySlider = ({ hardinessValues, onComplete }) => {
+const LibrarySlider: React.FC<LibSliderProps> = ({ hardinessValues, onComplete }) => {
   const [index, setIndex] = useState(0)
   const [hardiness, chooseHardiness] = useState(0)
 
@@ -77,7 +77,7 @@ const LibrarySlider = ({ hardinessValues, onComplete }) => {
       slide = <SlideThree />
       break
     case 3:
-      slide = <SlideFour hardinessValues={hardinessValues} onChoose={value => chooseHardiness(value)} />
+      slide = <SlideFour hardinessValues={hardinessValues} onChoose={(value) => chooseHardiness(value)} />
       break
     case 0:
     default:
@@ -119,9 +119,9 @@ const LibrarySlider = ({ hardinessValues, onComplete }) => {
   )
 }
 
-LibrarySlider.propTypes = {
-  hardinessValues: PropTypes.arrayOf(PropTypes.number).isRequired,
-  onComplete: PropTypes.func.isRequired,
+interface LibSliderProps {
+  hardinessValues: Array<Hardiness>
+  onComplete: (hardiness: number) => void
 }
 
 export default LibrarySlider
