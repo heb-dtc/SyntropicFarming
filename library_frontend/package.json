@@ -6,8 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development --env.env=dev",
     "build": "webpack --config ./webpack.config.js --env.env=prod",
-    "lint": "eslint --ignore-path '.eslintignore' --ext .js,.jsx .",
-    "lintfix": "eslint --fix --ignore-path '.eslintignore' --ext .js,.jsx .",
+    "lint": "eslint --ignore-path '.eslintignore' --ext .js,.ts,.tsx .",
+    "lintfix": "eslint --fix --ignore-path '.eslintignore' --ext .js,.ts,.tsx .",
     "analyze": "source-map-explorer 'dist/*.js'",
     "test": "jest --config ./jest.config.js"
   },
@@ -19,6 +19,8 @@
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
     "babel-loader": "^8.0.6",
     "css-modules-typescript-loader": "^4.0.0",
     "jest": "^26.4.2",

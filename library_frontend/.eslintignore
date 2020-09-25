@@ -1,5 +1,5 @@
 node_modules/
 dist/
 coverage/
-webpack.config.js
+webpack.*.js
 *.test.js
