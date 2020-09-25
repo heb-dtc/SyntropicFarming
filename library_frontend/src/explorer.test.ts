@@ -1,7 +1,9 @@
-import { groupBySelectedSpecies, updateModelsWithItemStatus, updateItemsStatusFromModels } from './explorer.js'
+import { groupBySelectedSpecies, updateModelsWithItemStatus, updateItemsStatusFromModels } from './explorer'
+import { AssociationModel } from './models'
 
-const createAssociationModel = (species, material, imageUrl, link, selected) => ({
+const createAssociationModel = (species, material, imageUrl, link, selected): AssociationModel => ({
   association: {
+    id: 0,
     species_name: species,
     material_name: material,
     image_url: imageUrl,
@@ -12,7 +14,7 @@ const createAssociationModel = (species, material, imageUrl, link, selected) => 
 
 describe('Library explorer data tests', () => {
   it('associations are grouped by selected models only', () => {
-    const models = [
+    const models: Array<AssociationModel> = [
       createAssociationModel('corn', 'wood', 'http://image.png', 'http://info.html', true),
       createAssociationModel('corn', 'wood', 'http://image.png', 'http://info.html', true),
       createAssociationModel('abaca', 'wood', 'http://image.png', 'http://info.html', true),
@@ -26,10 +28,10 @@ describe('Library explorer data tests', () => {
 
     const groupedAssociations = groupBySelectedSpecies(models)
 
-    expect(groupedAssociations.corn).toHaveLength(4)
-    expect(groupedAssociations.abaca).toHaveLength(2)
-    expect(groupedAssociations.banana).toHaveLength(1)
-    expect(groupedAssociations.colzar).toBeUndefined()
+    expect(groupedAssociations['corn']).toHaveLength(4)
+    expect(groupedAssociations['abaca']).toHaveLength(2)
+    expect(groupedAssociations['banana']).toHaveLength(1)
+    expect(groupedAssociations['colzar']).toBeUndefined()
   })
 
   it('material item status is set on all matching models', () => {
@@ -45,19 +47,20 @@ describe('Library explorer data tests', () => {
 
     const materialItem = {
       name: 'wood',
+      selected: false
     }
     const updatedModels = updateModelsWithItemStatus(models, materialItem, false)
 
     // all wood models are now set to selected false
-    expect(models[0].selected).toBeFalse
-    expect(models[2].selected).toBeFalse
-    expect(models[5].selected).toBeFalse
+    expect(models[0].selected).toBeFalsy
+    expect(models[2].selected).toBeFalsy
+    expect(models[5].selected).toBeFalsy
 
     // all other models are left untouched
-    expect(models[1].selected).toBeTrue
-    expect(models[3].selected).toBeTrue
-    expect(models[4].selected).toBeTrue
-    expect(models[6].selected).toBeFalse
+    expect(models[1].selected).toBeTruthy
+    expect(models[3].selected).toBeTruthy
+    expect(models[4].selected).toBeTruthy
+    expect(models[6].selected).toBeFalsy
   })
 
   it('species item status is set on all matching models', () => {
@@ -73,19 +76,20 @@ describe('Library explorer data tests', () => {
 
     const speciesItem = {
       name: 'corn',
+      selected: false
     }
     const updatedModels = updateModelsWithItemStatus(models, speciesItem, false)
 
     // all wood models are now set to selected false
-    expect(models[0].selected).toBeFalse
-    expect(models[1].selected).toBeFalse
-    expect(models[5].selected).toBeFalse
-    expect(models[6].selected).toBeFalse
+    expect(models[0].selected).toBeFalsy
+    expect(models[1].selected).toBeFalsy
+    expect(models[5].selected).toBeFalsy
+    expect(models[6].selected).toBeFalsy
 
     // all other models are left untouched
-    expect(models[2].selected).toBeTrue
-    expect(models[3].selected).toBeTrue
-    expect(models[4].selected).toBeTrue
+    expect(models[2].selected).toBeTruthy
+    expect(models[3].selected).toBeTruthy
+    expect(models[4].selected).toBeTruthy
   })
 
   it('species items status are updated according to models', () => {
@@ -111,11 +115,11 @@ describe('Library explorer data tests', () => {
 
     const updatedModels = updateItemsStatusFromModels(itemModels, associationModels)
 
-    expect(updatedModels[0].selected).toBeTrue
-    expect(updatedModels[1].selected).toBeFalse
-    expect(updatedModels[2].selected).toBeTrue
-    expect(updatedModels[3].selected).toBeFalse
-    expect(updatedModels[4].selected).toBeFalse
+    expect(updatedModels[0].selected).toBeTruthy
+    expect(updatedModels[1].selected).toBeFalsy
+    expect(updatedModels[2].selected).toBeTruthy
+    expect(updatedModels[3].selected).toBeFalsy
+    expect(updatedModels[4].selected).toBeFalsy
   })
 
   it('material items status are updated according to models', () => {
@@ -141,10 +145,10 @@ describe('Library explorer data tests', () => {
 
     const updatedModels = updateItemsStatusFromModels(itemModels, associationModels)
 
-    expect(updatedModels[0].selected).toBeTrue
-    expect(updatedModels[1].selected).toBeTrue
-    expect(updatedModels[2].selected).toBeFalse
-    expect(updatedModels[3].selected).toBeFalse
-    expect(updatedModels[4].selected).toBeTrue
+    expect(updatedModels[0].selected).toBeTruthy
+    expect(updatedModels[1].selected).toBeTruthy
+    expect(updatedModels[2].selected).toBeFalsy
+    expect(updatedModels[3].selected).toBeFalsy
+    expect(updatedModels[4].selected).toBeTruthy
   })
 })
