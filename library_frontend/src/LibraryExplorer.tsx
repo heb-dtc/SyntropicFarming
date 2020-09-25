@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { fetchAssociations } from '@/api'
 import { buildDisplayList, updateItemsStatusFromModels, updateModelsWithItemStatus } from '@/explorer'
+import { Hardiness } from '@/models'
 import styles from '@/style.css'
 
 const toggleSelected = (list, itemIndex) => {
@@ -18,8 +18,8 @@ const toggleSelected = (list, itemIndex) => {
   return newList
 }
 
-const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
-  const [associationModels, updateAssociationModels] = useState({})
+const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, onChangeHardiness }) => {
+  const [associationModels, updateAssociationModels] = useState([])
   const [materialModels, updateMaterialModels] = useState([])
   const [speciesModels, updateSpeciesModels] = useState([])
   const [associationDisplayList, updateAssociationDisplayList] = useState([])
@@ -62,7 +62,7 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
         const displayList = buildDisplayList(associationModelList)
         updateAssociationDisplayList(displayList)
       } else {
-        updateAssociationModels({})
+        updateAssociationModels([])
         updateSpeciesModels([])
         updateMaterialModels([])
         updateAssociationDisplayList([])
@@ -100,7 +100,9 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
             return (
               <div
                 key={i}
-                className={item.selected ? `${styles['explorerMenuText']} ${styles['selected']}` : styles['explorerMenuText']}
+                className={
+                  item.selected ? `${styles['explorerMenuText']} ${styles['selected']}` : styles['explorerMenuText']
+                }
                 onClick={() => {
                   // toggle species item status
                   updateSpeciesModels(toggleSelected(speciesModels, i))
@@ -147,7 +149,9 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
           {materialModels.map((item, index) => (
             <div
               key={index}
-              className={item.selected ? `${styles['explorerMenuText']} ${styles['selected']}` : styles['explorerMenuText']}
+              className={
+                item.selected ? `${styles['explorerMenuText']} ${styles['selected']}` : styles['explorerMenuText']
+              }
               onClick={() => {
                 // toggle material item status
                 updateMaterialModels(toggleSelected(materialModels, index))
@@ -170,10 +174,10 @@ const LibraryExplorer = ({ hardinessValues, hardiness, onChangeHardiness }) => {
   )
 }
 
-LibraryExplorer.propTypes = {
-  hardinessValues: PropTypes.arrayOf(PropTypes.number).isRequired,
-  hardiness: PropTypes.number.isRequired,
-  onChangeHardiness: PropTypes.func.isRequired,
+interface LibExpProps {
+  hardinessValues: Array<Hardiness>
+  hardiness: number
+  onChangeHardiness: (value: number) => void
 }
 
 export default LibraryExplorer

@@ -1,7 +1,8 @@
 import { BASE_URL } from './api'
+import { AssociationModel, MenuItemModel, DisplayRow } from '@/models'
 
-export const groupBySelectedSpecies = (array) => {
-  return array.reduce((accumulator, item) => {
+export const groupBySelectedSpecies = (array: Array<AssociationModel>): Array<DisplayRow> => {
+  return array.reduce((accumulator, item: AssociationModel) => {
     const { selected } = item
 
     if (selected) {
@@ -18,15 +19,19 @@ export const groupBySelectedSpecies = (array) => {
       })
     }
     return accumulator
-  }, {})
+  }, [])
 }
 
 // build the associations that can be displayed, grouped by species
-export const buildDisplayList = (models) => {
+export const buildDisplayList = (models: Array<AssociationModel>): Array<DisplayRow> => {
   return groupBySelectedSpecies(models)
 }
 
-export const updateModelsWithItemStatus = (models, item, status) => {
+export const updateModelsWithItemStatus = (
+  models: Array<AssociationModel>,
+  item: MenuItemModel,
+  status: boolean
+): Array<AssociationModel> => {
   return models.map((model) => {
     if (model.association.species_name === item.name || model.association.material_name === item.name) {
       return {
@@ -38,7 +43,10 @@ export const updateModelsWithItemStatus = (models, item, status) => {
   })
 }
 
-export const updateItemsStatusFromModels = (itemModels, associationModels) => {
+export const updateItemsStatusFromModels = (
+  itemModels: Array<MenuItemModel>,
+  associationModels: Array<AssociationModel>
+): Array<MenuItemModel> => {
   return itemModels.map((item) => {
     let updatedItem = {
       ...item,
@@ -56,49 +64,5 @@ export const updateItemsStatusFromModels = (itemModels, associationModels) => {
       }
     })
     return updatedItem
-  })
-}
-
-// update material selected status according to selected associations
-// setting to false by default and switching back to true if finding one selected association
-export const updateMaterialsStatus = (materials, associations) => {
-  return materials.map((material) => {
-    let updatedMaterial = {
-      ...material,
-      selected: false,
-    }
-    associations.forEach((item) => {
-      if (item.association.material_name === material.name) {
-        if (item.selected) {
-          updatedMaterial = {
-            ...material,
-            selected: true,
-          }
-        }
-      }
-    })
-    return updatedMaterial
-  })
-}
-
-// update species selected status according to selected associations
-// setting to false by default and switching back to true if finding one selected association
-export const updateSpeciesStatus = (speciesList, associations) => {
-  return speciesList.map((species) => {
-    let updatedSpecies = {
-      ...species,
-      selected: false,
-    }
-    associations.forEach((item) => {
-      if (item.association.species_name === species.name) {
-        if (item.selected) {
-          updatedSpecies = {
-            ...species,
-            selected: true,
-          }
-        }
-      }
-    })
-    return updatedSpecies
   })
 }
