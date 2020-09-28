@@ -6,37 +6,36 @@ import ArrowPrevious from '@/assets/prev_arrow.svg'
 
 const SlideOne = () => (
   <div>
-    <p>
-      welcome on syntropic materials library here you will be able to discover species and the materials they can be
-      processed into.
-    </p>
-    <p> your exploration will be filtered by selecting a climatic zone of interest</p>
+    <p>In this section you can find the first iteration of the syntropic materials library.</p>
+    <p> Here you will be able to browse through species and the materials they can be processed into.</p>
+    <p> All entries are categorized and filterable by climatic zones.</p>
   </div>
 )
 
 const SlideTwo = () => (
   <div>
+    <p>Your search begin with selecting a climatic zone of interest.</p>
     <p>
-      when your search will begin you’ll be exposed to all the species and materials recorded in the library which grows
-      in your selected climatic zone.
+      At first all the species and materials recorded in the library for that specific climatic zone will be displayed.
     </p>
+    <p>You will then be able to filter out materials or species that you dont find interesting by de-selecting them.</p>
   </div>
 )
 
 const SlideThree = () => (
   <div>
-    <p>your exploration will begin by selecting a climatic zone of interest </p>
+    <p>For the moment this library uses the hardiness zone classification system.</p>
     <p>
-      this database use the hardiness zone classification system. To know more about this classification and to find
-      your hardiness number please visit&nbsp;
-      <a href="https://www.plantmaps.com/index.php" target="_blank" rel="noreferrer">
-        https://www.plantmaps.com
+      “A hardiness zone is a geographic area defined to encompass a certain range of climatic conditions relevant to
+      plant growth and survival.”&nbsp;
+      <a href="https://en.wikipedia.org/wiki/Hardiness_zone" target="_blank" rel="noreferrer">
+        https://en.wikipedia.org/wiki/Hardiness_zone
       </a>
     </p>
     <p>
-      To learn more about the hardiness zones classification system go to &nbsp;
-      <a href="https://en.wikipedia.org/wiki/Hardiness_zone" target="_blank" rel="noreferrer">
-        https://en.wikipedia.org/wiki/Hardiness_zone
+      To find the hardiness zone number connected to you geographical area please visit&nbsp;
+      <a href="https://www.plantmaps.com/index.php" target="_blank" rel="noreferrer">
+        https://www.plantmaps.com
       </a>
     </p>
   </div>
@@ -44,12 +43,12 @@ const SlideThree = () => (
 
 const SlideFour: React.FC<SlideFourProps> = ({ hardinessValues, onChoose }) => (
   <div>
-    <p>select the hardiness zone of your interest and begin to explore the library</p>
+    <p>Select the hardiness zone of your interest and begin to explore the library</p>
     <p>
       Hardiness Zone /
-      <select className={styles['select']} onChange={(e) => onChoose(parseInt(e.target.value, 10))}>
+      <select className={styles['select']} onChange={e => onChoose(parseInt(e.target.value, 10))}>
         <option value={0}>All</option>
-        {hardinessValues.map((hardiness) => (
+        {hardinessValues.map(hardiness => (
           <option key={hardiness.id} value={hardiness.value}>
             {hardiness.value}
           </option>
@@ -77,7 +76,7 @@ const LibrarySlider: React.FC<LibSliderProps> = ({ hardinessValues, onComplete }
       slide = <SlideThree />
       break
     case 3:
-      slide = <SlideFour hardinessValues={hardinessValues} onChoose={(value) => chooseHardiness(value)} />
+      slide = <SlideFour hardinessValues={hardinessValues} onChoose={value => chooseHardiness(value)} />
       break
     case 0:
     default:

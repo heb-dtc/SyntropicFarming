@@ -3,13 +3,13 @@ import styles from '@/style.css'
 
 const LandingPage: React.FC = () => (
   <div className={`${styles['pageContainer']} ${styles['scrollContainer']}`}>
-    <div className={styles['contentHeader']}>
-      <p>
-        In this section you can find a description of the project, description which will change with the development of
-        the research.
-      </p>
-    </div>
     <div className={styles['contentContainer']}>
+      <div className={styles['contentHeader']}>
+        <p>
+          In this section you can find a description of the project, description which will change with the development
+          of the research.
+        </p>
+      </div>
       <div className={styles['content']}>
         <p>
           The current environmental crisis has proven to be a total one, affecting biodiversity, soil, water and air. As
@@ -41,9 +41,10 @@ const LandingPage: React.FC = () => (
           questioning what could be the relationship between a polycultural biodiverse successional and cyclical
           agroecosystem and innovation in material production.
         </p>
+        <h3>POLYCULTURES</h3>
         <p>
           For the development of the research a series of polycultural regenerative agroecosystems will be analysed and
-          presented in the section Polycutures.
+          presented in the section Polycultures.
         </p>
         <h3>LIBRARY</h3>
         <p>
