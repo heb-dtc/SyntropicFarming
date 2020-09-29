@@ -23,6 +23,8 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
   const [materialModels, updateMaterialModels] = useState([])
   const [speciesModels, updateSpeciesModels] = useState([])
   const [associationDisplayList, updateAssociationDisplayList] = useState([])
+  const [rightMenuVisible, switchSpeciesMenuVisibility] = useState(false)
+  const [leftMenuVisible, switchMaterialsMenuVisibility] = useState(false)
 
   useEffect(() => {
     const fetchValues = async () => {
@@ -30,7 +32,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
 
       if (associations != null) {
         // build array of all associations
-        const associationModelList = associations.map((item) => {
+        const associationModelList = associations.map(item => {
           return {
             association: item,
             selected: true,
@@ -41,7 +43,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
         // build an array of all species
         const speciesModelList = associations.reduce(
           (unique, item) =>
-            unique.some((species) => species.name === item.species_name)
+            unique.some(species => species.name === item.species_name)
               ? unique
               : [...unique, { name: item.species_name, selected: true }],
           []
@@ -51,7 +53,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
         // build an array of all materials
         const materialModelList = associations.reduce(
           (unique, item) =>
-            unique.some((material) => material.name === item.material_name)
+            unique.some(material => material.name === item.material_name)
               ? unique
               : [...unique, { name: item.material_name, selected: true }],
           []
@@ -79,13 +81,13 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
           <select
             className={styles['select']}
             value={hardiness}
-            onChange={(e) => {
+            onChange={e => {
               const value = parseInt(e.target.value, 10)
               onChangeHardiness(value)
             }}
           >
             <option value={0}>All</option>
-            {hardinessValues.map((item) => (
+            {hardinessValues.map(item => (
               <option key={item.id} value={item.value}>
                 {item.value}
               </option>
@@ -96,30 +98,44 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
       <div className={styles['explorerContainer']}>
         <aside className={`${styles['explorerMenu']} ${styles['leftMenu']} ${styles['scrollContainer']}`}>
           <div className={styles['explorerMenuTitle']}>species</div>
-          {speciesModels.map((item, i) => {
-            return (
-              <div
-                key={i}
-                className={
-                  item.selected ? `${styles['explorerMenuText']} ${styles['selected']}` : styles['explorerMenuText']
-                }
-                onClick={() => {
-                  // toggle species item status
-                  updateSpeciesModels(toggleSelected(speciesModels, i))
-                  // update all association models matching species to new status
-                  const models = updateModelsWithItemStatus(associationModels, item, !item.selected)
-                  updateAssociationModels(models)
-                  // check if any material item status should change and update if needed
-                  const updatedMaterialModels = updateItemsStatusFromModels(materialModels, models)
-                  updateMaterialModels(updatedMaterialModels)
-                  // re-compute the association display list
-                  updateAssociationDisplayList(buildDisplayList(models))
-                }}
-              >
-                {item.name}
-              </div>
-            )
-          })}
+          <div
+            className={
+              leftMenuVisible
+                ? `${styles['explorerMenuIcon']} ${styles['visibleItem']}`
+                : `${styles['explorerMenuIcon']} ${styles['hiddenItem']}`
+            }
+            onClick={() => {
+              switchSpeciesMenuVisibility(!leftMenuVisible)
+            }}
+          >
+            S
+          </div>
+          <div className={styles['explorerMenuItems']}>
+            {speciesModels.map((item, i) => {
+              return (
+                <div
+                  key={i}
+                  className={
+                    item.selected ? `${styles['explorerMenuText']} ${styles['selected']}` : styles['explorerMenuText']
+                  }
+                  onClick={() => {
+                    // toggle species item status
+                    updateSpeciesModels(toggleSelected(speciesModels, i))
+                    // update all association models matching species to new status
+                    const models = updateModelsWithItemStatus(associationModels, item, !item.selected)
+                    updateAssociationModels(models)
+                    // check if any material item status should change and update if needed
+                    const updatedMaterialModels = updateItemsStatusFromModels(materialModels, models)
+                    updateMaterialModels(updatedMaterialModels)
+                    // re-compute the association display list
+                    updateAssociationDisplayList(buildDisplayList(models))
+                  }}
+                >
+                  {item.name}
+                </div>
+              )
+            })}
+          </div>
         </aside>
 
         <main className={styles['scrollContainer']}>
@@ -146,28 +162,31 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
 
         <aside className={`${styles['explorerMenu']} ${styles['rightMenu']} ${styles['scrollContainer']}`}>
           <div className={styles['explorerMenuTitle']}>materials</div>
-          {materialModels.map((item, index) => (
-            <div
-              key={index}
-              className={
-                item.selected ? `${styles['explorerMenuText']} ${styles['selected']}` : styles['explorerMenuText']
-              }
-              onClick={() => {
-                // toggle material item status
-                updateMaterialModels(toggleSelected(materialModels, index))
-                // update all association models matching material to new status
-                const models = updateModelsWithItemStatus(associationModels, item, !item.selected)
-                updateAssociationModels(models)
-                // check if any species item status should change and update if needed
-                const updatedSpeciesModels = updateItemsStatusFromModels(speciesModels, models)
-                updateSpeciesModels(updatedSpeciesModels)
-                // re-compute the association display list
-                updateAssociationDisplayList(buildDisplayList(models))
-              }}
-            >
-              {item.name}
-            </div>
-          ))}
+          <div className={styles['explorerMenuIcon']}>M</div>
+          <div className={styles['explorerMenuItems']}>
+            {materialModels.map((item, index) => (
+              <div
+                key={index}
+                className={
+                  item.selected ? `${styles['explorerMenuText']} ${styles['selected']}` : styles['explorerMenuText']
+                }
+                onClick={() => {
+                  // toggle material item status
+                  updateMaterialModels(toggleSelected(materialModels, index))
+                  // update all association models matching material to new status
+                  const models = updateModelsWithItemStatus(associationModels, item, !item.selected)
+                  updateAssociationModels(models)
+                  // check if any species item status should change and update if needed
+                  const updatedSpeciesModels = updateItemsStatusFromModels(speciesModels, models)
+                  updateSpeciesModels(updatedSpeciesModels)
+                  // re-compute the association display list
+                  updateAssociationDisplayList(buildDisplayList(models))
+                }}
+              >
+                {item.name}
+              </div>
+            ))}
+          </div>
         </aside>
       </div>
     </div>

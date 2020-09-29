@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack.config.js --mode development --env.env=dev",
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development --env.env=dev --host 0.0.0.0",
     "build": "webpack --config ./webpack.config.js --env.env=prod",
     "lint": "eslint --ignore-path '.eslintignore' --ext .js,.ts,.tsx .",
     "lintfix": "eslint --fix --ignore-path '.eslintignore' --ext .js,.ts,.tsx .",

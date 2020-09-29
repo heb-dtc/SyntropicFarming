@@ -207,6 +207,45 @@ main {
   flex-flow: column;
 }
 
+.explorerMenuItems {
+  position: absolute;
+  left: -999px;
+}
+
+.visibleItem {
+    position: relative;
+    left: 0px;
+}
+
+.hiddenItem {
+    position: absolute;
+    left: -999px;
+}
+
+@media screen and (min-width: 768px) {
+  .explorerMenu {
+    padding: 0px var(--explorer-side-padding);
+    order: 1;
+    display: flex;
+    flex-flow: column;
+  }
+
+  .explorerMenuItems {
+    position: relative;
+    left: 0px;
+  }
+
+  .explorerMenuIcon {
+    position: absolute;
+    left: -999px;
+  }
+
+  .explorerMenuTitle {
+    position: relative;
+    left: 0px;
+  }
+}
+
 .leftMenu {
   order: 1;
 }
@@ -214,10 +253,18 @@ main {
 .rightMenu {
   order: 3;
 }
+
+.explorerMenuIcon {
+   position: relative;
+   left: 0px;
+ }
+
 .explorerMenuTitle {
-  text-align: center;
-  text-transform: uppercase;
-  margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    position: absolute;
+    left: -999px;
 }
 
 .explorerMenuText {
@@ -268,6 +315,13 @@ main {
   padding: 50px;
   flex-grow: 1;
   flex-basis: 0;
+  order: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .sliderContent {
+    order: 0; 
+  }
 }
 
 .select {
