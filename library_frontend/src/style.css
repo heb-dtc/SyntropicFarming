@@ -70,8 +70,8 @@ ul {
 }
 
 li {
-   list-style-type: '/';
-   display: list-item; 
+  list-style-type: '/';
+  display: list-item;
 }
 
 @media screen and (min-width: 768px) {
@@ -207,40 +207,23 @@ main {
   flex-flow: column;
 }
 
-.explorerMenuItems {
+.visibleItem {
+  position: relative;
+  left: 0px;
+}
+
+.hiddenItem {
   position: absolute;
   left: -999px;
 }
 
-.visibleItem {
-    position: relative;
-    left: 0px;
-}
-
-.hiddenItem {
-    position: absolute;
-    left: -999px;
-}
-
 @media screen and (min-width: 768px) {
-  .explorerMenu {
-    padding: 0px var(--explorer-side-padding);
-    order: 1;
-    display: flex;
-    flex-flow: column;
-  }
-
-  .explorerMenuItems {
-    position: relative;
-    left: 0px;
-  }
-
-  .explorerMenuIcon {
+  .visibleItem {
     position: absolute;
     left: -999px;
   }
 
-  .explorerMenuTitle {
+  .hiddenItem {
     position: relative;
     left: 0px;
   }
@@ -255,16 +238,14 @@ main {
 }
 
 .explorerMenuIcon {
-   position: relative;
-   left: 0px;
- }
+  position: relative;
+  left: 0px;
+}
 
 .explorerMenuTitle {
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    position: absolute;
-    left: -999px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 20px;
 }
 
 .explorerMenuText {
@@ -320,7 +301,7 @@ main {
 
 @media screen and (min-width: 768px) {
   .sliderContent {
-    order: 0; 
+    order: 0;
   }
 }
 

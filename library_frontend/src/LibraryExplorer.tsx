@@ -23,8 +23,8 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
   const [materialModels, updateMaterialModels] = useState([])
   const [speciesModels, updateSpeciesModels] = useState([])
   const [associationDisplayList, updateAssociationDisplayList] = useState([])
-  const [rightMenuVisible, switchSpeciesMenuVisibility] = useState(false)
-  const [leftMenuVisible, switchMaterialsMenuVisibility] = useState(false)
+  const [speciesMenuVisible, switchSpeciesMenuVisibility] = useState(false)
+  const [materialsMenuVisible, switchMaterialsMenuVisibility] = useState(false)
 
   useEffect(() => {
     const fetchValues = async () => {
@@ -97,20 +97,16 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
       </ul>
       <div className={styles['explorerContainer']}>
         <aside className={`${styles['explorerMenu']} ${styles['leftMenu']} ${styles['scrollContainer']}`}>
-          <div className={styles['explorerMenuTitle']}>species</div>
           <div
-            className={
-              leftMenuVisible
-                ? `${styles['explorerMenuIcon']} ${styles['visibleItem']}`
-                : `${styles['explorerMenuIcon']} ${styles['hiddenItem']}`
-            }
+            className={styles['explorerMenuTitle']}
             onClick={() => {
-              switchSpeciesMenuVisibility(!leftMenuVisible)
+              const visible = !speciesMenuVisible
+              switchSpeciesMenuVisibility(visible)
             }}
           >
-            S
+            {speciesMenuVisible ? 'species' : 'S'}
           </div>
-          <div className={styles['explorerMenuItems']}>
+          <div className={speciesMenuVisible ? styles['visibleItem'] : styles['hiddenItem']}>
             {speciesModels.map((item, i) => {
               return (
                 <div
@@ -161,9 +157,16 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
         </main>
 
         <aside className={`${styles['explorerMenu']} ${styles['rightMenu']} ${styles['scrollContainer']}`}>
-          <div className={styles['explorerMenuTitle']}>materials</div>
-          <div className={styles['explorerMenuIcon']}>M</div>
-          <div className={styles['explorerMenuItems']}>
+          <div
+            className={styles['explorerMenuTitle']}
+            onClick={() => {
+              const visible = !materialsMenuVisible
+              switchMaterialsMenuVisibility(visible)
+            }}
+          >
+            {materialsMenuVisible ? 'materials' : 'M'}
+          </div>
+          <div className={materialsMenuVisible ? styles['visibleItem'] : styles['hiddenItem']}>
             {materialModels.map((item, index) => (
               <div
                 key={index}
