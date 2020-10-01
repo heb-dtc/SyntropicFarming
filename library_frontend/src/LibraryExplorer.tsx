@@ -84,7 +84,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
               onChangeHardiness(value)
             }}
           >
-            <option value={0}>All</option>
+            <option value={0}>ALL</option>
             {hardinessValues.map((item) => (
               <option key={item.id} value={item.value}>
                 {item.value}
