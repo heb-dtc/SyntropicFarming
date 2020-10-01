@@ -144,7 +144,7 @@ li {
 
 .navigationBar {
   flex: 1;
-  background-color: #dfc7ff;
+  background-color: #e4e4e4;
   padding: 18px 0px;
 }
 
@@ -233,7 +233,7 @@ main {
 }
 
 .selected {
-  background-color: #f8d7d7;
+  background-color: #dec8fc;
 }
 
 .sliderContainer {
