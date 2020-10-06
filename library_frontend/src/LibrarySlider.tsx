@@ -47,7 +47,7 @@ const SlideFour: React.FC<SlideFourProps> = ({ hardinessValues, onChoose }) => (
     <p>
       Hardiness Zone /
       <select className={styles['select']} onChange={e => onChoose(parseInt(e.target.value, 10))}>
-        <option value={0}>All</option>
+        <option value={0}>ALL</option>
         {hardinessValues.map(hardiness => (
           <option key={hardiness.id} value={hardiness.value}>
             {hardiness.value}
