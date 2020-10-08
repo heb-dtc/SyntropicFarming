@@ -10,7 +10,7 @@ const AboutPage: React.FC = () => (
           <a href="http://www.eumo.it" target="_blank" rel="noreferrer">
             Eugenia Morpurgo
           </a>{' '}
-          in September 2019 during a Fellowship period at the&nbsp;
+          in September 2019 during the Tiffany & Co. Italian Fellowship at the&nbsp;
           <a href="https://www.aarome.org/home" target="_blank" rel="noreferrer">
             American Academy in Rome
           </a>{' '}
