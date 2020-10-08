@@ -19,12 +19,20 @@ const toggleSelected = (list, itemIndex) => {
 }
 
 const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, onChangeHardiness }) => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const [associationModels, updateAssociationModels] = useState([])
   const [materialModels, updateMaterialModels] = useState([])
   const [speciesModels, updateSpeciesModels] = useState([])
   const [associationDisplayList, updateAssociationDisplayList] = useState([])
   const [speciesMenuVisible, switchSpeciesMenuVisibility] = useState(false)
   const [materialsMenuVisible, switchMaterialsMenuVisibility] = useState(false)
+
+  useEffect(() => {
+    const handleWindowResize = () => setScreenWidth(window.innerWidth)
+    window.addEventListener("resize", handleWindowResize)
+
+    return () => window.removeEventListener("resize", handleWindowResize)
+  }, [])
 
   useEffect(() => {
     const fetchValues = async () => {
@@ -100,11 +108,13 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
           <div
             className={styles['explorerMenuTitle']}
             onClick={() => {
-              const visible = !speciesMenuVisible
-              switchSpeciesMenuVisibility(visible)
+              if (screenWidth < 768) {
+                const visible = !speciesMenuVisible
+                switchSpeciesMenuVisibility(visible)
+              }
             }}
           >
-            {speciesMenuVisible ? 'species' : 'S'}
+            {screenWidth > 768  ? 'species' : speciesMenuVisible ? 'species' : 'S'}
           </div>
           <div className={speciesMenuVisible ? styles['visibleItem'] : styles['hiddenItem']}>
             {speciesModels.map((item, i) => {
@@ -160,11 +170,13 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
           <div
             className={styles['explorerMenuTitle']}
             onClick={() => {
-              const visible = !materialsMenuVisible
-              switchMaterialsMenuVisibility(visible)
+              if (screenWidth < 768) {
+                const visible = !materialsMenuVisible
+                switchMaterialsMenuVisibility(visible)
+              }
             }}
           >
-            {materialsMenuVisible ? 'materials' : 'M'}
+            {screenWidth > 768  ? 'materials' : materialsMenuVisible ? 'materials' : 'M'}
           </div>
           <div className={materialsMenuVisible ? styles['visibleItem'] : styles['hiddenItem']}>
             {materialModels.map((item, index) => (

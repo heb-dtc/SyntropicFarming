@@ -264,7 +264,7 @@ main {
   text-align: center;
   text-transform: lowercase;
   padding: 0px 4px;
-  margin: 4px 0px;
+  margin: 4px auto;
   display: table;
   align-self: center;
   cursor: pointer;
