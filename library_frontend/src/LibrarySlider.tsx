@@ -24,18 +24,26 @@ const SlideTwo = () => (
 
 const SlideThree = () => (
   <div>
-    <p>For the moment this library uses the hardiness zone classification system.</p>
+    <p>
+      For the moment this library uses the&nbsp;
+      <a
+        className={styles['inlineLink']}
+        href="https://en.wikipedia.org/wiki/Hardiness_zone"
+        target="_blank"
+        rel="noreferrer"
+      >
+        hardiness zone
+      </a>
+      &nbsp;classification system.
+    </p>
     <p>
       “A hardiness zone is a geographic area defined to encompass a certain range of climatic conditions relevant to
       plant growth and survival.”&nbsp;
-      <a href="https://en.wikipedia.org/wiki/Hardiness_zone" target="_blank" rel="noreferrer">
-        https://en.wikipedia.org/wiki/Hardiness_zone
-      </a>
     </p>
     <p>
       To find the hardiness zone number connected to you geographical area please visit&nbsp;
-      <a href="https://www.plantmaps.com/index.php" target="_blank" rel="noreferrer">
-        https://www.plantmaps.com
+      <a className={styles['inlineLink']} href="https://www.plantmaps.com/index.php" target="_blank" rel="noreferrer">
+        plantmaps.com
       </a>
     </p>
   </div>
@@ -84,19 +92,21 @@ const LibrarySlider: React.FC<LibSliderProps> = ({ hardinessValues, onComplete }
   }
 
   return (
-    <div className={styles['sliderContainer']}>
-      <div className={styles['sliderArrowContainer']}>
-        {index > 0 && (
-          <img
-            className={styles['sliderArrow']}
-            src={ArrowPrevious}
-            alt="previous"
-            onClick={() => {
-              const newIndex = index - 1
-              setIndex(newIndex)
-            }}
-          />
-        )}
+    <div className={`${styles['sliderContainer']} ${styles['scrollContainer']}`}>
+      <div
+        className={
+          index == 0 ? `${styles['sliderArrowContainer']} ${styles['hidden']}` : styles['sliderArrowContainer']
+        }
+      >
+        <img
+          className={styles['sliderArrow']}
+          src={ArrowPrevious}
+          alt="previous"
+          onClick={() => {
+            const newIndex = index - 1
+            setIndex(newIndex)
+          }}
+        />
       </div>
       <div className={styles['sliderContent']}>{slide}</div>
       <div className={styles['sliderArrowContainer']}>

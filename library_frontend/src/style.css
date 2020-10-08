@@ -62,8 +62,7 @@ li > a {
   text-decoration: none;
 }
 
-nav,
-ul {
+nav, ul  {
   display: flex;
   flex-flow: column;
   margin: 0;
@@ -118,6 +117,14 @@ li {
   display: none;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
+.inlineLink {
+  display: inline-block;
+}
+
 .contentHeader {
   max-width: var(--header-max-width);
   align-self: start;
@@ -143,6 +150,7 @@ li {
 }
 
 .navigationBar {
+  margin: 0;
   flex: 1;
   background-color: #e4e4e4;
   padding: 18px 0px;
@@ -157,6 +165,8 @@ li {
 }
 
 .explorerNavBar {
+  flex-flow: row;
+  flex-wrap: wrap;
   margin-top: 40px;
   margin-bottom: 50px;
 }
@@ -295,9 +305,8 @@ main {
 .sliderContent {
   font-size: var(--text-font-size);
   text-align: center;
-  padding: 50px;
+  padding: 0px 50px;
   flex-grow: 1;
-  flex-basis: 0;
   order: 1;
 }
 
