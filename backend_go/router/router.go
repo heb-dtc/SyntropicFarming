@@ -23,11 +23,16 @@ func Router() *mux.Router {
 	router.HandleFunc("/api/species/new", middleware.AddSpecies).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/species/delete/{id}", middleware.DeleteSpecies).Methods("DELETE", "OPTIONS")
 
+	router.HandleFunc("/api/agro", middleware.GetAllAgroEcoSystems).Methods("GET", "OPTIONS")
+	router.HandleFunc("/api/agro/new", middleware.AddAgroEcoSystem).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/agro/delete/{id}", middleware.DeleteAgroEcoSystem).Methods("DELETE", "OPTIONS")
+
 	staticFileDirectory := http.Dir("./assets/")
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
 	router.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
 
   router.HandleFunc("/gallery", middleware.RenderGallery).Methods("GET")
+  router.HandleFunc("/agro", middleware.RenderAddAgroSystem).Methods("GET")
   router.HandleFunc("/species", middleware.RenderAddSpecies).Methods("GET")
   router.HandleFunc("/materials", middleware.RenderAddMaterial).Methods("GET")
   router.HandleFunc("/associations", middleware.RenderAddAssociation).Methods("GET")

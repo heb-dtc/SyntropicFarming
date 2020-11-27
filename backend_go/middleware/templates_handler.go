@@ -13,6 +13,11 @@ type AddSpeciesPageData struct {
   HardinessList []models.Hardiness
 }
 
+type AddAgroSystemPageData struct {
+  AgroEcoSystems []models.AgroEcoSystem
+  HardinessList []models.Hardiness
+}
+
 type AddAssociationPageData struct {
   Species []models.Species
   Materials []models.Material
@@ -92,6 +97,25 @@ func RenderAddSpecies(w http.ResponseWriter, r *http.Request) {
 
     items := AddSpeciesPageData {
       Species: species,
+      HardinessList: hardinessList,
+    }
+    tmpl.ExecuteTemplate(w, "layout", items)
+  }
+}
+
+func RenderAddAgroSystem(w http.ResponseWriter, r *http.Request) {
+  log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
+
+  lp := filepath.Join("templates", "layout.html")
+  fp := filepath.Join("templates", "agro.html")
+  tmpl, err := template.ParseFiles(lp, fp)
+
+  if err == nil {
+    agroSystems, _ := getAllAgroEcoSystems()
+    hardinessList, _ := getAllHardiness()
+
+    items := AddAgroSystemPageData {
+      AgroEcoSystems: agroSystems,
       HardinessList: hardinessList,
     }
     tmpl.ExecuteTemplate(w, "layout", items)

@@ -32,3 +32,9 @@ type AssociationDetails struct {
 	ImageUrl     string `json:"image_url"`
 	Link         string `json:"link"`
 }
+
+type AgroEcoSystem struct {
+	ID        int64  `json:"id"`
+	Name      string `json:"name"`
+	Hardiness int    `json:"hardiness"`
+}

@@ -1,0 +1,60 @@
+{{define "page"}}Agro Eco Systems{{end}}
+{{define "title"}}Add Agro Eco System{{end}}
+
+{{define "body"}}
+
+<form id="addAgroEcoSystemForm">
+  <input type="text" name="name" id="agroSystemName" />
+  <select id="hardinessSelect" name="hardiness">
+    <option>Choose an hardiness</option>
+    {{range .HardinessList}}
+    <option value={{.ID}}>{{.Value}}</option>
+    {{end}}
+  </select>
+  <input type="submit" value="add" />
+</form>
+<br/>
+
+<h1>Existing Agro Eco Systems</h1>
+<table>
+  <thead>
+    <tr>
+      <th colspan="1">Name</th>
+      <th colspan="1">Hardiness</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{range .AgroEcoSystems}}
+    <tr>
+      <td>{{.Name}}</td>
+      <td>{{.Hardiness}}</td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+<br/>
+
+<script>
+document.getElementById('addAgroEcoSystemForm').addEventListener('submit', addAgroEcoSystem);
+
+function addAgroEcoSystem(event) {
+  event.preventDefault();
+  let name = document.getElementById('agroSystemName').value;
+  hardiness = parseInt(hardinessSelect.value)
+
+  fetch("/api/agro/new", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: JSON.stringify({name: name, hardiness: hardiness})
+  })
+    .then(response => location.reload());
+}
+</script>
+{{end}}
