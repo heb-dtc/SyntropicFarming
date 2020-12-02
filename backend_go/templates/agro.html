@@ -1,8 +1,9 @@
 {{define "page"}}Agro Eco Systems{{end}}
-{{define "title"}}Add Agro Eco System{{end}}
+{{define "title"}}Agro Eco System{{end}}
 
 {{define "body"}}
 
+<h2> ---> add new agro eco system </h2>
 <form id="addAgroEcoSystemForm">
   <input type="text" name="name" id="agroSystemName" />
   <select id="hardinessSelect" name="hardiness">
@@ -15,19 +16,38 @@
 </form>
 <br/>
 
+<h2> ---> populate exisitng agro eco system </h2>
+<form id="populateAgroEcoSystemForm">
+  <select id="agroSystemSelect" name="agroEcoSystem">
+    <option>Choose an Agro Eco System</option>
+    {{range .AgroEcoSystems}}
+    <option value={{.ID}}>{{.Name}}</option>
+    {{end}}
+  </select>
+  <select id="speciesSelect" name="species" multiple>
+    {{range .Species}}
+    <option value={{.ID}}>{{.Name}}</option>
+    {{end}}
+  </select>
+  <input type="submit" value="add" />
+</form>
+<br/>
+
 <h1>Existing Agro Eco Systems</h1>
 <table>
   <thead>
     <tr>
       <th colspan="1">Name</th>
       <th colspan="1">Hardiness</th>
+      <th colspan="1">Species</th>
     </tr>
   </thead>
   <tbody>
-    {{range .AgroEcoSystems}}
+    {{range .AgroEcoSystemAssociations}}
     <tr>
       <td>{{.Name}}</td>
       <td>{{.Hardiness}}</td>
+      <td>{{.SpeciesName}}</td>
     </tr>
     {{end}}
   </tbody>
@@ -35,11 +55,12 @@
 <br/>
 
 <script>
-document.getElementById('addAgroEcoSystemForm').addEventListener('submit', addAgroEcoSystem);
+document.getElementById('addAgroEcoSystemForm').addEventListener('submit', addAgroEcoSystem)
+document.getElementById('populateAgroEcoSystemForm').addEventListener('submit', populateAgroEcoSystem)
 
 function addAgroEcoSystem(event) {
-  event.preventDefault();
-  let name = document.getElementById('agroSystemName').value;
+  event.preventDefault()
+  name = document.getElementById('agroSystemName').value
   hardiness = parseInt(hardinessSelect.value)
 
   fetch("/api/agro/new", {
@@ -54,7 +75,24 @@ function addAgroEcoSystem(event) {
     referrer: "no-referrer",
     body: JSON.stringify({name: name, hardiness: hardiness})
   })
-    .then(response => location.reload());
+    .then(response => location.reload())
+}
+
+function populateAgroEcoSystem(event) {
+  event.preventDefault()
+  form = document.getElementById("populateAgroEcoSystemForm")
+  const formData = new FormData(form);
+
+  fetch("/api/agro/populate", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: formData //JSON.stringify({agroSystemId: agroId, species: speciesIdList})
+  })
+    .then(response => location.reload())
 }
 </script>
 {{end}}

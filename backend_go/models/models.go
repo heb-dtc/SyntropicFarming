@@ -38,3 +38,10 @@ type AgroEcoSystem struct {
 	Name      string `json:"name"`
 	Hardiness int    `json:"hardiness"`
 }
+
+type AgroEcoSystemAssociation struct {
+  ID int64 `json:"id"`
+  Name string `json:"name"`
+  Hardiness int `json:"hardiness"`
+  SpeciesName string `json:"speciesName"`
+}
