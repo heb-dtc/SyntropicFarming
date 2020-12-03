@@ -25,6 +25,11 @@ const NavigationBar: React.FC = () => (
           ABOUT
         </NavLink>
       </li>
+      <li>
+        <NavLink activeClassName={styles['selectedNav']} to="/credits">
+          CREDITS
+        </NavLink>
+      </li>
     </ul>
   </div>
 )

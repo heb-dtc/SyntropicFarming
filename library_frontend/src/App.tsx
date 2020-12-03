@@ -5,6 +5,7 @@ import LandingPage from '@/LandingPage'
 import LibraryPage from '@/LibraryPage'
 import PolyculturePage from '@/PolyculturePage'
 import AboutPage from '@/AboutPage'
+import CreditsPage from '@/CreditsPage'
 import styles from '@/style.css'
 
 const App: React.FC = () => (
@@ -20,6 +21,9 @@ const App: React.FC = () => (
         </Route>
         <Route path="/about">
           <AboutPage />
+        </Route>
+        <Route path="/credits">
+          <CreditsPage />
         </Route>
         <Route path="/">
           <LandingPage />

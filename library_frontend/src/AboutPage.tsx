@@ -21,9 +21,10 @@ const AboutPage: React.FC = () => (
           </a>{' '}
           from November 2020 until April 2021.
         </p>
+        <p>Programming by Florent Noel <br/>
+        To see the source code of this library go to <a href="https://github.com/heb-dtc/SyntropicFarming/">https://github.com/heb-dtc/SyntropicFarming/</a></p>
         <p>Contact: eumorpurgo at gmail.com</p>
         <p>Thanks to: Fiori Berhane, Naomi Galavotti and Sophia Guggenberger.</p>
-        <p>Programming by Florent Noel</p>
       </div>
     </div>
   </div>
