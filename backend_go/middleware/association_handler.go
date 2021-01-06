@@ -63,6 +63,10 @@ func AddAssociation(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(res)
 }
 
+func EditAssociation(w http.ResponseWriter, r *http.Request) {
+  log.Printf("EditAssociations")
+}
+
 func GetAllAssociations(w http.ResponseWriter, r *http.Request) {
   log.Printf("GetAllAssociations")
 

@@ -40,6 +40,21 @@ func RenderHome(w http.ResponseWriter, r *http.Request) {
   }
 }
 
+func RenderEditAssociations(w http.ResponseWriter, r *http.Request) {
+  log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
+
+  lp := filepath.Join("templates", "layout.html")
+  fp := filepath.Join("templates", "edit_associations.html")
+  tmpl, err := template.ParseFiles(lp, fp)
+
+  if err == nil {
+    items, _ := getAllAssociations()
+    tmpl.ExecuteTemplate(w, "layout", items)
+  } else {
+    log.Fatal(err)
+  }
+}
+
 func RenderGallery(w http.ResponseWriter, r *http.Request) {
   log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
 

@@ -1,0 +1,49 @@
+{{define "page"}}Association{{end}}
+{{define "title"}}Edit Association{{end}}
+
+{{define "body"}}
+<table>
+  <thead>
+    <tr>
+      <th colspan="1">ID</th>
+      <th colspan="1">species</th>
+      <th colspan="1">material</th>
+      <th colspan="1">image</th>
+      <th colspan="1">link</th>
+      <th colspan="1">action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{range .}}
+    <tr>
+      <th>{{.ID}}</th>
+      <td>{{.SpeciesName}}</td>
+      <td>{{.MaterialName}}</td>
+      <td contenteditable="true"><img src="{{.ImageUrl}}"/></td>
+      <td contenteditable="true">{{.Link}}</td>
+      <td><button onclick="editAssociation()">Update</button></td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+
+<script>
+document.getElementById('update-btn').addEventListener('onclick', editAssociation)
+
+function editAssociation(id) {
+    console.log("edit association ${id}")
+  /*
+  fetch("/api/associations/edit/", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: formData
+  })
+    .then(response => console.log("association edited"));
+  */
+}
+</script>
+{{end}}

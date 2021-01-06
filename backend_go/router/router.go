@@ -13,6 +13,7 @@ func Router() *mux.Router {
 
 	router.HandleFunc("/api/associations", middleware.GetAllAssociations).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/associations/create", middleware.AddAssociation).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/associations/edit/{id}", middleware.EditAssociation).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/associations/filter/{hardiness}", middleware.FilterAssociations).Methods("GET", "OPTIONS")
 
 	router.HandleFunc("/api/materials", middleware.GetAllMaterials).Methods("GET", "OPTIONS")
@@ -37,6 +38,7 @@ func Router() *mux.Router {
   router.HandleFunc("/species", middleware.RenderAddSpecies).Methods("GET")
   router.HandleFunc("/materials", middleware.RenderAddMaterial).Methods("GET")
   router.HandleFunc("/associations", middleware.RenderAddAssociation).Methods("GET")
+  router.HandleFunc("/edit_associations", middleware.RenderEditAssociations).Methods("GET")
   router.HandleFunc("/", middleware.RenderHome).Methods("GET")
 
 	imageFileDirectory := http.Dir("./uploads/")
