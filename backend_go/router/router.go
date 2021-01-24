@@ -2,8 +2,8 @@ package router
 
 import (
 	"backend/middleware"
-	"net/http"
 	"github.com/gorilla/mux"
+	"net/http"
 )
 
 func Router() *mux.Router {
@@ -33,13 +33,13 @@ func Router() *mux.Router {
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
 	router.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
 
-  router.HandleFunc("/gallery", middleware.RenderGallery).Methods("GET")
-  router.HandleFunc("/agro", middleware.RenderAddAgroSystem).Methods("GET")
-  router.HandleFunc("/species", middleware.RenderAddSpecies).Methods("GET")
-  router.HandleFunc("/materials", middleware.RenderAddMaterial).Methods("GET")
-  router.HandleFunc("/associations", middleware.RenderAddAssociation).Methods("GET")
-  router.HandleFunc("/edit_associations", middleware.RenderEditAssociations).Methods("GET")
-  router.HandleFunc("/", middleware.RenderHome).Methods("GET")
+	router.HandleFunc("/gallery", middleware.RenderGallery).Methods("GET")
+	router.HandleFunc("/agro", middleware.RenderAddAgroSystem).Methods("GET")
+	router.HandleFunc("/species", middleware.RenderAddSpecies).Methods("GET")
+	router.HandleFunc("/materials", middleware.RenderAddMaterial).Methods("GET")
+	router.HandleFunc("/associations", middleware.RenderAddAssociation).Methods("GET")
+	router.HandleFunc("/association/{id}", middleware.RenderAssociationDetails).Methods("GET")
+	router.HandleFunc("/", middleware.RenderHome).Methods("GET")
 
 	imageFileDirectory := http.Dir("./uploads/")
 	imageFileHandler := http.StripPrefix("/uploads/", http.FileServer(imageFileDirectory))

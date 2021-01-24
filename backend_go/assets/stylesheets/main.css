@@ -14,6 +14,12 @@
   width: 100%;
 }
 
+.table-img {
+  object-fit: cover;
+  width: 100px;
+  width: 100%;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;

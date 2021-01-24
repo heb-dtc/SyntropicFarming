@@ -1,0 +1,61 @@
+{{define "page"}}Association{{end}}
+{{define "title"}}Edit Association{{end}}
+
+{{define "body"}}
+<form id="editAssociationForm">
+  <select id="speciesSelect" name="species">
+    <option selected="selected" value={{.AssociationDetails.SpeciesId}}>{{.AssociationDetails.SpeciesName}}</option>
+    {{range .Species}}
+    <option value={{.ID}}>{{.Name}}</option>
+    {{end}}
+  </select>
+  <select id="materialSelect" name="material">
+    <option selected="selected" value={{.AssociationDetails.MaterialId}}>{{.AssociationDetails.MaterialName}}</option>
+    {{range .Materials}}
+    <option value={{.ID}}>{{.Name}}</option>
+    {{end}}
+  </select>
+  <br/>
+  <br/>
+  image: <input type="file" name="image" text="yooo"/>
+  <br/>
+  <br/>
+  link: <input type="text" name="link" id="link"/>
+  <br/>
+  <br/>
+  <input type="submit" value="update" />
+</form>
+
+<script>
+document.getElementById('updateAssociationForm').addEventListener('submit', createAssociation)
+
+function editAssociation(event) {
+  event.preventDefault();
+  form = document.getElementById('updateAssociationForm')
+  const formData = new FormData(form);
+
+  /*
+  fetch("/api/associations/edit/", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: formData
+  })
+    .then(response => console.log("association edited"));
+  fetch("/api/associations/create", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: formData
+  })
+    .then(response => console.log("association updated"));
+  */
+}
+</script>
+{{end}}

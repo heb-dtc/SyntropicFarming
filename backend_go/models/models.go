@@ -27,7 +27,9 @@ type Association struct {
 
 type AssociationDetails struct {
 	ID           int64  `json:"id"`
+	SpeciesId    int64  `json:"species_id"`
 	SpeciesName  string `json:"species_name"`
+	MaterialId   int64  `json:"material_id"`
 	MaterialName string `json:"material_name"`
 	ImageUrl     string `json:"image_url"`
 	Link         string `json:"link"`
@@ -40,8 +42,8 @@ type AgroEcoSystem struct {
 }
 
 type AgroEcoSystemAssociation struct {
-  ID int64 `json:"id"`
-  Name string `json:"name"`
-  Hardiness int `json:"hardiness"`
-  SpeciesName string `json:"speciesName"`
+	ID          int64  `json:"id"`
+	Name        string `json:"name"`
+	Hardiness   int    `json:"hardiness"`
+	SpeciesName string `json:"speciesName"`
 }
