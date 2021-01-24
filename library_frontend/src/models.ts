@@ -30,3 +30,18 @@ export interface GridItemModel {
 export interface DisplayRow {
   [speciesName: string]: GridItemModel
 }
+
+export interface AgroEcoSystem {
+  id: number 
+}
+
+export enum FilterType {
+  HARDINESS,
+  AGRO_ECO_SYSTEM
+}
+
+export interface LibraryFilter {
+  id: number
+  value: number
+  filterType: FilterType
+}

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Hardiness, Association } from '@/models'
+import { Hardiness, Association, LibraryFilter, FilterType } from '@/models'
 
 export const getImageUrl = (imageName: string): string => {
   return `${BASE_URL}/uploads/${imageName}`
@@ -16,6 +16,18 @@ export const fetchAssociations = async (hardiness: number): Promise<Array<Associ
   const url = buildUrl(hardiness)
   const response = await axios(url)
   return response.data
+}
+
+export const fetchLibraryFilters = async (filterType: FilterType): Promise<Array<LibraryFilter>> => {
+  if (filterType == FilterType.HARDINESS) {
+    const hardinessValues = await fetchHardinessValues()
+    return hardinessValues.map(hardiness =>{ return {
+      id: hardiness.id,
+      value: hardiness.value,
+      filterType: filterType
+    }})
+  }
+  return []
 }
 
 export const fetchHardinessValues = async (): Promise<Array<Hardiness>> => {

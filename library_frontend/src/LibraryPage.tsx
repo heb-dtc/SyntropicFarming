@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { fetchHardinessValues } from '@/api'
+import { fetchLibraryFilters } from '@/api'
 import LibraryExplorer from '@/LibraryExplorer'
 import LibrarySlider from '@/LibrarySlider'
-import { Hardiness } from '@/models'
+import { Hardiness, FilterType } from '@/models'
 
 const LibraryPage: React.FC = () => {
   const [introPlayed, setIntroPlayed] = useState(false)
@@ -11,7 +11,7 @@ const LibraryPage: React.FC = () => {
 
   useEffect(() => {
     const fetchValues = async () => {
-      const values: Array<Hardiness> = await fetchHardinessValues()
+      const values: Array<Hardiness> = await fetchLibraryFilters(FilterType.HARDINESS)
       setValues(values)
     }
     fetchValues()
@@ -20,9 +20,9 @@ const LibraryPage: React.FC = () => {
   if (introPlayed) {
     return (
       <LibraryExplorer
-        hardinessValues={hardinessValues}
-        hardiness={hardiness}
-        onChangeHardiness={(value) => setHardiness(value)}
+        availableValues={hardinessValues}
+        value={hardiness}
+        onValueChange={(value) => setHardiness(value)}
       />
     )
   }

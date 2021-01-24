@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { fetchAssociations } from '@/api'
 import { buildDisplayList, updateItemsStatusFromModels, updateModelsWithItemStatus } from '@/explorer'
-import { Hardiness } from '@/models'
+import { Hardiness, LibraryFilter } from '@/models'
 import styles from '@/style.css'
 
 const toggleSelected = (list, itemIndex) => {
@@ -18,7 +18,7 @@ const toggleSelected = (list, itemIndex) => {
   return newList
 }
 
-const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, onChangeHardiness }) => {
+const LibraryExplorer: React.FC<LibExpProps> = ({ availableValues, value, onValueChange }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const [associationModels, updateAssociationModels] = useState([])
   const [materialModels, updateMaterialModels] = useState([])
@@ -36,7 +36,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
 
   useEffect(() => {
     const fetchValues = async () => {
-      const associations = await fetchAssociations(hardiness)
+      const associations = await fetchAssociations(value)
 
       if (associations != null) {
         // build array of all associations
@@ -79,7 +79,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
       }
     }
     fetchValues()
-  }, [hardiness])
+  }, [value])
 
   return (
     <div className={styles['pageContainer']}>
@@ -88,14 +88,14 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
         <li>
           <select
             className={styles['select']}
-            value={hardiness}
+            value={value}
             onChange={e => {
               const value = parseInt(e.target.value, 10)
-              onChangeHardiness(value)
+              onValueChange(value)
             }}
           >
             <option value={0}>ALL</option>
-            {hardinessValues.map((item) => (
+            {availableValues.map((item) => (
               <option key={item.id} value={item.value}>
                 {item.value}
               </option>
@@ -209,9 +209,9 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ hardinessValues, hardiness, on
 }
 
 interface LibExpProps {
-  hardinessValues: Array<Hardiness>
-  hardiness: number
-  onChangeHardiness: (value: number) => void
+  availableValues: Array<LibraryFilter>
+  value: number
+  onValueChange: (value: number) => void
 }
 
 export default LibraryExplorer
