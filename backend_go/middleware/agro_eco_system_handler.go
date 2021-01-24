@@ -48,15 +48,15 @@ func PopulateAgroEcoSystem(w http.ResponseWriter, r *http.Request) {
 		log.Fatalf("Unable to convert the string into int.  %v", err)
 	}
 
-  speciesIdList := r.Form["species"]
+	speciesIdList := r.Form["species"]
 	if err != nil {
 		log.Fatalf("Unable to convert the string into int.  %v", err)
 	}
 
-  for _, s := range speciesIdList {
-    speciesId, _ := strconv.Atoi(s)
-	  insertAgroSystemAssociation(int64(agroSystemId), int64(speciesId))
-  }
+	for _, s := range speciesIdList {
+		speciesId, _ := strconv.Atoi(s)
+		insertAgroSystemAssociation(int64(agroSystemId), int64(speciesId))
+	}
 
 	res := response{
 		Message: "Agro eco system populated successfully",
@@ -71,13 +71,31 @@ func GetAllAgroEcoSystems(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	users, err := getAllAgroEcoSystems()
+	systems, err := getAllAgroEcoSystems()
 
 	if err != nil {
-		log.Fatalf("Unable to get all species. %v", err)
+		log.Fatalf("Unable to get all agro eco system. %v", err)
 	}
 
-	json.NewEncoder(w).Encode(users)
+	json.NewEncoder(w).Encode(systems)
+}
+
+func GetAssociationsForAgroEcoSystem(w http.ResponseWriter, r *http.Request) {
+	log.Printf("getAllAgroEcoSystems")
+
+	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	params := mux.Vars(r)
+	systemId, err := strconv.Atoi(params["id"])
+	associations, err := getAssociationsForAgroEcoSytem(systemId)
+
+	if err != nil {
+		log.Fatalf("Unable to get assocications for agro eco system. %v", err)
+	}
+
+	json.NewEncoder(w).Encode(associations)
+
 }
 
 func DeleteAgroEcoSystem(w http.ResponseWriter, r *http.Request) {

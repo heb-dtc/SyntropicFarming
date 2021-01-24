@@ -25,6 +25,7 @@ func Router() *mux.Router {
 	router.HandleFunc("/api/species/delete/{id}", middleware.DeleteSpecies).Methods("DELETE", "OPTIONS")
 
 	router.HandleFunc("/api/agro", middleware.GetAllAgroEcoSystems).Methods("GET", "OPTIONS")
+	router.HandleFunc("/api/agro/{id}/associations", middleware.GetAssociationsForAgroEcoSystem).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/agro/new", middleware.AddAgroEcoSystem).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/agro/populate", middleware.PopulateAgroEcoSystem).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/agro/delete/{id}", middleware.DeleteAgroEcoSystem).Methods("DELETE", "OPTIONS")
