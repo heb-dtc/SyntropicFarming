@@ -5,8 +5,7 @@ export const getImageUrl = (imageName: string): string => {
   return `${BASE_URL}/uploads/${imageName}`
 }
 
-//export const BASE_URL = 'https://syntropic-api.hebus.net'
-export const BASE_URL = 'http://127.0.0.1:3001'
+export const BASE_URL = 'https://syntropic-api.hebus.net'
 const API_URL = `${BASE_URL}/api`
 
 const buildFilterByHardinessUrl = (hardiness: number): string => {
