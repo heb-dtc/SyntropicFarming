@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import styles from '@/style.css'
-import { LibraryFilter, Filter } from '@/models'
+import { LibraryFilter, Filter, FilterType } from '@/models'
+
+const printFilter = (filter: Filter) => {
+  if (filter.filterType == FilterType.HARDINESS) {
+    if (filter.value == 0) {
+      return 'ALL'
+    }
+  }
+
+  return filter.value
+}
 
 const FilterSelector: React.FC<FilterSelectorProps> = ({ libraryFilters, libFiltersIndex, filterIndex, onChoose }) => {
   const [currentLibFilter, setCurrentLibFilter] = useState(libFiltersIndex)
@@ -34,7 +44,7 @@ const FilterSelector: React.FC<FilterSelectorProps> = ({ libraryFilters, libFilt
       }}>
         {filters.map((filter,index) => (
           <option key={filter.id} value={index}>
-            {filter.value}
+            { printFilter(filter)}
           </option>
         ))}
       </select>

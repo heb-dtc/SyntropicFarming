@@ -37,6 +37,13 @@ export const fetchLibraryFilters = async (): Promise<Array<LibraryFilter>> => {
       filterType: FilterType.HARDINESS
     }})
 
+  // insert a fake hardiness reprensenting ALL
+  hardinessFilterValues.splice(0, 0, { 
+    id: -1,
+    value: 0,
+    filterType: FilterType.HARDINESS
+  })
+
   const hardinessFilers ={
     filters: hardinessFilterValues,
     name: 'Hardiness Zones'
