@@ -19,6 +19,18 @@ const toggleSelected = (list, itemIndex) => {
   return newList
 }
 
+const orderAlphabetically = (a,b) => {
+  var nameA = a.name.toUpperCase()
+    var nameB = b.name.toUpperCase()
+    if (nameA < nameB) {
+      return -1;
+    }
+  if (nameA > nameB) {
+    return 1;
+  }
+  return 0; 
+}
+
 const LibraryExplorer: React.FC<LibExpProps> = ({ filters, libFiltersIndex, selectedFilter, selectedFilterIndex, onFilterChange }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const [associationModels, updateAssociationModels] = useState([])
@@ -56,7 +68,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ filters, libFiltersIndex, sele
               ? unique
               : [...unique, { name: item.species_name, selected: true }],
           []
-        )
+        ).sort(orderAlphabetically)
         updateSpeciesModels(speciesModelList)
 
         // build an array of all materials
@@ -66,7 +78,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ filters, libFiltersIndex, sele
               ? unique
               : [...unique, { name: item.material_name, selected: true }],
           []
-        )
+        ).sort(orderAlphabetically)
         updateMaterialModels(materialModelList)
 
         // build array of associations to display
