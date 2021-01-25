@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import FilterSelector from '@/FilterSelector' 
+import FilterSelector from '@/FilterSelector'
 import { fetchAssociations } from '@/api'
 import { buildDisplayList, updateItemsStatusFromModels, updateModelsWithItemStatus } from '@/explorer'
 import { Hardiness, LibraryFilter, Filter, FilterType } from '@/models'
@@ -19,19 +19,25 @@ const toggleSelected = (list, itemIndex) => {
   return newList
 }
 
-const orderAlphabetically = (a,b) => {
-  var nameA = a.name.toUpperCase()
-    var nameB = b.name.toUpperCase()
-    if (nameA < nameB) {
-      return -1;
-    }
-  if (nameA > nameB) {
-    return 1;
+const orderAlphabetically = (a, b) => {
+  const nameA = a.toUpperCase()
+  const nameB = b.toUpperCase()
+  if (nameA < nameB) {
+    return -1
   }
-  return 0; 
+  if (nameA > nameB) {
+    return 1
+  }
+  return 0
 }
 
-const LibraryExplorer: React.FC<LibExpProps> = ({ filters, libFiltersIndex, selectedFilter, selectedFilterIndex, onFilterChange }) => {
+const LibraryExplorer: React.FC<LibExpProps> = ({
+  filters,
+  libFiltersIndex,
+  selectedFilter,
+  selectedFilterIndex,
+  onFilterChange,
+}) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const [associationModels, updateAssociationModels] = useState([])
   const [materialModels, updateMaterialModels] = useState([])
@@ -42,43 +48,49 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ filters, libFiltersIndex, sele
 
   useEffect(() => {
     const handleWindowResize = () => setScreenWidth(window.innerWidth)
-    window.addEventListener("resize", handleWindowResize)
+    window.addEventListener('resize', handleWindowResize)
 
-    return () => window.removeEventListener("resize", handleWindowResize)
+    return () => window.removeEventListener('resize', handleWindowResize)
   }, [])
-  
+
   useEffect(() => {
     const fetchValues = async () => {
       const associations = await fetchAssociations(selectedFilter)
 
       if (associations != null) {
         // build array of all associations
-        const associationModelList = associations.map(item => {
-          return {
-            association: item,
-            selected: true,
-          }
-        })
+        const associationModelList = associations
+          .map((item) => {
+            return {
+              association: item,
+              selected: true,
+            }
+          })
+          .sort((a, b) => orderAlphabetically(a.association.species_name, b.association.species_name))
         updateAssociationModels(associationModelList)
 
         // build an array of all species
-        const speciesModelList = associations.reduce(
-          (unique, item) =>
-            unique.some(species => species.name === item.species_name)
-              ? unique
-              : [...unique, { name: item.species_name, selected: true }],
-          []
-        ).sort(orderAlphabetically)
+        const speciesModelList = associations
+          .reduce(
+            (unique, item) =>
+              unique.some((species) => species.name === item.species_name)
+                ? unique
+                : [...unique, { name: item.species_name, selected: true }],
+            []
+          )
+          .sort((a, b) => orderAlphabetically(a.name, b.name))
         updateSpeciesModels(speciesModelList)
 
         // build an array of all materials
-        const materialModelList = associations.reduce(
-          (unique, item) =>
-            unique.some(material => material.name === item.material_name)
-              ? unique
-              : [...unique, { name: item.material_name, selected: true }],
-          []
-        ).sort(orderAlphabetically)
+        const materialModelList = associations
+          .reduce(
+            (unique, item) =>
+              unique.some((material) => material.name === item.material_name)
+                ? unique
+                : [...unique, { name: item.material_name, selected: true }],
+            []
+          )
+          .sort((a, b) => orderAlphabetically(a.name, b.name))
         updateMaterialModels(materialModelList)
 
         // build array of associations to display
@@ -96,15 +108,17 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ filters, libFiltersIndex, sele
 
   return (
     <div className={styles['pageContainer']}>
-    <ul className={styles['explorerNavBar']}>
-    <li>
-    <FilterSelector libraryFilters={filters} 
-      libFiltersIndex={libFiltersIndex} 
-      filterIndex={selectedFilterIndex} 
-      onChoose={onFilterChange} />
-    </li>
-    </ul>
-    <div className={styles['explorerContainer']}>
+      <ul className={styles['explorerNavBar']}>
+        <li>
+          <FilterSelector
+            libraryFilters={filters}
+            libFiltersIndex={libFiltersIndex}
+            filterIndex={selectedFilterIndex}
+            onChoose={onFilterChange}
+          />
+        </li>
+      </ul>
+      <div className={styles['explorerContainer']}>
         <aside className={`${styles['explorerMenu']} ${styles['leftMenu']} ${styles['scrollContainer']}`}>
           <div
             className={styles['explorerMenuTitle']}
@@ -115,7 +129,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ filters, libFiltersIndex, sele
               }
             }}
           >
-            {screenWidth > 768  ? 'species' : speciesMenuVisible ? 'species' : 'S'}
+            {screenWidth > 768 ? 'species' : speciesMenuVisible ? 'species' : 'S'}
           </div>
           <div className={speciesMenuVisible ? styles['visibleItem'] : styles['hiddenItem']}>
             {speciesModels.map((item, i) => {
@@ -177,7 +191,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ filters, libFiltersIndex, sele
               }
             }}
           >
-            {screenWidth > 768  ? 'materials' : materialsMenuVisible ? 'materials' : 'M'}
+            {screenWidth > 768 ? 'materials' : materialsMenuVisible ? 'materials' : 'M'}
           </div>
           <div className={materialsMenuVisible ? styles['visibleItem'] : styles['hiddenItem']}>
             {materialModels.map((item, index) => (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import FilterSelector from '@/FilterSelector' 
+import FilterSelector from '@/FilterSelector'
 import { LibraryFilter, Filter } from '@/models'
 import styles from '@/style.css'
 import ArrowNext from '@/assets/next_arrow.svg'
@@ -60,7 +60,7 @@ const SlideFour: React.FC<SlideFourProps> = ({ filters, onChoose }) => (
 )
 
 interface SlideFourProps {
-  filters: Array<LibraryFilter>,
+  filters: Array<LibraryFilter>
   onChoose: (libFiltersIndex: number, filter: Filter, index: number) => void
 }
 
@@ -79,11 +79,16 @@ const LibrarySlider: React.FC<LibSliderProps> = ({ filters, onComplete }) => {
       slide = <SlideThree />
       break
     case 3:
-      slide = <SlideFour filters={filters} onChoose={(libFiltersIndex, filter, filterIndex) => {
-        chooseFilter(filter)
-        chooseFilterIndex(filterIndex)
-        chooseLibFiltersIndex(libFiltersIndex)
-      }} />
+      slide = (
+        <SlideFour
+          filters={filters}
+          onChoose={(libFiltersIndex, filter, filterIndex) => {
+            chooseFilter(filter)
+            chooseFilterIndex(filterIndex)
+            chooseLibFiltersIndex(libFiltersIndex)
+          }}
+        />
+      )
       break
     case 0:
     default:
@@ -113,17 +118,17 @@ const LibrarySlider: React.FC<LibSliderProps> = ({ filters, onComplete }) => {
           className={styles['sliderArrow']}
           src={ArrowNext}
           alt="next"
-            onClick={() => {
-              const newIndex = index + 1
-                if (newIndex === 4) {
-                  if (filter == null) {
-                    onComplete(0, filters[0].filters[0], 0)
-                  } else {
-                  console.log(`${libFiltersIndex} and ${filterIndex}`)
-                    onComplete(libFiltersIndex, filter, filterIndex)
-                  }
-                } else {
-                  setIndex(newIndex)
+          onClick={() => {
+            const newIndex = index + 1
+            if (newIndex === 4) {
+              if (filter == null) {
+                onComplete(0, filters[0].filters[0], 0)
+              } else {
+                console.log(`${libFiltersIndex} and ${filterIndex}`)
+                onComplete(libFiltersIndex, filter, filterIndex)
+              }
+            } else {
+              setIndex(newIndex)
             }
           }}
         />

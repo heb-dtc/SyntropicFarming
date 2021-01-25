@@ -30,35 +30,37 @@ export const fetchAssociations = async (filter: Filter): Promise<Array<Associati
 
 export const fetchLibraryFilters = async (): Promise<Array<LibraryFilter>> => {
   const hardinessValues = await fetchHardinessValues()
-  const hardinessFilterValues = hardinessValues.map(hardiness => { 
+  const hardinessFilterValues = hardinessValues.map((hardiness) => {
     return {
       id: hardiness.id,
       value: hardiness.value,
-      filterType: FilterType.HARDINESS
-    }})
-
-  // insert a fake hardiness reprensenting ALL
-  hardinessFilterValues.splice(0, 0, { 
-    id: -1,
-    value: 0,
-    filterType: FilterType.HARDINESS
+      filterType: FilterType.HARDINESS,
+    }
   })
 
-  const hardinessFilers ={
+  // insert a fake hardiness reprensenting ALL
+  hardinessFilterValues.splice(0, 0, {
+    id: -1,
+    value: 0,
+    filterType: FilterType.HARDINESS,
+  })
+
+  const hardinessFilers = {
     filters: hardinessFilterValues,
-    name: 'Hardiness Zones'
+    name: 'Hardiness Zones',
   }
 
   const agroEcoSystems = await fetchAgroEcoSystems()
-  const agroFilterValues = agroEcoSystems.map(system => {
+  const agroFilterValues = agroEcoSystems.map((system) => {
     return {
       id: system.id,
       value: system.name,
-      filterType: FilterType.AGRO_ECO_SYSTEM 
-    }})
+      filterType: FilterType.AGRO_ECO_SYSTEM,
+    }
+  })
   const agroFilters = {
     filters: agroFilterValues,
-    name: "Agro Eco Sytems"
+    name: 'Agro Eco Sytems',
   }
 
   return [hardinessFilers, agroFilters]

@@ -27,7 +27,7 @@ const LibraryPage: React.FC = () => {
         selectedFilterIndex={filterIndex}
         libFiltersIndex={libFiltersIndex}
         onFilterChange={(libFiltersIndex, filter, index) => {
-          setFilter(filter) 
+          setFilter(filter)
           setLibFiltersIndex(libFiltersIndex)
           setFilterIndex(filterIndex)
         }}

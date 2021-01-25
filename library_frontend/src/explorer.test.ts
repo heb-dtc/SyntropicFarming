@@ -47,7 +47,7 @@ describe('Library explorer data tests', () => {
 
     const materialItem = {
       name: 'wood',
-      selected: false
+      selected: false,
     }
     const updatedModels = updateModelsWithItemStatus(models, materialItem, false)
 
@@ -76,7 +76,7 @@ describe('Library explorer data tests', () => {
 
     const speciesItem = {
       name: 'corn',
-      selected: false
+      selected: false,
     }
     const updatedModels = updateModelsWithItemStatus(models, speciesItem, false)
 

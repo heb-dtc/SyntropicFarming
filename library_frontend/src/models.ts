@@ -32,14 +32,14 @@ export interface DisplayRow {
 }
 
 export interface AgroEcoSystem {
-  id: number 
+  id: number
   name: string
   hardiness: number
 }
 
 export enum FilterType {
   HARDINESS,
-  AGRO_ECO_SYSTEM
+  AGRO_ECO_SYSTEM,
 }
 
 export interface Filter {

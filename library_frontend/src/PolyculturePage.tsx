@@ -9,12 +9,12 @@ const PolyculturePage: React.FC = () => {
   return (
     <div className={`${styles['pageContainer']} ${styles['scrollContainer']}`}>
       <div className={styles['contentContainer']}>
-      <div className={styles['contentHeader']}>
-        <p>
-          In this section you can find a selection of analysis of polycultural agroecosystems and the materials they
-          potentially can produce.
-        </p>
-      </div>
+        <div className={styles['contentHeader']}>
+          <p>
+            In this section you can find a selection of analysis of polycultural agroecosystems and the materials they
+            potentially can produce.
+          </p>
+        </div>
         <div className={styles['polycultureMenu']}>
           <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[0]))}>
             MayaForestGarden

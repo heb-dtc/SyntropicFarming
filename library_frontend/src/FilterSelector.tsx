@@ -27,28 +27,36 @@ const FilterSelector: React.FC<FilterSelectorProps> = ({ libraryFilters, libFilt
 
   return (
     <div>
-      <select className={styles['select']} value={currentLibFilter} onChange={e => {
+      <select
+        className={styles['select']}
+        value={currentLibFilter}
+        onChange={(e) => {
           setCurrentLibFilter(parseInt(e.target.value, 10))
           //when switching the lib filters we want to display the first filter item
           setCurrentFilterIndex(0)
-        }} >
-        {libraryFilters.map((filter,index) => (
+        }}
+      >
+        {libraryFilters.map((filter, index) => (
           <option key={index} value={index}>
             {filter.name}
           </option>
         ))}
       </select>
       /
-      <select className={styles['select']} value={currentFilterIndex} onChange={e => {
-        setCurrentFilterIndex(parseInt(e.target.value, 10))
-      }}>
-        {filters.map((filter,index) => (
+      <select
+        className={styles['select']}
+        value={currentFilterIndex}
+        onChange={(e) => {
+          setCurrentFilterIndex(parseInt(e.target.value, 10))
+        }}
+      >
+        {filters.map((filter, index) => (
           <option key={filter.id} value={index}>
-            { printFilter(filter)}
+            {printFilter(filter)}
           </option>
         ))}
       </select>
-      </div>
+    </div>
   )
 }
 
@@ -56,7 +64,7 @@ interface FilterSelectorProps {
   libraryFilters: Array<LibraryFilter>
   libFiltersIndex: number
   filterIndex: number
-  onChoose: (libFiltersIndex:number, filter: Filter, index: number) => void
+  onChoose: (libFiltersIndex: number, filter: Filter, index: number) => void
 }
 
 export default FilterSelector
