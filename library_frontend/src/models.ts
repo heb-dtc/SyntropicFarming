@@ -33,6 +33,8 @@ export interface DisplayRow {
 
 export interface AgroEcoSystem {
   id: number 
+  name: string
+  hardiness: number
 }
 
 export enum FilterType {
@@ -40,8 +42,13 @@ export enum FilterType {
   AGRO_ECO_SYSTEM
 }
 
-export interface LibraryFilter {
+export interface Filter {
   id: number
-  value: number
+  value: number | string
   filterType: FilterType
+}
+
+export interface LibraryFilter {
+  filters: Array<Filter>
+  name: string
 }
