@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import FilterSelector from '@/FilterSelector' 
 import { fetchAssociations } from '@/api'
 import { buildDisplayList, updateItemsStatusFromModels, updateModelsWithItemStatus } from '@/explorer'
-import { Hardiness, LibraryFilter } from '@/models'
+import { Hardiness, LibraryFilter, Filter, FilterType } from '@/models'
 import styles from '@/style.css'
 
 const toggleSelected = (list, itemIndex) => {
@@ -18,7 +19,7 @@ const toggleSelected = (list, itemIndex) => {
   return newList
 }
 
-const LibraryExplorer: React.FC<LibExpProps> = ({ availableValues, value, onValueChange }) => {
+const LibraryExplorer: React.FC<LibExpProps> = ({ filters, selectedFilter, onFilterChange }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const [associationModels, updateAssociationModels] = useState([])
   const [materialModels, updateMaterialModels] = useState([])
@@ -36,7 +37,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ availableValues, value, onValu
 
   useEffect(() => {
     const fetchValues = async () => {
-      const associations = await fetchAssociations(value)
+      const associations = await fetchAssociations(selectedFilter)
 
       if (associations != null) {
         // build array of all associations
@@ -79,28 +80,18 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ availableValues, value, onValu
       }
     }
     fetchValues()
-  }, [value])
+  }, [selectedFilter])
 
   return (
     <div className={styles['pageContainer']}>
       <ul className={styles['explorerNavBar']}>
-        <li className={styles['navigationBarTitle']}>Hardiness zone</li>
+        <li className={styles['navigationBarTitle']}>{
+          selectedFilter.filterType == FilterType.HARDINESS 
+          ? 'Hardiness zone' 
+          : 'Agro Eco System'
+          }</li>
         <li>
-          <select
-            className={styles['select']}
-            value={value}
-            onChange={e => {
-              const value = parseInt(e.target.value, 10)
-              onValueChange(value)
-            }}
-          >
-            <option value={0}>ALL</option>
-            {availableValues.map((item) => (
-              <option key={item.id} value={item.value}>
-                {item.value}
-              </option>
-            ))}
-          </select>
+          <FilterSelector libraryFilters={filters} libFilterIndex={0} filterIndex={0} onChoose={onFilterChange} />
         </li>
       </ul>
       <div className={styles['explorerContainer']}>
@@ -209,9 +200,9 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ availableValues, value, onValu
 }
 
 interface LibExpProps {
-  availableValues: Array<LibraryFilter>
-  value: number
-  onValueChange: (value: number) => void
+  filters: Array<LibraryFilter>
+  selectedFilter: Filter
+  onFilterChange: (filter: Filter) => void
 }
 
 export default LibraryExplorer

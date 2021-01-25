@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Hardiness } from '@/models'
+import FilterSelector from '@/FilterSelector' 
+import { LibraryFilter, Filter } from '@/models'
 import styles from '@/style.css'
 import ArrowNext from '@/assets/next_arrow.svg'
 import ArrowPrevious from '@/assets/prev_arrow.svg'
@@ -49,31 +50,23 @@ const SlideThree = () => (
   </div>
 )
 
-const SlideFour: React.FC<SlideFourProps> = ({ hardinessValues, onChoose }) => (
+const SlideFour: React.FC<SlideFourProps> = ({ filters, onChoose }) => (
   <div>
-    <p>Select the hardiness zone of your interest and begin to explore the library</p>
+    <p>Select a filter mode and begin to explore the library</p>
     <p>
-      Hardiness Zone /
-      <select className={styles['select']} onChange={e => onChoose(parseInt(e.target.value, 10))}>
-        <option value={0}>ALL</option>
-        {hardinessValues.map(hardiness => (
-          <option key={hardiness.id} value={hardiness.value}>
-            {hardiness.value}
-          </option>
-        ))}
-      </select>
+      <FilterSelector libraryFilters={filters} libFilterIndex={0} filterIndex={0} onChoose={onChoose} />
     </p>
   </div>
 )
 
 interface SlideFourProps {
-  hardinessValues: Array<Hardiness>
-  onChoose: (hardiness: number) => void
+  filters: Array<LibraryFilter>,
+  onChoose: (filter: Filter) => void
 }
 
-const LibrarySlider: React.FC<LibSliderProps> = ({ hardinessValues, onComplete }) => {
+const LibrarySlider: React.FC<LibSliderProps> = ({ filters, onComplete }) => {
   const [index, setIndex] = useState(0)
-  const [hardiness, chooseHardiness] = useState(0)
+  const [filter, chooseFilter] = useState(null)
 
   let slide
   switch (index) {
@@ -84,7 +77,9 @@ const LibrarySlider: React.FC<LibSliderProps> = ({ hardinessValues, onComplete }
       slide = <SlideThree />
       break
     case 3:
-      slide = <SlideFour hardinessValues={hardinessValues} onChoose={value => chooseHardiness(value)} />
+      slide = <SlideFour filters={filters} onChoose={(filter) => {
+        chooseFilter(filter)
+      }} />
       break
     case 0:
     default:
@@ -114,12 +109,16 @@ const LibrarySlider: React.FC<LibSliderProps> = ({ hardinessValues, onComplete }
           className={styles['sliderArrow']}
           src={ArrowNext}
           alt="next"
-          onClick={() => {
-            const newIndex = index + 1
-            if (newIndex === 4) {
-              onComplete(hardiness)
-            } else {
-              setIndex(newIndex)
+            onClick={() => {
+              const newIndex = index + 1
+                if (newIndex === 4) {
+                  if (filter == null) {
+                    onComplete(filters[0].filters[0])
+                  } else {
+                    onComplete(filter)
+                  }
+                } else {
+                  setIndex(newIndex)
             }
           }}
         />
@@ -129,8 +128,8 @@ const LibrarySlider: React.FC<LibSliderProps> = ({ hardinessValues, onComplete }
 }
 
 interface LibSliderProps {
-  hardinessValues: Array<Hardiness>
-  onComplete: (hardiness: number) => void
+  filters: Array<LibraryFilter>
+  onComplete: (filter: Filter) => void
 }
 
 export default LibrarySlider
