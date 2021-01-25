@@ -54,19 +54,21 @@ const SlideFour: React.FC<SlideFourProps> = ({ filters, onChoose }) => (
   <div>
     <p>Select a filter mode and begin to explore the library</p>
     <p>
-      <FilterSelector libraryFilters={filters} libFilterIndex={0} filterIndex={0} onChoose={onChoose} />
+      <FilterSelector libraryFilters={filters} libFiltersIndex={0} filterIndex={0} onChoose={onChoose} />
     </p>
   </div>
 )
 
 interface SlideFourProps {
   filters: Array<LibraryFilter>,
-  onChoose: (filter: Filter) => void
+  onChoose: (libFiltersIndex: number, filter: Filter, index: number) => void
 }
 
 const LibrarySlider: React.FC<LibSliderProps> = ({ filters, onComplete }) => {
   const [index, setIndex] = useState(0)
   const [filter, chooseFilter] = useState(null)
+  const [filterIndex, chooseFilterIndex] = useState(0)
+  const [libFiltersIndex, chooseLibFiltersIndex] = useState(0)
 
   let slide
   switch (index) {
@@ -77,8 +79,10 @@ const LibrarySlider: React.FC<LibSliderProps> = ({ filters, onComplete }) => {
       slide = <SlideThree />
       break
     case 3:
-      slide = <SlideFour filters={filters} onChoose={(filter) => {
+      slide = <SlideFour filters={filters} onChoose={(libFiltersIndex, filter, filterIndex) => {
         chooseFilter(filter)
+        chooseFilterIndex(filterIndex)
+        chooseLibFiltersIndex(libFiltersIndex)
       }} />
       break
     case 0:
@@ -113,9 +117,10 @@ const LibrarySlider: React.FC<LibSliderProps> = ({ filters, onComplete }) => {
               const newIndex = index + 1
                 if (newIndex === 4) {
                   if (filter == null) {
-                    onComplete(filters[0].filters[0])
+                    onComplete(0, filters[0].filters[0], 0)
                   } else {
-                    onComplete(filter)
+                  console.log(`${libFiltersIndex} and ${filterIndex}`)
+                    onComplete(libFiltersIndex, filter, filterIndex)
                   }
                 } else {
                   setIndex(newIndex)
@@ -129,7 +134,7 @@ const LibrarySlider: React.FC<LibSliderProps> = ({ filters, onComplete }) => {
 
 interface LibSliderProps {
   filters: Array<LibraryFilter>
-  onComplete: (filter: Filter) => void
+  onComplete: (libFiltersIndex: number, filter: Filter, index: number) => void
 }
 
 export default LibrarySlider

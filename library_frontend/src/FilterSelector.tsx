@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styles from '@/style.css'
 import { LibraryFilter, Filter } from '@/models'
 
-const FilterSelector: React.FC<FilterSelectorProps> = ({ libraryFilters, libFilterIndex, filterIndex, onChoose }) => {
-  const [currentLibFilter, setCurrentLibFilter] = useState(libFilterIndex)
+const FilterSelector: React.FC<FilterSelectorProps> = ({ libraryFilters, libFiltersIndex, filterIndex, onChoose }) => {
+  const [currentLibFilter, setCurrentLibFilter] = useState(libFiltersIndex)
   const [filters, setFilters] = useState([])
   const [currentFilterIndex, setCurrentFilterIndex] = useState(filterIndex)
 
@@ -13,12 +13,12 @@ const FilterSelector: React.FC<FilterSelectorProps> = ({ libraryFilters, libFilt
   }, [currentLibFilter])
 
   useEffect(() => {
-    onChoose(libraryFilters[currentLibFilter].filters[currentFilterIndex])
+    onChoose(currentLibFilter, libraryFilters[currentLibFilter].filters[currentFilterIndex], currentFilterIndex)
   }, [currentFilterIndex])
 
   return (
     <div>
-      <select className={styles['select']} onChange={e => {
+      <select className={styles['select']} value={currentLibFilter} onChange={e => {
           setCurrentLibFilter(parseInt(e.target.value, 10))
         }} >
         {libraryFilters.map((filter,index) => (
@@ -43,9 +43,9 @@ const FilterSelector: React.FC<FilterSelectorProps> = ({ libraryFilters, libFilt
 
 interface FilterSelectorProps {
   libraryFilters: Array<LibraryFilter>
-  libFilterIndex: number
+  libFiltersIndex: number
   filterIndex: number
-  onChoose: (filter: Filter) => void
+  onChoose: (libFiltersIndex:number, filter: Filter, index: number) => void
 }
 
 export default FilterSelector

@@ -7,7 +7,8 @@ import { LibraryFilter, FilterType } from '@/models'
 const LibraryPage: React.FC = () => {
   const [introPlayed, setIntroPlayed] = useState(false)
   const [filters, setFilters] = useState([])
-  const [currentFilterIndex, setCurrentFilterIndex] = useState(0)
+  const [libFiltersIndex, setLibFiltersIndex] = useState(0)
+  const [filterIndex, setFilterIndex] = useState(0)
   const [filter, setFilter] = useState(null)
 
   useEffect(() => {
@@ -23,15 +24,23 @@ const LibraryPage: React.FC = () => {
       <LibraryExplorer
         filters={filters}
         selectedFilter={filter}
-        onFilterChange={(value) => setFilter(value)}
+        selectedFilterIndex={filterIndex}
+        libFiltersIndex={libFiltersIndex}
+        onFilterChange={(libFiltersIndex, filter, index) => {
+          setFilter(filter) 
+          setLibFiltersIndex(libFiltersIndex)
+          setFilterIndex(filterIndex)
+        }}
       />
     )
   }
   return (
     <LibrarySlider
       filters={filters}
-      onComplete={(selectedFilter) => {
+      onComplete={(libFiltersIndex, selectedFilter, selectedFilterIndex) => {
         setFilter(selectedFilter)
+        setFilterIndex(selectedFilterIndex)
+        setLibFiltersIndex(libFiltersIndex)
         setIntroPlayed(true)
       }}
     />

@@ -19,7 +19,7 @@ const toggleSelected = (list, itemIndex) => {
   return newList
 }
 
-const LibraryExplorer: React.FC<LibExpProps> = ({ filters, selectedFilter, onFilterChange }) => {
+const LibraryExplorer: React.FC<LibExpProps> = ({ filters, libFiltersIndex, selectedFilter, selectedFilterIndex, onFilterChange }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const [associationModels, updateAssociationModels] = useState([])
   const [materialModels, updateMaterialModels] = useState([])
@@ -34,7 +34,7 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ filters, selectedFilter, onFil
 
     return () => window.removeEventListener("resize", handleWindowResize)
   }, [])
-
+  
   useEffect(() => {
     const fetchValues = async () => {
       const associations = await fetchAssociations(selectedFilter)
@@ -84,17 +84,15 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ filters, selectedFilter, onFil
 
   return (
     <div className={styles['pageContainer']}>
-      <ul className={styles['explorerNavBar']}>
-        <li className={styles['navigationBarTitle']}>{
-          selectedFilter.filterType == FilterType.HARDINESS 
-          ? 'Hardiness zone' 
-          : 'Agro Eco System'
-          }</li>
-        <li>
-          <FilterSelector libraryFilters={filters} libFilterIndex={0} filterIndex={0} onChoose={onFilterChange} />
-        </li>
-      </ul>
-      <div className={styles['explorerContainer']}>
+    <ul className={styles['explorerNavBar']}>
+    <li>
+    <FilterSelector libraryFilters={filters} 
+      libFiltersIndex={libFiltersIndex} 
+      filterIndex={selectedFilterIndex} 
+      onChoose={onFilterChange} />
+    </li>
+    </ul>
+    <div className={styles['explorerContainer']}>
         <aside className={`${styles['explorerMenu']} ${styles['leftMenu']} ${styles['scrollContainer']}`}>
           <div
             className={styles['explorerMenuTitle']}
@@ -201,8 +199,10 @@ const LibraryExplorer: React.FC<LibExpProps> = ({ filters, selectedFilter, onFil
 
 interface LibExpProps {
   filters: Array<LibraryFilter>
+  libFiltersIndex: number
   selectedFilter: Filter
-  onFilterChange: (filter: Filter) => void
+  selectedFilterIndex: number
+  onFilterChange: (libFiltersIndex: number, filter: Filter, index: number) => void
 }
 
 export default LibraryExplorer
