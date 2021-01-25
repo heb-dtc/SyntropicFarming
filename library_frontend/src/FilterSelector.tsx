@@ -9,17 +9,18 @@ const FilterSelector: React.FC<FilterSelectorProps> = ({ libraryFilters, libFilt
 
   useEffect(() => {
     setFilters(libraryFilters[currentLibFilter].filters)
-    setCurrentFilterIndex(0)
   }, [currentLibFilter])
 
   useEffect(() => {
     onChoose(currentLibFilter, libraryFilters[currentLibFilter].filters[currentFilterIndex], currentFilterIndex)
-  }, [currentFilterIndex])
+  })
 
   return (
     <div>
       <select className={styles['select']} value={currentLibFilter} onChange={e => {
           setCurrentLibFilter(parseInt(e.target.value, 10))
+          //when switching the lib filters we want to display the first filter item
+          setCurrentFilterIndex(0)
         }} >
         {libraryFilters.map((filter,index) => (
           <option key={index} value={index}>
