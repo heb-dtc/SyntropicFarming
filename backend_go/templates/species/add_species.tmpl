@@ -1,0 +1,52 @@
+{{define "page"}}Species{{end}}
+{{define "title"}}Add Species{{end}}
+
+{{define "body"}}
+
+<form id="addSpeciesForm">
+  <input type="text" name="common name" id="commonName" />
+  <input type="text" name="scientific name" id="scientificName" />
+  <select id="minHardinessSelect" name="minHardiness">
+    <option>Choose a min hardiness</option>
+    {{range .HardinessList}}
+    <option value={{.ID}}>{{.Value}}</option>
+    {{end}}
+  </select>
+  <select id="maxHardinessSelect" name="maxHardiness">
+    <option>Choose a max hardiness</option>
+    {{range .HardinessList}}
+    <option value={{.ID}}>{{.Value}}</option>
+    {{end}}
+  </select>
+    <input type="submit" value="add" />
+</form>
+<br/>
+  {{ template "species" . }}
+<br/>
+
+<script>
+document.getElementById('addSpeciesForm').addEventListener('submit', addSpecies);
+
+function addSpecies(event) {
+  event.preventDefault();
+  let commonName = document.getElementById('commonName').value;
+  let scientificName = document.getElementById('scientificName').value;
+  minHardiness = parseInt(minHardinessSelect.value)
+  maxHardiness = parseInt(maxHardinessSelect.value)
+
+  fetch("/api/species/new", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: JSON.stringify({commonName: commonName, scientificName: scientificName,  min_hardiness: minHardiness, max_hardiness: maxHardiness})
+  })
+    .then(response => location.reload());
+}
+</script>
+{{end}}

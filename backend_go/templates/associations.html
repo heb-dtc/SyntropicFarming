@@ -6,7 +6,7 @@
   <select id="speciesSelect" name="species">
     <option>Choose a species</option>
     {{range .Species}}
-    <option value={{.ID}}>{{.Name}}</option>
+    <option value={{.ID}}>{{.CommonName}}</option>
     {{end}}
   </select>
   <select id="materialSelect" name="material">

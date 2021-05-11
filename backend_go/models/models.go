@@ -11,10 +11,11 @@ type Material struct {
 }
 
 type Species struct {
-	ID           int64  `json:"id"`
-	Name         string `json:"name"`
-	MinHardiness int    `json:"min_hardiness"`
-	MaxHardiness int    `json:"max_hardiness"`
+	ID             int64  `json:"id"`
+	ScientificName string `json:"scientific_name"`
+	CommonName     string `json:"common_name"`
+	MinHardiness   int    `json:"min_hardiness"`
+	MaxHardiness   int    `json:"max_hardiness"`
 }
 
 type Association struct {

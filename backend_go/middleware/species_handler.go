@@ -82,7 +82,7 @@ func insertSpecies(species models.Species) int64 {
 	sqlStatement := `INSERT into species (name, min_hardiness, max_hardiness) VALUES ($1, $2, $3) RETURNING uid`
 
 	var id int64
-	err := db.QueryRow(sqlStatement, species.Name, species.MinHardiness, species.MaxHardiness).Scan(&id)
+	err := db.QueryRow(sqlStatement, species.CommonName, species.MinHardiness, species.MaxHardiness).Scan(&id)
 
 	if err != nil {
 		log.Fatalf("Unable to execute the query, %v", err)
@@ -109,7 +109,7 @@ func getAllSpecies() ([]models.Species, error) {
 
 	for rows.Next() {
 		var species models.Species
-		err = rows.Scan(&species.ID, &species.Name, &species.MinHardiness, &species.MaxHardiness)
+		err = rows.Scan(&species.ID, &species.CommonName, &species.MinHardiness, &species.MaxHardiness)
 
 		if err != nil {
 			log.Fatalf("Unable to scan the row. %v", err)

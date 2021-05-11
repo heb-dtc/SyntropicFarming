@@ -15,6 +15,12 @@ type AddSpeciesPageData struct {
 	HardinessList []models.Hardiness
 }
 
+type EditSpeciesPageData struct {
+	SpeciesId            int64
+  Species       []models.Species
+	HardinessList []models.Hardiness
+}
+
 type AddAgroSystemPageData struct {
 	AgroEcoSystems            []models.AgroEcoSystem
 	HardinessList             []models.Hardiness
@@ -119,12 +125,55 @@ func RenderAddMaterial(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func RenderSpecies(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Render Template %s", filepath.Clean(r.URL.Path))
+
+  id, found := mux.Vars(r)["id"]
+
+	lp := filepath.Join("templates", "layout.html")
+  listTmpl := filepath.Join("templates/species", "list_species.tmpl")
+  actionTmpl := ""
+  if found {
+    log.Printf("loading edit template")
+	  actionTmpl = filepath.Join("templates/species", "edit_species.tmpl")
+  } else {
+    log.Printf("loading add template")
+	  actionTmpl = filepath.Join("templates/species", "add_species.tmpl")
+  }
+
+	tmpl, err := template.ParseFiles(lp, listTmpl, actionTmpl)
+
+	if err == nil {
+		species, _ := getAllSpecies()
+		hardinessList, _ := getAllHardiness()
+
+    var items interface{}
+    if found {
+		  items = AddSpeciesPageData{
+			  Species:       species,
+			  HardinessList: hardinessList,
+		  }
+    } else {
+      speciesId, _ := strconv.ParseInt(id, 10, 64)
+		  items = EditSpeciesPageData{
+        SpeciesId: speciesId,
+			  Species:       species,
+			  HardinessList: hardinessList,
+		  }
+    }
+		tmpl.ExecuteTemplate(w, "layout", items)
+	} else {
+    log.Println(err)
+  }
+}
+
 func RenderAddSpecies(w http.ResponseWriter, r *http.Request) {
 	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
 
 	lp := filepath.Join("templates", "layout.html")
-	fp := filepath.Join("templates", "species.html")
-	tmpl, err := template.ParseFiles(lp, fp)
+	fp := filepath.Join("templates/species", "add_species.tmpl")
+  tp := filepath.Join("templates/species", "list_species.tmpl")
+	tmpl, err := template.ParseFiles(lp, fp, tp)
 
 	if err == nil {
 		species, _ := getAllSpecies()
@@ -135,7 +184,33 @@ func RenderAddSpecies(w http.ResponseWriter, r *http.Request) {
 			HardinessList: hardinessList,
 		}
 		tmpl.ExecuteTemplate(w, "layout", items)
-	}
+	} else {
+    log.Println(err)
+  }
+}
+
+func RenderEditSpecies(w http.ResponseWriter, r *http.Request) {
+	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
+
+	lp := filepath.Join("templates", "layout.html")
+	fp := filepath.Join("templates/species", "edit_species.tmpl")
+  tp := filepath.Join("templates/species", "list_species.tmpl")
+	tmpl, err := template.ParseFiles(lp, fp, tp)
+
+	if err == nil {
+		species, _ := getAllSpecies()
+		hardinessList, _ := getAllHardiness()
+    speciesId, _ := strconv.ParseInt(r.URL.Query().Get("id"), 10, 64)
+
+		items := EditSpeciesPageData{
+      SpeciesId:     speciesId,
+			Species:       species,
+			HardinessList: hardinessList,
+		}
+		tmpl.ExecuteTemplate(w, "layout", items)
+	} else {
+    log.Println(err)
+  }
 }
 
 func RenderAddAgroSystem(w http.ResponseWriter, r *http.Request) {

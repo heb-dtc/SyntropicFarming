@@ -32,7 +32,7 @@ func MessageHandler(w http.ResponseWriter, r *http.Request) {
 func Router() *mux.Router {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/", logHandler(MessageHandler))
+  //router.HandleFunc("/", logHandler(MessageHandler))
 
 	router.HandleFunc("/api/hardiness", middleware.GetAllHardiness).Methods("GET", "OPTIONS")
 
@@ -61,7 +61,10 @@ func Router() *mux.Router {
 
 	router.HandleFunc("/gallery", middleware.RenderGallery).Methods("GET")
 	router.HandleFunc("/agro", middleware.RenderAddAgroSystem).Methods("GET")
-	router.HandleFunc("/species", middleware.RenderAddSpecies).Methods("GET")
+	
+  router.HandleFunc("/species/{id}", middleware.RenderSpecies).Methods("GET")
+  router.HandleFunc("/species", middleware.RenderSpecies).Methods("GET")
+
 	router.HandleFunc("/materials", middleware.RenderAddMaterial).Methods("GET")
 	router.HandleFunc("/associations", middleware.RenderAddAssociation).Methods("GET")
 	router.HandleFunc("/association/{id}", middleware.RenderAssociationDetails).Methods("GET")

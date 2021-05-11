@@ -1,10 +1,11 @@
 {{define "page"}}Species{{end}}
-{{define "title"}}Add Species{{end}}
+{{define "title"}}Edit Species{{end}}
 
 {{define "body"}}
 
-<form id="addSpeciesForm">
-  <input type="text" name="name" id="speciesName" />
+<form id="editSpeciesForm">
+  <input type="text" name="common name" id="commonName" />
+  <input type="text" name="scientific name" id="scientificName" />
   <select id="minHardinessSelect" name="minHardiness">
     <option>Choose a min hardiness</option>
     {{range .HardinessList}}
@@ -17,37 +18,19 @@
     <option value={{.ID}}>{{.Value}}</option>
     {{end}}
   </select>
-  <input type="submit" value="add" />
+    <input type="submit" value="edit" />
 </form>
 <br/>
-
-<h1>Existing Species</h1>
-<table>
-  <thead>
-    <tr>
-      <th colspan="1">Name</th>
-      <th colspan="1">MinHardiness</th>
-      <th colspan="1">MaxHardiness</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{range .Species}}
-    <tr>
-      <td>{{.Name}}</td>
-      <td>{{.MinHardiness}}</td>
-      <td>{{.MaxHardiness}}</td>
-    </tr>
-    {{end}}
-  </tbody>
-</table>
+  {{ template "species" . }}
 <br/>
 
 <script>
-document.getElementById('addSpeciesForm').addEventListener('submit', addSpecies);
+document.getElementById('editSpeciesForm').addEventListener('submit', editSpecies);
 
-function addSpecies(event) {
+function editSpecies(event) {
   event.preventDefault();
-  let name = document.getElementById('speciesName').value;
+  let commonName = document.getElementById('commonName').value;
+  let scientificName = document.getElementById('scientificName').value;
   minHardiness = parseInt(minHardinessSelect.value)
   maxHardiness = parseInt(maxHardinessSelect.value)
 
@@ -61,7 +44,7 @@ function addSpecies(event) {
     },
     redirect: "follow",
     referrer: "no-referrer",
-    body: JSON.stringify({name: name, min_hardiness: minHardiness, max_hardiness: maxHardiness})
+    body: JSON.stringify({commonName: commonName, scientificName: scientificName,  min_hardiness: minHardiness, max_hardiness: maxHardiness})
   })
     .then(response => location.reload());
 }

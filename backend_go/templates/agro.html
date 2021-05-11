@@ -26,7 +26,7 @@
   </select>
   <select id="speciesSelect" name="species" multiple>
     {{range .Species}}
-    <option value={{.ID}}>{{.Name}}</option>
+    <option value={{.ID}}>{{.CommonName}}</option>
     {{end}}
   </select>
   <input type="submit" value="add" />
