@@ -2,7 +2,7 @@ package models
 
 type Hardiness struct {
 	ID    int64  `json:"id"`
-	Value string `json:"value"`
+	Value int `json:"value"`
 }
 
 type Material struct {

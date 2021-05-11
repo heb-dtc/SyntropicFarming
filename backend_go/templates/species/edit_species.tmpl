@@ -4,24 +4,31 @@
 {{define "body"}}
 
 <form id="editSpeciesForm">
-  <input type="text" name="common name" id="commonName" />
-  <input type="text" name="scientific name" id="scientificName" />
+  <input type="text" name="common name" placeholder="common name" id="commonName" value="{{ .Species.CommonName }}"/>
+  <input type="text" name="scientific name" placeholder="scientific name" id="scientificName" value="{{ .Species.ScientificName }}"/>
   <select id="minHardinessSelect" name="minHardiness">
-    <option>Choose a min hardiness</option>
-    {{range .HardinessList}}
-    <option value={{.ID}}>{{.Value}}</option>
-    {{end}}
+    {{ range .HardinessList }}
+      {{ if (eq .Value $.Species.MinHardiness) }}
+        <option value={{.ID}} selected>{{.Value}}</option>
+      {{ else }}
+        <option value={{.ID}}>{{.Value}}</option>
+      {{ end }}
+    {{ end }}
   </select>
   <select id="maxHardinessSelect" name="maxHardiness">
-    <option>Choose a max hardiness</option>
     {{range .HardinessList}}
-    <option value={{.ID}}>{{.Value}}</option>
+      {{ if (eq .Value $.Species.MaxHardiness) }}
+        <option value={{.ID}} selected>{{.Value}}</option>
+      {{ else }}
+        <option value={{.ID}}>{{.Value}}</option>
+      {{ end }}
     {{end}}
   </select>
     <input type="submit" value="edit" />
+    <input type="submit" value="delete" />
 </form>
 <br/>
-  {{ template "species" . }}
+  {{ template "species" .SpeciesList }}
 <br/>
 
 <script>
@@ -34,7 +41,7 @@ function editSpecies(event) {
   minHardiness = parseInt(minHardinessSelect.value)
   maxHardiness = parseInt(maxHardinessSelect.value)
 
-  fetch("/api/species/new", {
+  fetch("/api/species/edit/{{ .SpeciesId }}", {
     method: "POST",
     mode: "cors",
     cache: "no-cache", 

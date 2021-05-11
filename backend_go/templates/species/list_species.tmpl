@@ -10,11 +10,10 @@
         <th colspan="1">MinHardiness</th>
         <th colspan="1">MaxHardiness</th>
         <th colspan="1">Edit</th>
-        <th colspan="1">Delete</th>
       </tr>
     </thead>
     <tbody>
-      {{range .Species}}
+      {{range .}}
       <tr>
         <td>{{.ID}}</td>
         <td>{{.CommonName}}</td>
@@ -22,7 +21,6 @@
         <td>{{.MinHardiness}}</td>
         <td>{{.MaxHardiness}}</td>
         <td><a href="/species/{{ .ID }}">Edit</a></td>
-        <td><a href="/delete?id={{ .ID }}">Delete</a><td>
       </tr>
       {{end}}
     </tbody>

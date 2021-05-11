@@ -11,13 +11,13 @@ import (
 )
 
 type AddSpeciesPageData struct {
-	Species       []models.Species
+	SpeciesList   []models.Species
 	HardinessList []models.Hardiness
 }
 
 type EditSpeciesPageData struct {
-	SpeciesId            int64
-  Species       []models.Species
+	Species       models.Species
+  SpeciesList   []models.Species
 	HardinessList []models.Hardiness
 }
 
@@ -144,69 +144,34 @@ func RenderSpecies(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles(lp, listTmpl, actionTmpl)
 
 	if err == nil {
-		species, _ := getAllSpecies()
+		speciesList, _ := getAllSpecies()
 		hardinessList, _ := getAllHardiness()
 
     var items interface{}
     if found {
-		  items = AddSpeciesPageData{
-			  Species:       species,
+      speciesId, _ := strconv.ParseInt(id, 10, 64)
+      var species models.Species
+      for _, v := range speciesList {
+        if v.ID == speciesId {
+          species = v
+          break
+        }
+      }
+
+		  items = EditSpeciesPageData{
+        Species: species,
+			  SpeciesList:   speciesList,
 			  HardinessList: hardinessList,
 		  }
     } else {
-      speciesId, _ := strconv.ParseInt(id, 10, 64)
-		  items = EditSpeciesPageData{
-        SpeciesId: speciesId,
-			  Species:       species,
+		  items = AddSpeciesPageData{
+			  SpeciesList:   speciesList,
 			  HardinessList: hardinessList,
 		  }
     }
-		tmpl.ExecuteTemplate(w, "layout", items)
-	} else {
-    log.Println(err)
-  }
-}
 
-func RenderAddSpecies(w http.ResponseWriter, r *http.Request) {
-	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
+    log.Printf("found %d species", len(speciesList))
 
-	lp := filepath.Join("templates", "layout.html")
-	fp := filepath.Join("templates/species", "add_species.tmpl")
-  tp := filepath.Join("templates/species", "list_species.tmpl")
-	tmpl, err := template.ParseFiles(lp, fp, tp)
-
-	if err == nil {
-		species, _ := getAllSpecies()
-		hardinessList, _ := getAllHardiness()
-
-		items := AddSpeciesPageData{
-			Species:       species,
-			HardinessList: hardinessList,
-		}
-		tmpl.ExecuteTemplate(w, "layout", items)
-	} else {
-    log.Println(err)
-  }
-}
-
-func RenderEditSpecies(w http.ResponseWriter, r *http.Request) {
-	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
-
-	lp := filepath.Join("templates", "layout.html")
-	fp := filepath.Join("templates/species", "edit_species.tmpl")
-  tp := filepath.Join("templates/species", "list_species.tmpl")
-	tmpl, err := template.ParseFiles(lp, fp, tp)
-
-	if err == nil {
-		species, _ := getAllSpecies()
-		hardinessList, _ := getAllHardiness()
-    speciesId, _ := strconv.ParseInt(r.URL.Query().Get("id"), 10, 64)
-
-		items := EditSpeciesPageData{
-      SpeciesId:     speciesId,
-			Species:       species,
-			HardinessList: hardinessList,
-		}
 		tmpl.ExecuteTemplate(w, "layout", items)
 	} else {
     log.Println(err)

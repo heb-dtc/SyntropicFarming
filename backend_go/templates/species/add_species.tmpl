@@ -4,8 +4,8 @@
 {{define "body"}}
 
 <form id="addSpeciesForm">
-  <input type="text" name="common name" id="commonName" />
-  <input type="text" name="scientific name" id="scientificName" />
+  <input type="text" name="common name" placeholder="common name" id="commonName" />
+  <input type="text" name="scientific name" placeholder="scientific name" id="scientificName" />
   <select id="minHardinessSelect" name="minHardiness">
     <option>Choose a min hardiness</option>
     {{range .HardinessList}}
@@ -21,7 +21,7 @@
     <input type="submit" value="add" />
 </form>
 <br/>
-  {{ template "species" . }}
+  {{ template "species" .SpeciesList }}
 <br/>
 
 <script>
