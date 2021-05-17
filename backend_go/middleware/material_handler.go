@@ -11,6 +11,47 @@ import (
 	"strconv"
 )
 
+func EditMaterials(w http.ResponseWriter, r *http.Request) {
+	log.Printf("EditMaterial")
+
+	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	var material models.Material
+	err := json.NewDecoder(r.Body).Decode(&material)
+
+	if err != nil {
+		log.Fatalf("Unable to decode the request body.  %v", err)
+	}
+
+	material = editMaterial(material)
+	res := response{
+		ID: material.ID,
+		Message: "Material edited successfully",
+	}
+
+	json.NewEncoder(w).Encode(res)
+}
+
+func editMaterial(material models.Material) models.Material {
+	db := createConnection()
+	defer db.Close()
+
+	sqlStatement := `UPDATE materials set name=$1 WHERE uid=$2`
+
+  //TODO: read the number of row affected by the update
+	_, err := db.Exec(sqlStatement, material.Name, material.ID)
+
+	if err != nil {
+		log.Fatalf("Unable to execute the query, %v", err)
+	}
+
+	fmt.Printf("Edited material %v", material.ID)
+	return material
+}
+
 func AddMaterial(w http.ResponseWriter, r *http.Request) {
 	log.Printf("AddMaterial")
 
