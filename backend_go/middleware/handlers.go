@@ -49,18 +49,18 @@ func createConnection() *sql.DB {
 }
 
 func GetAllHardiness(w http.ResponseWriter, r *http.Request) {
-	log.Printf("GetAllSpecies")
+	log.Printf("GetAllHardiness")
 
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	users, err := getAllHardiness()
+	hardinessList, err := getAllHardiness()
 
 	if err != nil {
 		log.Fatalf("Unable to get all hardiness. %v", err)
 	}
 
-	json.NewEncoder(w).Encode(users)
+	json.NewEncoder(w).Encode(hardinessList)
 }
 
 func delete(query string, id int64) int64 {
