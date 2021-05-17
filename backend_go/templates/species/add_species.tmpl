@@ -31,8 +31,8 @@ function addSpecies(event) {
   event.preventDefault();
   let commonName = document.getElementById('commonName').value;
   let scientificName = document.getElementById('scientificName').value;
-  minHardiness = parseInt(minHardinessSelect.value)
-  maxHardiness = parseInt(maxHardinessSelect.value)
+  minHardiness = parseInt(minHardinessSelect.value);
+  maxHardiness = parseInt(maxHardinessSelect.value);
 
   fetch("/api/species/new", {
     method: "POST",

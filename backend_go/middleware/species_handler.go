@@ -11,6 +11,11 @@ import (
 	"strconv"
 )
 
+func EditSpecies(w http.ResponseWriter, r *http.Request) {
+	log.Printf("EditSpecies")
+	json.NewEncoder(w).Encode("{}")
+}
+
 func AddSpecies(w http.ResponseWriter, r *http.Request) {
 	log.Printf("AddSpecies")
 

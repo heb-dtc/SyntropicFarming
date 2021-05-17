@@ -24,24 +24,44 @@
       {{ end }}
     {{end}}
   </select>
-    <input type="submit" value="edit" />
-    <input type="submit" value="delete" />
+  <button id="editButton" type="button">edit</button>
+  <button id="deleteButton" type="button">delete</button>
 </form>
 <br/>
   {{ template "species" .SpeciesList }}
 <br/>
 
 <script>
-document.getElementById('editSpeciesForm').addEventListener('submit', editSpecies);
+document.getElementById("editButton").addEventListener("click", editSpecies);
+document.getElementById("deleteButton").addEventListener("click", deleteSpecies);
+
+function deleteSpecies(event) {
+  event.preventDefault();
+
+  let id = {{ .Species.ID }}; 
+  fetch(`/api/species/delete/${id}`, {
+    method: "DELETE",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+  })
+    .then(response => location.assign("/species"));
+}
 
 function editSpecies(event) {
   event.preventDefault();
+  let id = {{ .Species.ID }}; 
   let commonName = document.getElementById('commonName').value;
   let scientificName = document.getElementById('scientificName').value;
-  minHardiness = parseInt(minHardinessSelect.value)
-  maxHardiness = parseInt(maxHardinessSelect.value)
+  minHardiness = parseInt(minHardinessSelect.value);
+  maxHardiness = parseInt(maxHardinessSelect.value);
 
-  fetch("/api/species/edit/{{ .SpeciesId }}", {
+  fetch(`/api/species/edit/${id}`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache", 
@@ -51,9 +71,9 @@ function editSpecies(event) {
     },
     redirect: "follow",
     referrer: "no-referrer",
-    body: JSON.stringify({commonName: commonName, scientificName: scientificName,  min_hardiness: minHardiness, max_hardiness: maxHardiness})
+    body: JSON.stringify({id: id, commonName: commonName, scientificName: scientificName,  min_hardiness: minHardiness, max_hardiness: maxHardiness})
   })
-    .then(response => location.reload());
+  .then(response => console.log(response));
 }
 </script>
 {{end}}
