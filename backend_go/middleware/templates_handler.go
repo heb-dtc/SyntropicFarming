@@ -21,6 +21,15 @@ type EditSpeciesPageData struct {
 	HardinessList []models.Hardiness
 }
 
+type AddMaterialPageData struct {
+  Materials []models.Material
+}
+
+type EditMaterialPageData struct {
+  Material models.Material
+  Materials []models.Material
+}
+
 type AddAgroSystemPageData struct {
 	AgroEcoSystems            []models.AgroEcoSystem
 	HardinessList             []models.Hardiness
@@ -112,17 +121,51 @@ func RenderAddAssociation(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func RenderAddMaterial(w http.ResponseWriter, r *http.Request) {
+func RenderMaterial(w http.ResponseWriter, r *http.Request) {
 	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
 
+  id, found := mux.Vars(r)["id"]
+
 	lp := filepath.Join("templates", "layout.html")
-	fp := filepath.Join("templates", "materials.html")
-	tmpl, err := template.ParseFiles(lp, fp)
+  listTmpl := filepath.Join("templates/materials", "list_materials.tmpl")
+  actionTmpl := ""
+  if found {
+    log.Printf("loading edit template")
+	  actionTmpl = filepath.Join("templates/materials", "edit_materials.tmpl")
+  } else {
+    log.Printf("loading add template")
+	  actionTmpl = filepath.Join("templates/materials", "add_materials.tmpl")
+  }
+
+	tmpl, err := template.ParseFiles(lp, listTmpl, actionTmpl)
 
 	if err == nil {
-		items, _ := getAllMaterials()
+		materials, _ := getAllMaterials()
+
+    var items interface{}
+    if found {
+      materialId, _ := strconv.ParseInt(id, 10, 64)
+      var material models.Material
+      for _, v := range materials {
+        if v.ID == materialId {
+          material = v
+          break
+        }
+      }
+
+		  items = EditMaterialPageData{
+        Material: material,
+			  Materials: materials,
+		  }
+    } else {
+      items = AddMaterialPageData {
+        Materials: materials,
+      }
+    }
 		tmpl.ExecuteTemplate(w, "layout", items)
-	}
+	} else {
+    log.Println(err)
+  }
 }
 
 func RenderSpecies(w http.ResponseWriter, r *http.Request) {

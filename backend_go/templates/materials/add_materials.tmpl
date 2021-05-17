@@ -7,17 +7,7 @@
   <input type="submit" value="add" />
 </form>
 <br/>
-
-<table>
-  <tr>
-    <th>Existing Materials</th>
-  </tr>
-  {{range .}}
-  <tr>
-    <td>{{.Name}}</td>
-  </td>
-  {{end}}
-</table>
+{{ template "materials" .Materials }}
 <br/>
 
 <script>

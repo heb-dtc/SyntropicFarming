@@ -1,0 +1,14 @@
+{{ define "materials" }}
+<table>
+  <tr>
+    <th>Existing Materials</th>
+    <th>Edit</th>
+  </tr>
+  {{range .}}
+  <tr>
+    <td>{{.Name}}</td>
+    <td><a href="/materials/{{ .ID }}">Edit</a></td>
+  </td>
+  {{end}}
+</table>
+{{ end }}

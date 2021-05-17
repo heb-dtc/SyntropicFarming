@@ -61,11 +61,13 @@ func Router() *mux.Router {
 
 	router.HandleFunc("/gallery", middleware.RenderGallery).Methods("GET")
 	router.HandleFunc("/agro", middleware.RenderAddAgroSystem).Methods("GET")
-	
+
   router.HandleFunc("/species/{id}", middleware.RenderSpecies).Methods("GET")
   router.HandleFunc("/species", middleware.RenderSpecies).Methods("GET")
 
-	router.HandleFunc("/materials", middleware.RenderAddMaterial).Methods("GET")
+	router.HandleFunc("/materials", middleware.RenderMaterial).Methods("GET")
+  router.HandleFunc("/materials/{id}", middleware.RenderMaterial).Methods("GET")
+
 	router.HandleFunc("/associations", middleware.RenderAddAssociation).Methods("GET")
 	router.HandleFunc("/association/{id}", middleware.RenderAssociationDetails).Methods("GET")
 	router.HandleFunc("/", middleware.RenderHome).Methods("GET")

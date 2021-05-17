@@ -1,0 +1,59 @@
+{{define "page"}}Material{{end}}
+{{define "title"}}Edit Material{{end}}
+
+{{define "body"}}
+<form id="editMaterialsForm">
+  <input type="text" name="name" value="{{ .Material.Name }}" id="materialName" />
+  <button id="editButton" type="button">edit</button>
+  <button id="deleteButton" type="button">delete</button>
+</form>
+<br/>
+{{ template "materials" .Materials }}
+<br/>
+
+<script>
+document.getElementById("editButton").addEventListener("click", editMaterial);
+document.getElementById("deleteButton").addEventListener("click", deleteMaterial);
+
+function deleteMaterial(event) {
+  event.preventDefault();
+  
+  let id = {{ .Material.ID }}; 
+
+  fetch(`/api/materials/delete/${id}`, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+  })
+    .then(response => location.assign("/materials"));
+}
+
+function editMaterial(event) {
+  event.preventDefault();
+  
+  let id = {{ .Material.ID }}; 
+  let name = document.getElementById('materialName').value;
+
+  fetch(`/api/materials/edit/${id}`, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: JSON.stringify({id: id, name: name})
+  })
+    .then(response => location.assign("/materials"));
+}
+
+</script>
+{{end}}
