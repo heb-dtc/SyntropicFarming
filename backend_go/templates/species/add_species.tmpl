@@ -44,7 +44,7 @@ function addSpecies(event) {
     },
     redirect: "follow",
     referrer: "no-referrer",
-    body: JSON.stringify({commonName: commonName, scientificName: scientificName,  min_hardiness: minHardiness, max_hardiness: maxHardiness})
+    body: JSON.stringify({common_name: commonName, scientific_name: scientificName,  min_hardiness: minHardiness, max_hardiness: maxHardiness})
   })
     .then(response => location.reload());
 }

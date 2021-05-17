@@ -71,9 +71,9 @@ function editSpecies(event) {
     },
     redirect: "follow",
     referrer: "no-referrer",
-    body: JSON.stringify({id: id, commonName: commonName, scientificName: scientificName,  min_hardiness: minHardiness, max_hardiness: maxHardiness})
+    body: JSON.stringify({id: id, common_name: commonName, scientific_name: scientificName,  min_hardiness: minHardiness, max_hardiness: maxHardiness})
   })
-  .then(response => console.log(response));
+  .then(response => location.assign("/species"));
 }
 </script>
 {{end}}
