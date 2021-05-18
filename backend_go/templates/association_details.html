@@ -6,7 +6,7 @@
   <select id="speciesSelect" name="species">
     <option selected="selected" value={{.AssociationDetails.SpeciesId}}>{{.AssociationDetails.SpeciesName}}</option>
     {{range .Species}}
-    <option value={{.ID}}>{{.Name}}</option>
+    <option value={{.ID}}>{{.CommonName}}</option>
     {{end}}
   </select>
   <select id="materialSelect" name="material">
@@ -17,25 +17,29 @@
   </select>
   <br/>
   <br/>
+  <img src="{{ .AssociationDetails.ImageUrl }}" />
   image: <input type="file" name="image" text="yooo"/>
   <br/>
   <br/>
-  link: <input type="text" name="link" id="link"/>
+  <input type="text" name="link" placeholder="link" id="link" value="{{ .AssociationDetails.Link }}"/>
   <br/>
   <br/>
-  <input type="submit" value="update" />
+  <button id="editButton" type="button">edit</button>
+  <button id="deleteButton" type="button">delete</button>
 </form>
 
 <script>
-document.getElementById('updateAssociationForm').addEventListener('submit', createAssociation)
+document.getElementById("editButton").addEventListener("click", editAssociation);
+document.getElementById("deleteButton").addEventListener("click", deleteAssociation);
 
 function editAssociation(event) {
   event.preventDefault();
-  form = document.getElementById('updateAssociationForm')
+  form = document.getElementById('editAssociationForm')
   const formData = new FormData(form);
 
-  /*
-  fetch("/api/associations/edit/", {
+  let id = {{ .AssociationDetails.ID }}; 
+
+  fetch(`/api/associations/edit/${id}`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache", 
@@ -44,18 +48,7 @@ function editAssociation(event) {
     referrer: "no-referrer",
     body: formData
   })
-    .then(response => console.log("association edited"));
-  fetch("/api/associations/create", {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache", 
-    credentials: "same-origin",
-    redirect: "follow",
-    referrer: "no-referrer",
-    body: formData
-  })
-    .then(response => console.log("association updated"));
-  */
+    .then(response => location.assign("/"));
 }
 </script>
 {{end}}
