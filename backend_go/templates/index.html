@@ -1,29 +1,5 @@
 {{define "page"}}Home{{end}}
 {{define "title"}}Species and Material associations{{end}}
 {{define "body"}}
-
-<h3>Existing Associations</h3>
-<table>
-  <thead>
-    <tr>
-      <th colspan="1">ID</th>
-      <th colspan="1">species</th>
-      <th colspan="1">material</th>
-      <th colspan="1">image</th>
-      <th colspan="1">link</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{range .}}
-    <tr>
-      <th><a href="/association/{{.ID}}">{{.ID}}</a></th>
-      <td>{{.SpeciesName}}</td>
-      <td>{{.MaterialName}}</td>
-      <td>{{.ImageUrl}}</td>
-      <td>{{.Link}}</td>
-    </tr>
-    {{end}}
-  </tbody>
-</table>
-<br/>
+{{ template "associations" . }}
 {{end}}

@@ -53,36 +53,12 @@ func RenderHome(w http.ResponseWriter, r *http.Request) {
 
 	lp := filepath.Join("templates", "layout.html")
 	fp := filepath.Join("templates", "index.html")
-	tmpl, err := template.ParseFiles(lp, fp)
+	ap := filepath.Join("templates", "associations/list_associations.tmpl")
+	tmpl, err := template.ParseFiles(lp, fp, ap)
 
 	if err == nil {
 		items, _ := getAllAssociations()
 		tmpl.ExecuteTemplate(w, "layout", items)
-	} else {
-		log.Fatal(err)
-	}
-}
-
-func RenderAssociationDetails(w http.ResponseWriter, r *http.Request) {
-	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
-
-	lp := filepath.Join("templates", "layout.html")
-	fp := filepath.Join("templates", "association_details.html")
-	tmpl, err := template.ParseFiles(lp, fp)
-
-	params := mux.Vars(r)
-	id, err := strconv.Atoi(params["id"])
-
-	if err == nil {
-		association, _ := getAssociation(id)
-		materials, _ := getAllMaterials()
-		species, _ := getAllSpecies()
-		pageData := AssociationDetailsPageData{
-			AssociationDetails: association,
-			Species:            species,
-			Materials:          materials,
-		}
-		tmpl.ExecuteTemplate(w, "layout", pageData)
 	} else {
 		log.Fatal(err)
 	}
@@ -103,22 +79,46 @@ func RenderGallery(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func RenderAddAssociation(w http.ResponseWriter, r *http.Request) {
+func RenderAssociation(w http.ResponseWriter, r *http.Request) {
 	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
 
+  id, found := mux.Vars(r)["id"]
+
 	lp := filepath.Join("templates", "layout.html")
-	fp := filepath.Join("templates", "associations.html")
-	tmpl, err := template.ParseFiles(lp, fp)
+  actionTmpl := ""
+  if found {
+    log.Printf("loading edit template")
+	  actionTmpl = filepath.Join("templates/associations", "edit_associations.tmpl")
+  } else {
+    log.Printf("loading add template")
+	  actionTmpl = filepath.Join("templates/associations", "add_associations.tmpl")
+  }
+
+	tmpl, err := template.ParseFiles(lp, actionTmpl)
 
 	if err == nil {
 		materials, _ := getAllMaterials()
 		species, _ := getAllSpecies()
-		items := AddAssociationPageData{
-			Species:   species,
-			Materials: materials,
-		}
-		tmpl.ExecuteTemplate(w, "layout", items)
-	}
+    var pageData interface{}
+
+    if found {
+      associationId, _ := strconv.ParseInt(id, 10, 64)
+		  association, _ := getAssociation(associationId)
+		  pageData = AssociationDetailsPageData{
+			  AssociationDetails: association,
+			  Species:            species,
+			  Materials:          materials,
+		  }
+    } else {
+      pageData = AddAssociationPageData{
+			  Species:   species,
+			  Materials: materials,
+		  }
+    }
+	tmpl.ExecuteTemplate(w, "layout", pageData)
+  } else {
+    log.Println(err)
+  }
 }
 
 func RenderMaterial(w http.ResponseWriter, r *http.Request) {

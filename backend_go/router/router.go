@@ -70,8 +70,8 @@ func Router() *mux.Router {
 	router.HandleFunc("/materials", middleware.RenderMaterial).Methods("GET")
   router.HandleFunc("/materials/{id}", middleware.RenderMaterial).Methods("GET")
 
-	router.HandleFunc("/associations", middleware.RenderAddAssociation).Methods("GET")
-	router.HandleFunc("/association/{id}", middleware.RenderAssociationDetails).Methods("GET")
+	router.HandleFunc("/associations", middleware.RenderAssociation).Methods("GET")
+	router.HandleFunc("/association/{id}", middleware.RenderAssociation).Methods("GET")
 	router.HandleFunc("/", middleware.RenderHome).Methods("GET")
 
 	imageFileDirectory := http.Dir("./uploads/")

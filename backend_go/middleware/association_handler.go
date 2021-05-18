@@ -193,7 +193,7 @@ func GetAllAssociations(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(associations)
 }
 
-func getAssociation(id int) (models.AssociationDetails, error) {
+func getAssociation(id int64) (models.AssociationDetails, error) {
 	db := createConnection()
 	defer db.Close()
 
