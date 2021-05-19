@@ -227,7 +227,7 @@ func RenderSpecies(w http.ResponseWriter, r *http.Request) {
   }
 }
 
-func RenderAddAgroSystem(w http.ResponseWriter, r *http.Request) {
+func RenderAgroSystem(w http.ResponseWriter, r *http.Request) {
 	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
 
 	lp := filepath.Join("templates", "layout.html")

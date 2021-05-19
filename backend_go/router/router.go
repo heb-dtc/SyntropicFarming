@@ -62,7 +62,9 @@ func Router() *mux.Router {
 	router.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
 
 	router.HandleFunc("/gallery", middleware.RenderGallery).Methods("GET")
-	router.HandleFunc("/agro", middleware.RenderAddAgroSystem).Methods("GET")
+
+	router.HandleFunc("/agro/{id}", middleware.RenderAgroSystem).Methods("GET")
+	router.HandleFunc("/agro", middleware.RenderAgroSystem).Methods("GET")
 
   router.HandleFunc("/species/{id}", middleware.RenderSpecies).Methods("GET")
   router.HandleFunc("/species", middleware.RenderSpecies).Methods("GET")
