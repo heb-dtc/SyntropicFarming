@@ -1,26 +1,27 @@
 {{ define "associations" }}
-<h3>Existing Associations</h3>
-<table>
-  <thead>
-    <tr>
-      <th colspan="1">ID</th>
-      <th colspan="1">species</th>
-      <th colspan="1">material</th>
-      <th colspan="1">image</th>
-      <th colspan="1">link</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{range .}}
-    <tr>
-      <th><a href="/association/{{.ID}}">{{.ID}}</a></th>
-      <td>{{.SpeciesName}}</td>
-      <td>{{.MaterialName}}</td>
-      <td>{{.ImageUrl}}</td>
-      <td>{{.Link}}</td>
-    </tr>
-    {{end}}
-  </tbody>
-</table>
-<br/>
+<div class="container">
+ <h2>Existing Associations</h2>
+ <table>
+   <thead>
+     <tr>
+       <th>ID</th>
+       <th>Species</th>
+       <th>Material</th>
+       <th>Image</th>
+       <th class="right-align">Link</th>
+     </tr>
+   </thead>
+   <tbody>
+     {{range .}}
+     <tr>
+       <td><a href="/association/{{.ID}}">{{.ID}}</a></th>
+       <td>{{.SpeciesName}}</td>
+       <td>{{.MaterialName}}</td>
+       <td>{{.ImageUrl}}</td>
+       <td class="right-align">{{.Link}}</td>
+     </tr>
+     {{end}}
+   </tbody>
+ </table>
+</div>
 {{ end }} 

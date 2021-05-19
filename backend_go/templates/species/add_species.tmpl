@@ -1,9 +1,6 @@
-{{define "page"}}Species{{end}}
-{{define "title"}}Add Species{{end}}
-
 {{define "body"}}
-
-<form id="addSpeciesForm">
+<form class="container" id="addSpeciesForm">
+  <h2>Add Species</h2>
   <input type="text" name="common name" placeholder="common name" id="commonName" />
   <input type="text" name="scientific name" placeholder="scientific name" id="scientificName" />
   <select id="minHardinessSelect" name="minHardiness">
@@ -18,11 +15,10 @@
     <option value={{.ID}}>{{.Value}}</option>
     {{end}}
   </select>
-    <input type="submit" value="add" />
+  <button>Add</button>
 </form>
-<br/>
-  {{ template "species" .SpeciesList }}
-<br/>
+
+{{ template "species" .SpeciesList }}
 
 <script>
 document.getElementById('addSpeciesForm').addEventListener('submit', addSpecies);

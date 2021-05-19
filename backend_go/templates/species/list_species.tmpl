@@ -1,27 +1,27 @@
 {{ define "species" }}
-  <h1>Existing Species</h1>
+<div class="container">
+  <h2>Existing Species</h2>
   <table>
     <thead>
       <tr>
-        <th colspan="1">ID</th>
-        <th colspan="1">Common Name</th>
-        <th colspan="1">Scientific Name</th>
-        <th colspan="1">MinHardiness</th>
-        <th colspan="1">MaxHardiness</th>
-        <th colspan="1">Edit</th>
+        <th>ID</th>
+        <th>Common Name</th>
+        <th>Scientific Name</th>
+        <th>MinHardiness</th>
+        <th>MaxHardiness</th>
       </tr>
     </thead>
     <tbody>
       {{range .}}
       <tr>
-        <td>{{.ID}}</td>
+        <td><a href="/species/{{ .ID }}">{{.ID}}</a></td>
         <td>{{.CommonName}}</td>
         <td>{{.ScientificName}}</td>
-        <td>{{.MinHardiness}}</td>
-        <td>{{.MaxHardiness}}</td>
-        <td><a href="/species/{{ .ID }}">Edit</a></td>
+        <td class="right-align">{{.MinHardiness}}</td>
+        <td class="right-align">{{.MaxHardiness}}</td>
       </tr>
       {{end}}
     </tbody>
   </table>
+</div>
 {{ end }}

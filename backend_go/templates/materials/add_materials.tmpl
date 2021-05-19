@@ -1,14 +1,11 @@
-{{define "page"}}Material{{end}}
-{{define "title"}}Add Material{{end}}
-
 {{define "body"}}
-<form id="addMaterialsForm">
-  <input type="text" name="name" id="materialName" />
-  <input type="submit" value="add" />
+<form class="container" id="addMaterialsForm">
+  <h2>Add Material</h2>
+  <input type="text" name="name" id="materialName" placeholder="name" />
+  <button>Add</button>
 </form>
-<br/>
+
 {{ template "materials" .Materials }}
-<br/>
 
 <script>
 document.getElementById('addMaterialsForm').addEventListener('submit', addMaterial);

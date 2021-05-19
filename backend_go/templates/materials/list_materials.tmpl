@@ -1,14 +1,17 @@
 {{ define "materials" }}
-<table>
-  <tr>
-    <th>Existing Materials</th>
-    <th>Edit</th>
-  </tr>
-  {{range .}}
-  <tr>
-    <td>{{.Name}}</td>
-    <td><a href="/materials/{{ .ID }}">Edit</a></td>
-  </td>
-  {{end}}
-</table>
+<div class="container">
+  <h3>Existing Materials</h3>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th class="right-align">Name</th>
+    </tr>
+    {{range .}}
+    <tr>
+      <td><a href="/materials/{{ .ID }}">{{.ID}}</a></td>
+      <td class="right-align">{{.Name}}</td>
+    </td>
+    {{end}}
+  </table>
+</div>
 {{ end }}

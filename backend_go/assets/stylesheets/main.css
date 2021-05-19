@@ -1,3 +1,48 @@
+select {
+  margin: 4px 0px 4px 0px;
+}
+
+input {
+  margin: 4px 0px 4px 0px;
+}
+
+.page {
+  display: flex;
+  align-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1;
+  padding: 0px 20px 0px 10px;
+}
+
+.container form {
+  flex: 0;  
+}
+
+table, th, td {
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #e4e4e4;
+  color: #761df0;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+
+.right-align {
+  text-align: right;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
 .grid-container {
   display: grid;
   grid-gap: 10px;

@@ -1,8 +1,6 @@
-{{define "page"}}Association{{end}}
-{{define "title"}}Edit Association{{end}}
-
 {{define "body"}}
-<form id="editAssociationForm">
+<form class="container" id="editAssociationForm">
+  <h2>Edit Association</h2>
   <select id="speciesSelect" name="species">
     <option selected="selected" value={{.AssociationDetails.SpeciesId}}>{{.AssociationDetails.SpeciesName}}</option>
     {{range .Species}}
@@ -18,7 +16,7 @@
   <br/>
   <br/>
   <img src="{{ .AssociationDetails.ImageUrl }}" />
-  image: <input type="file" name="image" text="yooo"/>
+  <input type="file" name="image" />
   <br/>
   <br/>
   <input type="text" name="link" placeholder="link" id="link" value="{{ .AssociationDetails.Link }}"/>
@@ -27,6 +25,8 @@
   <button id="editButton" type="button">edit</button>
   <button id="deleteButton" type="button">delete</button>
 </form>
+
+{{template "associations" .Associations}}
 
 <script>
 document.getElementById("editButton").addEventListener("click", editAssociation);

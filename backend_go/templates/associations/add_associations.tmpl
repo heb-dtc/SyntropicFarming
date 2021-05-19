@@ -1,8 +1,6 @@
-{{define "page"}}Association{{end}}
-{{define "title"}}Add Association{{end}}
-
 {{define "body"}}
-<form id="createAssociationForm">
+<form class="container" id="createAssociationForm">
+  <h2>Add Association</h2>
   <select id="speciesSelect" name="species">
     <option>Choose a species</option>
     {{range .Species}}
@@ -17,14 +15,19 @@
   </select>
   <br/>
   <br/>
-  image: <input type="file" name="image" />
+  <div>
+  <label for="image">Choose an image<label/>
+  <input type="file" name="image" id="image" />
+  </div>
   <br/>
   <br/>
-  link: <input type="text" name="link" id="link"/>
+  <input type="text" name="link" id="link" placeholder="link"/>
   <br/>
   <br/>
-  <input type="submit" value="create" />
+  <button>create</button>
 </form>
+
+{{template "associations" .Associations}}
 
 <script>
 document.getElementById('createAssociationForm').addEventListener('submit', createAssociation)

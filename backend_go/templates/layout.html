@@ -3,11 +3,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{{template "page"}}</title>
+    <title>Syntropic Dashboard</title>
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
   </head>
   <body>
-    <h1>{{template "title"}}</h1>
+    <h1>Syntropic Dashboard</h1>
     <ul>
       <a href="/">Home</a>
       <a href="/species">Species</a>
@@ -17,7 +17,9 @@
       <a href="/gallery">Gallery</a>
     </ul>
     <br/>
-    {{ template "body" . }}
+    <div class="page">
+      {{ template "body" . }}
+    </div>
   </body>
 </html>
 {{end}}

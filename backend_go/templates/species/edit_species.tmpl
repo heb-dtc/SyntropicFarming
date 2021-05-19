@@ -1,9 +1,6 @@
-{{define "page"}}Species{{end}}
-{{define "title"}}Edit Species{{end}}
-
 {{define "body"}}
-
-<form id="editSpeciesForm">
+<form class="container" id="editSpeciesForm">
+  <h2>Edit Species</h2>
   <input type="text" name="common name" placeholder="common name" id="commonName" value="{{ .Species.CommonName }}"/>
   <input type="text" name="scientific name" placeholder="scientific name" id="scientificName" value="{{ .Species.ScientificName }}"/>
   <select id="minHardinessSelect" name="minHardiness">

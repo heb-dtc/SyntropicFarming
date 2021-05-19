@@ -1,11 +1,8 @@
-{{define "page"}}Agro Eco Systems{{end}}
-{{define "title"}}Agro Eco System{{end}}
-
 {{define "body"}}
-
-<h2> ---> add new agro eco system </h2>
-<form id="addAgroEcoSystemForm">
-  <input type="text" name="name" id="agroSystemName" />
+<div class="container">
+<form class="container" id="addAgroEcoSystemForm">
+  <h2> Create Agro Eco System </h2>
+  <input type="text" name="name" id="agroSystemName" placeholder="name" />
   <select id="hardinessSelect" name="hardiness">
     <option>Choose an hardiness</option>
     {{range .HardinessList}}
@@ -14,10 +11,9 @@
   </select>
   <input type="submit" value="add" />
 </form>
-<br/>
 
-<h2> ---> populate existing agro eco system </h2>
-<form id="populateAgroEcoSystemForm">
+<form class="container" id="populateAgroEcoSystemForm">
+  <h2> Populate Agro Eco System </h2>
   <select id="agroSystemSelect" name="agroEcoSystem">
     <option>Choose an Agro Eco System</option>
     {{range .AgroEcoSystems}}
@@ -31,9 +27,10 @@
   </select>
   <input type="submit" value="add" />
 </form>
-<br/>
+</div>
 
-<h1>Existing Agro Eco Systems</h1>
+<div class="container">
+<h2>Existing Agro Eco Systems</h2>
 <table>
   <thead>
     <tr>
@@ -52,7 +49,7 @@
     {{end}}
   </tbody>
 </table>
-<br/>
+</div>
 
 <script>
 document.getElementById('addAgroEcoSystemForm').addEventListener('submit', addAgroEcoSystem)

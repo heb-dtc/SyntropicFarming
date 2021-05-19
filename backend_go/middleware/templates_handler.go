@@ -38,11 +38,13 @@ type AddAgroSystemPageData struct {
 }
 
 type AddAssociationPageData struct {
+  Associations []models.AssociationDetails
 	Species   []models.Species
 	Materials []models.Material
 }
 
 type AssociationDetailsPageData struct {
+  Associations []models.AssociationDetails
 	AssociationDetails models.AssociationDetails
 	Species            []models.Species
 	Materials          []models.Material
@@ -85,6 +87,7 @@ func RenderAssociation(w http.ResponseWriter, r *http.Request) {
   id, found := mux.Vars(r)["id"]
 
 	lp := filepath.Join("templates", "layout.html")
+  listTmpl := filepath.Join("templates/associations", "list_associations.tmpl")
   actionTmpl := ""
   if found {
     log.Printf("loading edit template")
@@ -94,9 +97,10 @@ func RenderAssociation(w http.ResponseWriter, r *http.Request) {
 	  actionTmpl = filepath.Join("templates/associations", "add_associations.tmpl")
   }
 
-	tmpl, err := template.ParseFiles(lp, actionTmpl)
+	tmpl, err := template.ParseFiles(lp, listTmpl, actionTmpl)
 
 	if err == nil {
+    associations, _ := getAllAssociations()
 		materials, _ := getAllMaterials()
 		species, _ := getAllSpecies()
     var pageData interface{}
@@ -106,11 +110,13 @@ func RenderAssociation(w http.ResponseWriter, r *http.Request) {
 		  association, _ := getAssociation(associationId)
 		  pageData = AssociationDetailsPageData{
 			  AssociationDetails: association,
+        Associations: associations,
 			  Species:            species,
 			  Materials:          materials,
 		  }
     } else {
       pageData = AddAssociationPageData{
+        Associations: associations,
 			  Species:   species,
 			  Materials: materials,
 		  }
@@ -225,7 +231,7 @@ func RenderAddAgroSystem(w http.ResponseWriter, r *http.Request) {
 	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
 
 	lp := filepath.Join("templates", "layout.html")
-	fp := filepath.Join("templates", "agro.html")
+	fp := filepath.Join("templates", "agroecosystems/agro_eco_systems.tmpl")
 	tmpl, err := template.ParseFiles(lp, fp)
 
 	if err == nil {
@@ -241,7 +247,9 @@ func RenderAddAgroSystem(w http.ResponseWriter, r *http.Request) {
 			AgroEcoSystemAssociations: agroSystemsAssociations,
 		}
 		tmpl.ExecuteTemplate(w, "layout", items)
-	}
+	} else {
+    log.Println(err)
+  }
 }
 
 func RenderTemplate(w http.ResponseWriter, r *http.Request) {
