@@ -125,7 +125,7 @@ func getAllSpecies() ([]models.Species, error) {
 
 	for rows.Next() {
 		var species models.Species
-		err = rows.Scan(&species.ID, &species.CommonName, &species.MinHardiness, &species.MaxHardiness)
+		err = rows.Scan(&species.ID, &species.CommonName, &species.MinHardiness, &species.MaxHardiness, &species.CreatedAt, &species.UpdatedAt)
 
 		if err != nil {
 			log.Fatalf("Unable to scan the row. %v", err)

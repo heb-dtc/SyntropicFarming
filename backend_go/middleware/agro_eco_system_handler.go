@@ -174,7 +174,7 @@ func getAllAgroEcoSystems() ([]models.AgroEcoSystem, error) {
 
 	for rows.Next() {
 		var aes models.AgroEcoSystem
-		err = rows.Scan(&aes.ID, &aes.Name, &aes.Hardiness)
+		err = rows.Scan(&aes.ID, &aes.Name, &aes.Hardiness, &aes.CreatedAt, &aes.UpdatedAt)
 
 		if err != nil {
 			log.Fatalf("Unable to scan the row. %v", err)

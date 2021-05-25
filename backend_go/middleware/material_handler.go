@@ -150,7 +150,7 @@ func getAllMaterials() ([]models.Material, error) {
 
 	for rows.Next() {
 		var material models.Material
-		err = rows.Scan(&material.ID, &material.Name)
+		err = rows.Scan(&material.ID, &material.Name, &material.CreatedAt, &material.UpdatedAt)
 
 		if err != nil {
 			log.Fatalf("Unable to scan the row. %v", err)

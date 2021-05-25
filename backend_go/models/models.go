@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type Hardiness struct {
 	ID    int64  `json:"id"`
 	Value int `json:"value"`
@@ -8,6 +10,8 @@ type Hardiness struct {
 type Material struct {
 	ID   int64  `json:"id"`
 	Name string `json:"name"`
+  CreatedAt time.Time `json:"created_at"`
+  UpdatedAt time.Time `json:"updated_at"`
 }
 
 type Species struct {
@@ -16,6 +20,8 @@ type Species struct {
 	CommonName     string `json:"common_name"`
 	MinHardiness   int    `json:"min_hardiness"`
 	MaxHardiness   int    `json:"max_hardiness"`
+  CreatedAt time.Time `json:"created_at"`
+  UpdatedAt time.Time `json:"updated_at"`
 }
 
 type Association struct {
@@ -40,6 +46,8 @@ type AgroEcoSystem struct {
 	ID        int64  `json:"id"`
 	Name      string `json:"name"`
 	Hardiness int    `json:"hardiness"`
+  CreatedAt time.Time `json:"created_at"`
+  UpdatedAt time.Time `json:"updated_at"`
 }
 
 type AgroEcoSystemAssociation struct {
