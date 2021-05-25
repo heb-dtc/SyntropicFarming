@@ -109,3 +109,47 @@ func getAllHardiness() ([]models.Hardiness, error) {
 
 	return hardinessList, err
 }
+
+func getStatistics() (StatisticPageData, error) {
+	db := createConnection()
+	defer db.Close()
+
+  var speciesCount int
+	sqlStatement := `SELECT COUNT(*) FROM species`
+	err := db.QueryRow(sqlStatement).Scan(&speciesCount)
+  if err != nil {
+		log.Fatalf("Unable to execute the query. %v", err)
+    return StatisticPageData{}, err
+	}
+
+  var materialsCount int
+	sqlStatement = `SELECT COUNT(*) FROM materials`
+	err = db.QueryRow(sqlStatement).Scan(&materialsCount)
+  if err != nil {
+		log.Fatalf("Unable to execute the query. %v", err)
+    return StatisticPageData{}, err
+	}
+
+  var associationsCount int
+	sqlStatement = `SELECT COUNT(*) FROM species_materials`
+	err = db.QueryRow(sqlStatement).Scan(&associationsCount)
+  if err != nil {
+		log.Fatalf("Unable to execute the query. %v", err)
+    return StatisticPageData{}, err
+  }
+
+  var agroSystemsCount int
+	sqlStatement = `SELECT COUNT(*) FROM agro_eco_systems`
+	err = db.QueryRow(sqlStatement).Scan(&agroSystemsCount)
+	if err != nil {
+		log.Fatalf("Unable to execute the query. %v", err)
+    return StatisticPageData{}, err
+	}
+
+	return StatisticPageData{
+    SpeciesNumber: speciesCount,
+    MaterialsNumber: materialsCount,
+    AssociationsNumber: associationsCount,
+    AgroSystemsNumber: agroSystemsCount,
+  }, nil
+}

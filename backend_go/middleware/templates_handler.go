@@ -10,6 +10,13 @@ import (
 	"strconv"
 )
 
+type StatisticPageData struct {
+  SpeciesNumber int
+  MaterialsNumber int
+  AssociationsNumber int
+  AgroSystemsNumber int
+}
+
 type AddSpeciesPageData struct {
 	SpeciesList   []models.Species
 	HardinessList []models.Hardiness
@@ -55,12 +62,12 @@ func RenderHome(w http.ResponseWriter, r *http.Request) {
 
 	lp := filepath.Join("templates", "layout.html")
 	fp := filepath.Join("templates", "index.html")
-	ap := filepath.Join("templates", "associations/list_associations.tmpl")
+	ap := filepath.Join("templates", "statistics.tmpl")
 	tmpl, err := template.ParseFiles(lp, fp, ap)
 
 	if err == nil {
-		items, _ := getAllAssociations()
-		tmpl.ExecuteTemplate(w, "layout", items)
+		item, _ := getStatistics()
+		tmpl.ExecuteTemplate(w, "layout", item)
 	} else {
 		log.Fatal(err)
 	}

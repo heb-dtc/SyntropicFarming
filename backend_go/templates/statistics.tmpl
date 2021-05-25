@@ -1,0 +1,22 @@
+{{ define "statistics" }}
+<div class="container">
+
+  <div>
+    <h3>Number of Species</h3>
+    <p>{{ .SpeciesNumber }}</p>
+  </div>
+  <div>
+    <h3>Number of Materials</h3>
+    <p>{{ .MaterialsNumber }}</p>
+  </div>
+  <div>
+    <h3>Number of Associations</h3>
+    <p>{{ .AssociationsNumber }}</p>
+  </div>
+  <div>
+    <h3>Number of AgroEcoSystems</h3>
+    <p>{{ .AgroSystemsNumber }}</p>
+  </div>
+
+</div>
+{{ end }}
