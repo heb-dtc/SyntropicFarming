@@ -1,0 +1,52 @@
+ALTER TABLE species 
+ADD created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ADD updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+ALTER TABLE materials 
+ADD created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ADD updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+ALTER table species_agrosystems
+ADD created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ADD updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+ALTER table species_materials
+ADD created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ADD updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+ALTER table agro_eco_systems
+ADD created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ADD updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+CREATE OR REPLACE FUNCTION trigger_set_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_timestamp
+BEFORE INSERT OR UPDATE ON species
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+CREATE TRIGGER set_timestamp
+BEFORE INSERT OR UPDATE ON materials
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+CREATE TRIGGER set_timestamp
+BEFORE INSERT OR UPDATE ON species_agrosystems
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+CREATE TRIGGER set_timestamp
+BEFORE INSERT OR UPDATE ON species_materials
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+CREATE TRIGGER set_timestamp
+BEFORE INSERT OR UPDATE ON agro_eco_systems
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
