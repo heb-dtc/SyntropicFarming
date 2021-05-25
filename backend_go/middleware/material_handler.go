@@ -139,7 +139,7 @@ func getAllMaterials() ([]models.Material, error) {
 
 	var materials []models.Material
 
-	sqlStatement := `SELECT * FROM materials`
+	sqlStatement := `SELECT * FROM materials order by updated_at desc;`
 	rows, err := db.Query(sqlStatement)
 
 	if err != nil {

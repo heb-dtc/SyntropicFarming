@@ -114,7 +114,7 @@ func getAllSpecies() ([]models.Species, error) {
 
 	var speciesList []models.Species
 
-	sqlStatement := `SELECT * FROM species`
+	sqlStatement := `SELECT * FROM species order by updated_at desc;`
 	rows, err := db.Query(sqlStatement)
 
 	if err != nil {

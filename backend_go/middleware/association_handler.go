@@ -318,10 +318,11 @@ func getAllAssociations() ([]models.AssociationDetails, error) {
 
 	var associations []models.AssociationDetails
 
-	sqlStatement := `select species_materials.uid, species."uid", species."name", materials."uid", materials."name", images."name", link from species_materials 
+	sqlStatement := `select species_materials.uid, species_materials.updated_at, species."uid", species."name", materials."uid", materials."name", images."name", link from species_materials 
     inner join species on species_materials.species_id=species.uid
     inner join materials on species_materials.material_id=materials.uid
-    inner join images on species_materials.image_id=images.uid;`
+    inner join images on species_materials.image_id=images.uid
+    order by species_materials.updated_at desc;`
 
 	rows, err := db.Query(sqlStatement)
 
@@ -333,7 +334,7 @@ func getAllAssociations() ([]models.AssociationDetails, error) {
 
 	for rows.Next() {
 		var association models.AssociationDetails
-		err = rows.Scan(&association.ID, &association.SpeciesId, &association.SpeciesName, &association.MaterialId, &association.MaterialName, &association.ImageUrl, &association.Link)
+		err = rows.Scan(&association.ID, &association.UpdatedAt, &association.SpeciesId, &association.SpeciesName, &association.MaterialId, &association.MaterialName, &association.ImageUrl, &association.Link)
 
 		imageUrl := "/uploads/" + association.ImageUrl
 		association.ImageUrl = imageUrl

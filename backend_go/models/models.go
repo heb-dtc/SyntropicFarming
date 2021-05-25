@@ -40,6 +40,7 @@ type AssociationDetails struct {
 	MaterialName string `json:"material_name"`
 	ImageUrl     string `json:"image_url"`
 	Link         string `json:"link"`
+  UpdatedAt time.Time `json:"updated_at"`
 }
 
 type AgroEcoSystem struct {
