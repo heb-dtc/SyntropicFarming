@@ -39,10 +39,10 @@ func editSpecies(species models.Species) models.Species {
 	db := createConnection()
 	defer db.Close()
 
-	sqlStatement := `UPDATE species set name=$1, min_hardiness=$2, max_hardiness=$3 WHERE uid=$4`
+	sqlStatement := `UPDATE species set common_name=$1, min_hardiness=$2, max_hardiness=$3, scientific_name=$4 WHERE uid=$5`
 
   //TODO: read the number of row affected by the update
-	_, err := db.Exec(sqlStatement, species.CommonName, species.MinHardiness, species.MaxHardiness, species.ID)
+	_, err := db.Exec(sqlStatement, species.CommonName, species.MinHardiness, species.MaxHardiness, species.ScientificName, species.ID)
 
 	if err != nil {
 		log.Fatalf("Unable to execute the query, %v", err)
@@ -80,10 +80,10 @@ func insertSpecies(species models.Species) int64 {
 	db := createConnection()
 	defer db.Close()
 
-	sqlStatement := `INSERT into species (name, min_hardiness, max_hardiness) VALUES ($1, $2, $3) RETURNING uid`
+	sqlStatement := `INSERT into species (common_name, scientific_name, min_hardiness, max_hardiness) VALUES ($1, $2, $3, $4) RETURNING uid`
 
 	var id int64
-	err := db.QueryRow(sqlStatement, species.CommonName, species.MinHardiness, species.MaxHardiness).Scan(&id)
+	err := db.QueryRow(sqlStatement, species.CommonName, species.ScientificName, species.MinHardiness, species.MaxHardiness).Scan(&id)
 
 	if err != nil {
 		log.Fatalf("Unable to execute the query, %v", err)
@@ -125,7 +125,7 @@ func getAllSpecies() ([]models.Species, error) {
 
 	for rows.Next() {
 		var species models.Species
-		err = rows.Scan(&species.ID, &species.CommonName, &species.MinHardiness, &species.MaxHardiness, &species.CreatedAt, &species.UpdatedAt)
+		err = rows.Scan(&species.ID, &species.CommonName, &species.MinHardiness, &species.MaxHardiness, &species.CreatedAt, &species.UpdatedAt, &species.ScientificName)
 
 		if err != nil {
 			log.Fatalf("Unable to scan the row. %v", err)

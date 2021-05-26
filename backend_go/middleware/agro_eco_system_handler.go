@@ -192,7 +192,7 @@ func getAllAgroEcoSystemsAssociations() ([]models.AgroEcoSystemAssociation, erro
 
 	var associations []models.AgroEcoSystemAssociation
 
-	sqlStatement := `SELECT species_agrosystems.uid, agro_eco_systems."name", agro_eco_systems."hardiness", species."name" FROM species_agrosystems
+	sqlStatement := `SELECT species_agrosystems.uid, agro_eco_systems."name", agro_eco_systems."hardiness", species."common_name" FROM species_agrosystems
     inner join species on species_agrosystems.species_id=species.uid
     inner join agro_eco_systems on species_agrosystems.agrosystem_id=agro_eco_systems.uid`
 

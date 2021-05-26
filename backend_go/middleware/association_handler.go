@@ -199,7 +199,7 @@ func getAllAssociations() ([]models.AssociationDetails, error) {
 
 	var associations []models.AssociationDetails
 
-	sqlStatement := `select species_materials.uid, species_materials.updated_at, species."uid", species."name", materials."uid", materials."name", images."name", link from species_materials 
+	sqlStatement := `select species_materials.uid, species_materials.updated_at, species."uid", species."common_name", materials."uid", materials."name", images."name", link from species_materials 
     inner join species on species_materials.species_id=species.uid
     inner join materials on species_materials.material_id=materials.uid
     inner join images on species_materials.image_id=images.uid
@@ -235,7 +235,7 @@ func getAssociation(id int64) (models.AssociationDetails, error) {
 
 	var association models.AssociationDetails
 
-	sqlStatement := `select species_materials.uid, species."uid", species."name", materials."uid", materials."name", images."name", link from species_materials 
+	sqlStatement := `select species_materials.uid, species."uid", species."common_name", materials."uid", materials."name", images."name", link from species_materials 
     inner join species on species_materials.species_id=species.uid
     inner join materials on species_materials.material_id=materials.uid
     inner join images on species_materials.image_id=images.uid
@@ -261,7 +261,7 @@ func getAssociationsForAgroEcoSytem(id int) ([]models.AssociationDetails, error)
 
 	var associations []models.AssociationDetails
 
-	sqlStatement := `select species_materials.uid, species."uid", species."name", materials."uid", materials."name", images."name", link from species_materials 
+	sqlStatement := `select species_materials.uid, species."uid", species."common_name", materials."uid", materials."name", images."name", link from species_materials 
     inner join species on species_materials.species_id=species.uid
     inner join materials on species_materials.material_id=materials.uid
     inner join images on species_materials.image_id=images.uid
@@ -318,7 +318,7 @@ func filterAssociations(hardiness int) ([]models.AssociationDetails, error) {
 
 	var associations []models.AssociationDetails
 
-	sqlStatement := `select species_materials.uid, species."uid", species."name", materials."uid", materials."name", images."name", link from species_materials 
+	sqlStatement := `select species_materials.uid, species."uid", species."common_name", materials."uid", materials."name", images."name", link from species_materials 
     inner join species on species_materials.species_id=species.uid
     inner join materials on species_materials.material_id=materials.uid
     inner join images on species_materials.image_id=images.uid
