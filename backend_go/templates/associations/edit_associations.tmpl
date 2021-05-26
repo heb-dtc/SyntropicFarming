@@ -32,6 +32,25 @@
 document.getElementById("editButton").addEventListener("click", editAssociation);
 document.getElementById("deleteButton").addEventListener("click", deleteAssociation);
 
+function deleteAssociation(event) {
+  event.preventDefault();
+
+  let id = {{ .AssociationDetails.ID }}; 
+
+  fetch(`/api/associations/delete/${id}`, {
+    method: "DELETE",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+  })
+    .then(response => location.assign("/associations"));
+}
+
 function editAssociation(event) {
   event.preventDefault();
   form = document.getElementById('editAssociationForm')

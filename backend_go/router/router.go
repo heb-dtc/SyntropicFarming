@@ -39,6 +39,7 @@ func Router() *mux.Router {
 	router.HandleFunc("/api/associations", middleware.GetAllAssociations).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/associations/create", middleware.AddAssociation).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/associations/edit/{id}", middleware.EditAssociation).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/associations/delete/{id}", middleware.DeleteAssociation).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/api/associations/filter/{hardiness}", middleware.FilterAssociations).Methods("GET", "OPTIONS")
 
 	router.HandleFunc("/api/materials", middleware.GetAllMaterials).Methods("GET", "OPTIONS")

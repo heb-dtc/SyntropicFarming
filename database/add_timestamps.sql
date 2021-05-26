@@ -50,3 +50,38 @@ CREATE TRIGGER set_timestamp
 BEFORE INSERT OR UPDATE ON agro_eco_systems
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
+
+ALTER TABLE species_materials
+DROP CONSTRAINT species_materials_species_id_fkey,
+ADD CONSTRAINT species_materials_species_id_fkey 
+FOREIGN KEY(species_id)
+REFERENCES species(uid)
+ON DELETE CASCADE;
+
+ALTER TABLE species_materials
+DROP CONSTRAINT species_materials_material_id_fkey,
+ADD CONSTRAINT species_materials_material_id_fkey 
+FOREIGN KEY(material_id)
+REFERENCES materials(uid)
+ON DELETE CASCADE;
+
+ALTER TABLE species_materials
+DROP CONSTRAINT species_materials_image_id_fkey,
+ADD CONSTRAINT species_materials_image_id_fkey 
+FOREIGN KEY(image_id)
+REFERENCES images(uid)
+ON DELETE CASCADE;
+
+ALTER TABLE species_agrosystems
+DROP CONSTRAINT species_agrosystems_species_id_fkey,
+ADD CONSTRAINT species_agrosystems_species_id_fkey 
+FOREIGN KEY(species_id)
+REFERENCES species(uid)
+ON DELETE CASCADE;
+
+ALTER TABLE species_agrosystems
+DROP CONSTRAINT species_agrosystems_agrosystem_id_fkey,
+ADD CONSTRAINT species_agrosystems_agrosystem_id_fkey 
+FOREIGN KEY(agrosystem_id)
+REFERENCES agro_eco_systems(uid)
+ON DELETE CASCADE;

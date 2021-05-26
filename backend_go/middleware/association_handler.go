@@ -193,6 +193,42 @@ func GetAllAssociations(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(associations)
 }
 
+func getAllAssociations() ([]models.AssociationDetails, error) {
+	db := createConnection()
+	defer db.Close()
+
+	var associations []models.AssociationDetails
+
+	sqlStatement := `select species_materials.uid, species_materials.updated_at, species."uid", species."name", materials."uid", materials."name", images."name", link from species_materials 
+    inner join species on species_materials.species_id=species.uid
+    inner join materials on species_materials.material_id=materials.uid
+    inner join images on species_materials.image_id=images.uid
+    order by species_materials.updated_at desc;`
+
+	rows, err := db.Query(sqlStatement)
+
+	if err != nil {
+		log.Fatalf("Unable to execute the query. %v", err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var association models.AssociationDetails
+		err = rows.Scan(&association.ID, &association.UpdatedAt, &association.SpeciesId, &association.SpeciesName, &association.MaterialId, &association.MaterialName, &association.ImageUrl, &association.Link)
+
+		imageUrl := "/uploads/" + association.ImageUrl
+		association.ImageUrl = imageUrl
+		if err != nil {
+			log.Fatalf("Unable to scan the row. %v", err)
+		}
+
+		associations = append(associations, association)
+	}
+
+	return associations, err
+}
+
 func getAssociation(id int64) (models.AssociationDetails, error) {
 	db := createConnection()
 	defer db.Close()
@@ -312,38 +348,27 @@ func filterAssociations(hardiness int) ([]models.AssociationDetails, error) {
 	return associations, err
 }
 
-func getAllAssociations() ([]models.AssociationDetails, error) {
-	db := createConnection()
-	defer db.Close()
+func DeleteAssociation(w http.ResponseWriter, r *http.Request) {
+	log.Printf("DeleteAssociation")
 
-	var associations []models.AssociationDetails
+	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
-	sqlStatement := `select species_materials.uid, species_materials.updated_at, species."uid", species."name", materials."uid", materials."name", images."name", link from species_materials 
-    inner join species on species_materials.species_id=species.uid
-    inner join materials on species_materials.material_id=materials.uid
-    inner join images on species_materials.image_id=images.uid
-    order by species_materials.updated_at desc;`
-
-	rows, err := db.Query(sqlStatement)
-
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
 	if err != nil {
-		log.Fatalf("Unable to execute the query. %v", err)
+		log.Fatalf("Unable to convert the string into int.  %v", err)
 	}
 
-	defer rows.Close()
+	sqlStatement := `DELETE FROM species_materials WHERE uid=$1`
+	deletedRows := delete(sqlStatement, int64(id))
+	msg := fmt.Sprintf("Association deleted successfully. Total rows/record affected %v", deletedRows)
 
-	for rows.Next() {
-		var association models.AssociationDetails
-		err = rows.Scan(&association.ID, &association.UpdatedAt, &association.SpeciesId, &association.SpeciesName, &association.MaterialId, &association.MaterialName, &association.ImageUrl, &association.Link)
-
-		imageUrl := "/uploads/" + association.ImageUrl
-		association.ImageUrl = imageUrl
-		if err != nil {
-			log.Fatalf("Unable to scan the row. %v", err)
-		}
-
-		associations = append(associations, association)
+	res := response{
+		ID:      int64(id),
+		Message: msg,
 	}
-
-	return associations, err
+	json.NewEncoder(w).Encode(res)
 }
