@@ -1,22 +1,51 @@
 {{ define "statistics" }}
-<div class="container">
+  <div class="container">
+   <div>
+     <h3>Number of Species</h3>
+     <p>{{ .SpeciesNumber }}</p>
+   </div>
+   <div>
+     <h3>Number of Materials</h3>
+     <p>{{ .MaterialsNumber }}</p>
+   </div>
+   <div>
+     <h3>Number of Associations</h3>
+     <p>{{ .AssociationsNumber }}</p>
+   </div>
+   <div>
+     <h3>Number of AgroEcoSystems</h3>
+     <p>{{ .AgroSystemsNumber }}</p>
+   </div>
+  </div>
 
-  <div>
-    <h3>Number of Species</h3>
-    <p>{{ .SpeciesNumber }}</p>
-  </div>
-  <div>
-    <h3>Number of Materials</h3>
-    <p>{{ .MaterialsNumber }}</p>
-  </div>
-  <div>
-    <h3>Number of Associations</h3>
-    <p>{{ .AssociationsNumber }}</p>
-  </div>
-  <div>
-    <h3>Number of AgroEcoSystems</h3>
-    <p>{{ .AgroSystemsNumber }}</p>
+  <div class="container">
+    <button id="checkLinksButton">check broken links</button>
+    <div id="spinner" class="loader"></div>
   </div>
 
-</div>
+<script>
+document.getElementById('checkLinksButton').addEventListener('click', checkLinks);
+document.getElementById('spinner')[0].style.visibility = 'hidden';
+
+function checkLinks(event) {
+  event.preventDefault();
+
+  document.getElementById('spinner')[0].style.visibility = 'visible';
+
+  fetch("/api/associations/links", {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache", 
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+  })
+  .then(response => {
+    document.getElementById('spinner')[0].style.visibility = 'hidden';
+  })
+}
+</script>
 {{ end }}

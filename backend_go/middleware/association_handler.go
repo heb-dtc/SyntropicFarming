@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"backend/models"
+  "backend/jobs"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -11,6 +12,18 @@ import (
 	"net/http"
 	"strconv"
 )
+
+func CheckAssociations(w http.ResponseWriter, r *http.Request) {
+	log.Printf("CheckAssociation")
+
+	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+  items, _ := getAllAssociations()
+  flaggedItems := jobs.CheckLinks(items)
+
+	json.NewEncoder(w).Encode(flaggedItems)
+}
 
 func AddAssociation(w http.ResponseWriter, r *http.Request) {
 	log.Printf("AddAssociation")
