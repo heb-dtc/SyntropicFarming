@@ -16,7 +16,7 @@ import (
 func CheckAssociations(w http.ResponseWriter, r *http.Request) {
 	log.Printf("CheckAssociation")
 
-	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Context-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
   items, _ := getAllAssociations()

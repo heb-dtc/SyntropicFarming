@@ -21,16 +21,18 @@
   <div class="container">
     <button id="checkLinksButton">check broken links</button>
     <div id="spinner" class="loader"></div>
+    <div id="results" />
+    </div>
   </div>
 
 <script>
 document.getElementById('checkLinksButton').addEventListener('click', checkLinks);
-document.getElementById('spinner')[0].style.visibility = 'hidden';
+document.getElementById('spinner').style.visibility = 'hidden';
 
 function checkLinks(event) {
   event.preventDefault();
 
-  document.getElementById('spinner')[0].style.visibility = 'visible';
+  document.getElementById('spinner').style.visibility = 'visible';
 
   fetch("/api/associations/links", {
     method: "GET",
@@ -44,7 +46,20 @@ function checkLinks(event) {
     referrer: "no-referrer",
   })
   .then(response => {
-    document.getElementById('spinner')[0].style.visibility = 'hidden';
+    return response.json();
+  })
+  .then(json => {
+    var res = document.getElementById('results')
+    for (var i = 0; i < json.length; i++) {
+      var div = document.createElement('div')
+      div.innerHTML = "Broken link -> " + json[i].link
+      res.appendChild(div)
+    }
+    document.getElementById('spinner').style.visibility = 'hidden';
+    document.getElementById('results').style.visibility = 'visible';
+  })
+  .catch(error => {
+    console.log(error)
   })
 }
 </script>
