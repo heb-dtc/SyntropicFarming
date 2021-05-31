@@ -1,16 +1,17 @@
 package middleware
 
 import (
+	"backend/jobs"
 	"backend/models"
-  "backend/jobs"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
-	_ "github.com/lib/pq"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
+	_ "github.com/lib/pq"
 )
 
 func CheckAssociations(w http.ResponseWriter, r *http.Request) {
@@ -19,8 +20,8 @@ func CheckAssociations(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-  items, _ := getAllAssociations()
-  flaggedItems := jobs.CheckLinks(items)
+	items, _ := getAllAssociations()
+	flaggedItems := jobs.CheckLinks(items)
 
 	json.NewEncoder(w).Encode(flaggedItems)
 }
@@ -135,29 +136,29 @@ func EditAssociation(w http.ResponseWriter, r *http.Request) {
 
 	image, handler, err := r.FormFile("image")
 	var imageId int64 = -1
-  if err != nil {
+	if err != nil {
 		fmt.Println(err)
 		fmt.Println("No image to update for the association")
 		fmt.Println(err)
 	} else {
-	  defer image.Close()
-	  log.Printf("Uploaded File: %+v\n", handler.Filename)
-	  log.Printf("File Size: %+v\n", handler.Size)
-	  log.Printf("MIME Header: %+v\n", handler.Header)
+		defer image.Close()
+		log.Printf("Uploaded File: %+v\n", handler.Filename)
+		log.Printf("File Size: %+v\n", handler.Size)
+		log.Printf("MIME Header: %+v\n", handler.Header)
 
-	  imageBytes, err := ioutil.ReadAll(image)
-	  if err != nil {
-		  fmt.Println(err)
-	  }
+		imageBytes, err := ioutil.ReadAll(image)
+		if err != nil {
+			fmt.Println(err)
+		}
 
-	  err = ioutil.WriteFile("./uploads/"+handler.Filename, imageBytes, 0666)
-	  if err != nil {
-      // TODO: need to exit with error here
-		  fmt.Println(err)
-	  }
+		err = ioutil.WriteFile("./uploads/"+handler.Filename, imageBytes, 0666)
+		if err != nil {
+			// TODO: need to exit with error here
+			fmt.Println(err)
+		}
 
-	  imageId = insertImage(handler.Filename)
-  }
+		imageId = insertImage(handler.Filename)
+	}
 
 	insertID := editAssociation(int64(id), int64(speciesId), int64(materialId), link, imageId)
 
@@ -173,15 +174,15 @@ func editAssociation(id int64, speciesId int64, materialId int64, link string, i
 	db := createConnection()
 	defer db.Close()
 
-  var sqlStatement = ""
-  var err error
-  if (imageId != -1) {
-	  sqlStatement = `UPDATE species_materials set species_id=$1, material_id=$2, image_id=$3, link=$4 WHERE uid=$5`
-	  _, err = db.Exec(sqlStatement, speciesId, materialId, imageId, link, id)
-  } else {
-	  sqlStatement = `UPDATE species_materials set species_id=$1, material_id=$2, link=$3 WHERE uid=$4`
-	  _, err = db.Exec(sqlStatement, speciesId, materialId, link, id)
-  }
+	var sqlStatement = ""
+	var err error
+	if imageId != -1 {
+		sqlStatement = `UPDATE species_materials set species_id=$1, material_id=$2, image_id=$3, link=$4 WHERE uid=$5`
+		_, err = db.Exec(sqlStatement, speciesId, materialId, imageId, link, id)
+	} else {
+		sqlStatement = `UPDATE species_materials set species_id=$1, material_id=$2, link=$3 WHERE uid=$4`
+		_, err = db.Exec(sqlStatement, speciesId, materialId, link, id)
+	}
 
 	if err != nil {
 		log.Fatalf("Unable to execute the query, %v", err)
@@ -258,10 +259,10 @@ func getAssociation(id int64) (models.AssociationDetails, error) {
 
 	err := row.Scan(&association.ID, &association.SpeciesId, &association.SpeciesName, &association.MaterialId, &association.MaterialName, &association.ImageUrl, &association.Link)
 
-  imageUrl := "/uploads/" + association.ImageUrl
+	imageUrl := "/uploads/" + association.ImageUrl
 	association.ImageUrl = imageUrl
 
-  if err != nil {
+	if err != nil {
 		log.Fatalf("Unable to scan the row. %v", err)
 	}
 

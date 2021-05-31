@@ -32,7 +32,7 @@ func MessageHandler(w http.ResponseWriter, r *http.Request) {
 func Router() *mux.Router {
 	router := mux.NewRouter()
 
-  //router.HandleFunc("/", logHandler(MessageHandler))
+	//router.HandleFunc("/", logHandler(MessageHandler))
 
 	router.HandleFunc("/api/hardiness", middleware.GetAllHardiness).Methods("GET", "OPTIONS")
 
@@ -41,7 +41,7 @@ func Router() *mux.Router {
 	router.HandleFunc("/api/associations/edit/{id}", middleware.EditAssociation).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/associations/delete/{id}", middleware.DeleteAssociation).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/api/associations/filter/{hardiness}", middleware.FilterAssociations).Methods("GET", "OPTIONS")
-  router.HandleFunc("/api/associations/links", middleware.CheckAssociations).Methods("GET", "OPTIONS")
+	router.HandleFunc("/api/associations/links", middleware.CheckAssociations).Methods("GET", "OPTIONS")
 
 	router.HandleFunc("/api/materials", middleware.GetAllMaterials).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/materials/new", middleware.AddMaterial).Methods("POST", "OPTIONS")
@@ -68,11 +68,11 @@ func Router() *mux.Router {
 	router.HandleFunc("/agro/{id}", middleware.RenderAgroSystem).Methods("GET")
 	router.HandleFunc("/agro", middleware.RenderAgroSystem).Methods("GET")
 
-  router.HandleFunc("/species/{id}", middleware.RenderSpecies).Methods("GET")
-  router.HandleFunc("/species", middleware.RenderSpecies).Methods("GET")
+	router.HandleFunc("/species/{id}", middleware.RenderSpecies).Methods("GET")
+	router.HandleFunc("/species", middleware.RenderSpecies).Methods("GET")
 
 	router.HandleFunc("/materials", middleware.RenderMaterial).Methods("GET")
-  router.HandleFunc("/materials/{id}", middleware.RenderMaterial).Methods("GET")
+	router.HandleFunc("/materials/{id}", middleware.RenderMaterial).Methods("GET")
 
 	router.HandleFunc("/associations", middleware.RenderAssociation).Methods("GET")
 	router.HandleFunc("/association/{id}", middleware.RenderAssociation).Methods("GET")

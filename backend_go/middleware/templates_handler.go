@@ -2,19 +2,20 @@ package middleware
 
 import (
 	"backend/models"
-	"github.com/gorilla/mux"
 	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
 	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 type StatisticPageData struct {
-  SpeciesNumber int
-  MaterialsNumber int
-  AssociationsNumber int
-  AgroSystemsNumber int
+	SpeciesNumber      int
+	MaterialsNumber    int
+	AssociationsNumber int
+	AgroSystemsNumber  int
 }
 
 type AddSpeciesPageData struct {
@@ -24,17 +25,17 @@ type AddSpeciesPageData struct {
 
 type EditSpeciesPageData struct {
 	Species       models.Species
-  SpeciesList   []models.Species
+	SpeciesList   []models.Species
 	HardinessList []models.Hardiness
 }
 
 type AddMaterialPageData struct {
-  Materials []models.Material
+	Materials []models.Material
 }
 
 type EditMaterialPageData struct {
-  Material models.Material
-  Materials []models.Material
+	Material  models.Material
+	Materials []models.Material
 }
 
 type AddAgroSystemPageData struct {
@@ -45,13 +46,13 @@ type AddAgroSystemPageData struct {
 }
 
 type AddAssociationPageData struct {
-  Associations []models.AssociationDetails
-	Species   []models.Species
-	Materials []models.Material
+	Associations []models.AssociationDetails
+	Species      []models.Species
+	Materials    []models.Material
 }
 
 type AssociationDetailsPageData struct {
-  Associations []models.AssociationDetails
+	Associations       []models.AssociationDetails
 	AssociationDetails models.AssociationDetails
 	Species            []models.Species
 	Materials          []models.Material
@@ -91,111 +92,111 @@ func RenderGallery(w http.ResponseWriter, r *http.Request) {
 func RenderAssociation(w http.ResponseWriter, r *http.Request) {
 	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
 
-  id, found := mux.Vars(r)["id"]
+	id, found := mux.Vars(r)["id"]
 
 	lp := filepath.Join("templates", "layout.html")
-  listTmpl := filepath.Join("templates/associations", "list_associations.tmpl")
-  actionTmpl := ""
-  if found {
-    log.Printf("loading edit template")
-	  actionTmpl = filepath.Join("templates/associations", "edit_associations.tmpl")
-  } else {
-    log.Printf("loading add template")
-	  actionTmpl = filepath.Join("templates/associations", "add_associations.tmpl")
-  }
+	listTmpl := filepath.Join("templates/associations", "list_associations.tmpl")
+	actionTmpl := ""
+	if found {
+		log.Printf("loading edit template")
+		actionTmpl = filepath.Join("templates/associations", "edit_associations.tmpl")
+	} else {
+		log.Printf("loading add template")
+		actionTmpl = filepath.Join("templates/associations", "add_associations.tmpl")
+	}
 
 	tmpl, err := template.ParseFiles(lp, listTmpl, actionTmpl)
 
 	if err == nil {
-    associations, _ := getAllAssociations()
+		associations, _ := getAllAssociations()
 		materials, _ := getAllMaterials()
 		species, _ := getAllSpecies()
-    var pageData interface{}
+		var pageData interface{}
 
-    if found {
-      associationId, _ := strconv.ParseInt(id, 10, 64)
-		  association, _ := getAssociation(associationId)
-		  pageData = AssociationDetailsPageData{
-			  AssociationDetails: association,
-        Associations: associations,
-			  Species:            species,
-			  Materials:          materials,
-		  }
-    } else {
-      pageData = AddAssociationPageData{
-        Associations: associations,
-			  Species:   species,
-			  Materials: materials,
-		  }
-    }
-	tmpl.ExecuteTemplate(w, "layout", pageData)
-  } else {
-    log.Println(err)
-  }
+		if found {
+			associationId, _ := strconv.ParseInt(id, 10, 64)
+			association, _ := getAssociation(associationId)
+			pageData = AssociationDetailsPageData{
+				AssociationDetails: association,
+				Associations:       associations,
+				Species:            species,
+				Materials:          materials,
+			}
+		} else {
+			pageData = AddAssociationPageData{
+				Associations: associations,
+				Species:      species,
+				Materials:    materials,
+			}
+		}
+		tmpl.ExecuteTemplate(w, "layout", pageData)
+	} else {
+		log.Println(err)
+	}
 }
 
 func RenderMaterial(w http.ResponseWriter, r *http.Request) {
 	log.Printf("RenderTemplate %s", filepath.Clean(r.URL.Path))
 
-  id, found := mux.Vars(r)["id"]
+	id, found := mux.Vars(r)["id"]
 
 	lp := filepath.Join("templates", "layout.html")
-  listTmpl := filepath.Join("templates/materials", "list_materials.tmpl")
-  actionTmpl := ""
-  if found {
-    log.Printf("loading edit template")
-	  actionTmpl = filepath.Join("templates/materials", "edit_materials.tmpl")
-  } else {
-    log.Printf("loading add template")
-	  actionTmpl = filepath.Join("templates/materials", "add_materials.tmpl")
-  }
+	listTmpl := filepath.Join("templates/materials", "list_materials.tmpl")
+	actionTmpl := ""
+	if found {
+		log.Printf("loading edit template")
+		actionTmpl = filepath.Join("templates/materials", "edit_materials.tmpl")
+	} else {
+		log.Printf("loading add template")
+		actionTmpl = filepath.Join("templates/materials", "add_materials.tmpl")
+	}
 
 	tmpl, err := template.ParseFiles(lp, listTmpl, actionTmpl)
 
 	if err == nil {
 		materials, _ := getAllMaterials()
 
-    var items interface{}
-    if found {
-      materialId, _ := strconv.ParseInt(id, 10, 64)
-      var material models.Material
-      for _, v := range materials {
-        if v.ID == materialId {
-          material = v
-          break
-        }
-      }
+		var items interface{}
+		if found {
+			materialId, _ := strconv.ParseInt(id, 10, 64)
+			var material models.Material
+			for _, v := range materials {
+				if v.ID == materialId {
+					material = v
+					break
+				}
+			}
 
-		  items = EditMaterialPageData{
-        Material: material,
-			  Materials: materials,
-		  }
-    } else {
-      items = AddMaterialPageData {
-        Materials: materials,
-      }
-    }
+			items = EditMaterialPageData{
+				Material:  material,
+				Materials: materials,
+			}
+		} else {
+			items = AddMaterialPageData{
+				Materials: materials,
+			}
+		}
 		tmpl.ExecuteTemplate(w, "layout", items)
 	} else {
-    log.Println(err)
-  }
+		log.Println(err)
+	}
 }
 
 func RenderSpecies(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Render Template %s", filepath.Clean(r.URL.Path))
 
-  id, found := mux.Vars(r)["id"]
+	id, found := mux.Vars(r)["id"]
 
 	lp := filepath.Join("templates", "layout.html")
-  listTmpl := filepath.Join("templates/species", "list_species.tmpl")
-  actionTmpl := ""
-  if found {
-    log.Printf("loading edit template")
-	  actionTmpl = filepath.Join("templates/species", "edit_species.tmpl")
-  } else {
-    log.Printf("loading add template")
-	  actionTmpl = filepath.Join("templates/species", "add_species.tmpl")
-  }
+	listTmpl := filepath.Join("templates/species", "list_species.tmpl")
+	actionTmpl := ""
+	if found {
+		log.Printf("loading edit template")
+		actionTmpl = filepath.Join("templates/species", "edit_species.tmpl")
+	} else {
+		log.Printf("loading add template")
+		actionTmpl = filepath.Join("templates/species", "add_species.tmpl")
+	}
 
 	tmpl, err := template.ParseFiles(lp, listTmpl, actionTmpl)
 
@@ -203,35 +204,35 @@ func RenderSpecies(w http.ResponseWriter, r *http.Request) {
 		speciesList, _ := getAllSpecies()
 		hardinessList, _ := getAllHardiness()
 
-    var items interface{}
-    if found {
-      speciesId, _ := strconv.ParseInt(id, 10, 64)
-      var species models.Species
-      for _, v := range speciesList {
-        if v.ID == speciesId {
-          species = v
-          break
-        }
-      }
+		var items interface{}
+		if found {
+			speciesId, _ := strconv.ParseInt(id, 10, 64)
+			var species models.Species
+			for _, v := range speciesList {
+				if v.ID == speciesId {
+					species = v
+					break
+				}
+			}
 
-		  items = EditSpeciesPageData{
-        Species: species,
-			  SpeciesList:   speciesList,
-			  HardinessList: hardinessList,
-		  }
-    } else {
-		  items = AddSpeciesPageData{
-			  SpeciesList:   speciesList,
-			  HardinessList: hardinessList,
-		  }
-    }
+			items = EditSpeciesPageData{
+				Species:       species,
+				SpeciesList:   speciesList,
+				HardinessList: hardinessList,
+			}
+		} else {
+			items = AddSpeciesPageData{
+				SpeciesList:   speciesList,
+				HardinessList: hardinessList,
+			}
+		}
 
-    log.Printf("found %d species", len(speciesList))
+		log.Printf("found %d species", len(speciesList))
 
 		tmpl.ExecuteTemplate(w, "layout", items)
 	} else {
-    log.Println(err)
-  }
+		log.Println(err)
+	}
 }
 
 func RenderAgroSystem(w http.ResponseWriter, r *http.Request) {
@@ -255,8 +256,8 @@ func RenderAgroSystem(w http.ResponseWriter, r *http.Request) {
 		}
 		tmpl.ExecuteTemplate(w, "layout", items)
 	} else {
-    log.Println(err)
-  }
+		log.Println(err)
+	}
 }
 
 func RenderTemplate(w http.ResponseWriter, r *http.Request) {

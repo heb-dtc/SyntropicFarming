@@ -4,11 +4,12 @@ import (
 	"backend/models"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
-	_ "github.com/lib/pq"
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
+	_ "github.com/lib/pq"
 )
 
 func EditMaterials(w http.ResponseWriter, r *http.Request) {
@@ -28,7 +29,7 @@ func EditMaterials(w http.ResponseWriter, r *http.Request) {
 
 	material = editMaterial(material)
 	res := response{
-		ID: material.ID,
+		ID:      material.ID,
 		Message: "Material edited successfully",
 	}
 
@@ -41,7 +42,7 @@ func editMaterial(material models.Material) models.Material {
 
 	sqlStatement := `UPDATE materials set name=$1 WHERE uid=$2`
 
-  //TODO: read the number of row affected by the update
+	//TODO: read the number of row affected by the update
 	_, err := db.Exec(sqlStatement, material.Name, material.ID)
 
 	if err != nil {

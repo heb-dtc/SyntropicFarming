@@ -4,11 +4,12 @@ import (
 	"backend/models"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
-	_ "github.com/lib/pq"
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
+	_ "github.com/lib/pq"
 )
 
 func EditSpecies(w http.ResponseWriter, r *http.Request) {
@@ -28,7 +29,7 @@ func EditSpecies(w http.ResponseWriter, r *http.Request) {
 
 	species = editSpecies(species)
 	res := response{
-		ID: species.ID,
+		ID:      species.ID,
 		Message: "Species edit successfully",
 	}
 
@@ -41,7 +42,7 @@ func editSpecies(species models.Species) models.Species {
 
 	sqlStatement := `UPDATE species set common_name=$1, min_hardiness=$2, max_hardiness=$3, scientific_name=$4 WHERE uid=$5`
 
-  //TODO: read the number of row affected by the update
+	//TODO: read the number of row affected by the update
 	_, err := db.Exec(sqlStatement, species.CommonName, species.MinHardiness, species.MaxHardiness, species.ScientificName, species.ID)
 
 	if err != nil {
@@ -161,4 +162,3 @@ func DeleteSpecies(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewEncoder(w).Encode(res)
 }
-
