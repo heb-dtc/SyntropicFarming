@@ -332,6 +332,11 @@ main {
   padding: 0px 0px;
 }
 
+.syntropicImg {
+  width: 100%;
+  max-width: 900px;
+}
+
 @media screen and (min-width: 768px) {
   .polycultureImg {
     padding: 0px 80px;

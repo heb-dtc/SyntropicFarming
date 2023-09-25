@@ -5,6 +5,20 @@ import { getImageUrl } from '@/api'
 const PolyculturePage: React.FC = () => {
   const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', '08.png', '09.png']
   const [imageUrl, setImageUrl] = useState(getImageUrl(IMAGES[0]))
+  const CAROUSEL = ['10.jpeg', '11.jpeg', '12.jpeg', '13.jpeg', '14.jpeg']
+  const [carouselIndex, nextCarouselIndex] = useState(0)
+  const [carouselUrl, setCarouselUrl] = useState(getImageUrl(CAROUSEL[carouselIndex]))
+
+  function nextIndex() {
+    let idx = carouselIndex
+    if (carouselIndex == 4) {
+      idx = 0
+    } else {
+      idx = idx + 1
+    }
+    nextCarouselIndex(idx)
+    setCarouselUrl(getImageUrl(CAROUSEL[idx]))
+  }
 
   return (
     <div className={`${styles['pageContainer']} ${styles['scrollContainer']}`}>
@@ -14,6 +28,32 @@ const PolyculturePage: React.FC = () => {
             In this section you can find a selection of analysis of polycultural agroecosystems and the materials they
             potentially can produce.
           </p>
+        </div>
+        <div className={styles['content']}>
+          <h3> SYNTROPIA</h3>
+          <p>
+            How can we design systems of production that – directly influence the regeneration of soil, enhance
+            biodiversity and-preserve water in order to create more withstanding ecosystems?
+          </p>
+          <p>
+            How can we create a product that is repairable and adaptable not only to different scales of production, but
+            also to shifting availability of natural resources? The research project Syntropia directly relates the
+            production of raw materials to the production of materials and, in extension, products. It proposes a shoe
+            made with bio-based materials which can grow on one polycultural field, in the mountain area of Andalucia in
+            the South of Spain.
+          </p>
+          <p>
+            Syntropia creates a dialogue between the design and implementation of the polyculture and the design and
+            production of the shoe. The ecosystemic necessities of the multicrop culture determine the design of the
+            shoe and vice versa. Syntropia is a project done in collaboration with Sophia Guggenberger and is funded by
+            Re-fream, a project supported by the European Union as part of the STARTS programme, Horizon 2020.
+          </p>
+          <p>
+            Syntropia has been awarded the Design Distributed Award For Responsible Design 2022, and has been a finalist
+            of the YouFab Award 2021.
+          </p>
+          <img onClick={() => nextIndex()} className={styles['syntropicImg']} src={carouselUrl} />
+          <p>Photos by Elisabeth Handl, Illustrations by Anastasija Mass</p>
         </div>
         <div className={styles['polycultureMenu']}>
           <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[0]))}>
