@@ -6,7 +6,7 @@ const PolyculturePage: React.FC = () => {
   const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', '08.png', '09.png']
   const [imageUrl, setImageUrl] = useState(getImageUrl(IMAGES[0]))
   const CAROUSEL = ['10.jpeg', '11.jpeg', '12.jpeg', '13.jpeg', '14.jpeg']
-  const [carouselIndex, nextCarouselIndex] = useState(0)
+  const [carouselIndex, nextCarouselIndex] = useState(4)
   const [carouselUrl, setCarouselUrl] = useState(getImageUrl(CAROUSEL[carouselIndex]))
 
   function nextIndex() {
@@ -29,8 +29,8 @@ const PolyculturePage: React.FC = () => {
             potentially can produce.
           </p>
         </div>
+        <h3 className={styles['selected']}> SYNTROPIA</h3>
         <div className={styles['content']}>
-          <h3> SYNTROPIA</h3>
           <p>
             How can we design systems of production that – directly influence the regeneration of soil, enhance
             biodiversity and-preserve water in order to create more withstanding ecosystems?
@@ -55,6 +55,10 @@ const PolyculturePage: React.FC = () => {
           <img onClick={() => nextIndex()} className={styles['syntropicImg']} src={carouselUrl} />
           <p>Photos by Elisabeth Handl, Illustrations by Anastasija Mass</p>
         </div>
+        <h3 className={`${styles['selected']} ${styles['topMarginContent']}`}>
+          {' '}
+          MAYA FOREST GARDEN - A MATERIAL ANALYSIS
+        </h3>
         <div className={styles['polycultureMenu']}>
           <div className={styles['polycultureMenuItem']} onClick={() => setImageUrl(getImageUrl(IMAGES[0]))}>
             MayaForestGarden

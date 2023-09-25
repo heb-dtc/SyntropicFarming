@@ -37,6 +37,7 @@ interface CssExports {
   'sliderContent': string;
   'syntropicImg': string;
   'topMarginContainer': string;
+  'topMarginContent': string;
   'visibleItem': string;
 }
 export const cssExports: CssExports;

@@ -145,6 +145,10 @@ li {
   max-width: 950px;
 }
 
+.topMarginContent {
+  margin-top: 4rem;
+}
+
 .topMarginContainer {
   margin-top: var(--top-margin-about);
 }
